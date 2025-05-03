@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  background: #f0f2f5;
+}
+
+.content {
+  flex: 1;
+  padding: 50px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.top {
+  text-align: center;
+}
+
+.header {
+  height: 44px;
+  line-height: 44px;
+}
+
+.title {
+  position: relative;
+  color: rgba(0, 0, 0, 85%);
+  font-weight: 600;
+  font-size: 35px;
+  font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.main {
+  width: 368px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 95%;
+    max-width: 368px;
+  }
+}

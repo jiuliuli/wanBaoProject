@@ -1,0 +1,125 @@
+import { EVALUATE_TYPE, INDUSTRY_TYPE, PROJECT_SOURCE_TYPE, SCALE_TYPE, VENTURE_FACTOR_TYPE, VENTURE_TYPE } from "@/constants/project.constants"
+
+export interface ProjectVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+    source: PROJECT_SOURCE_TYPE
+    industry_type: INDUSTRY_TYPE
+    address: string
+    evaluate_type: EVALUATE_TYPE
+    establisher: string
+    director: string
+    report: string  // 送审报告
+    audit_quantity: number
+    backup_quantity: number
+    amount: number
+    start_time: number
+    end_time: number
+    finished_time: number
+    bid_bond: number
+    status: PROJECT_STATUS
+    bureau: string[]
+    describe: string
+    project_venture: VENTURE_TYPE
+    company_venture: VENTURE_TYPE
+    technical_venture: VENTURE_TYPE
+    industry_venture: string
+    venture_factor: VENTURE_FACTOR_TYPE  // 风险因素
+    scale: SCALE_TYPE  // 项目规模
+    environment: string
+    expert: boolean  // 是否外聘
+}
+
+export interface BasicInfoVO {
+    projectNumber: string
+    projectName: string
+    shortName: string
+    customerName: string
+    source: string,
+    projectType: string | number,
+    industryType: string,
+    bidBond: number
+    amount: number
+    director: string
+    bureau: string[]
+    status: string
+    auditQuantity: number
+    backupQuantity: number
+    finishedTime: string
+    endTime?: string
+    address: string
+    describe: string
+    startTime: string
+    establisher: string
+    evaluateType: string
+    highRisk: string
+    ventureFactor: string
+    travelFee: number
+    printFee: number
+    channelFee: number
+    compileCost: number
+    commissionFee: number
+    firstAudit: number
+    techAudit: number
+    projectAudit: number
+    reviewAudit: number
+    taxFee: number
+    compiler: string
+    report: string
+    companyVenture: string
+    technicalVenture: string
+    industryVenture: string
+    mainVenture: string
+    expert: string
+    environment: string
+    projectScale: string
+    createBy: string
+    createTime: string
+
+}
+
+export interface ContractInfoVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+}
+
+export interface ProcessInfoVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+}
+
+export interface MemberInfoVO {
+    id: number;
+    projectNumber: string;
+    name: string;
+    duty: string;
+    endTime: string;
+    finishedTime: string | null;
+}
+
+export interface MaterialInfoVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+}
+
+export interface ArchiveInfoVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+}
+
+export interface RiskInfoVO {
+    project_number: string
+    project_name: string
+    short_name: string
+    customer_name: string
+}
