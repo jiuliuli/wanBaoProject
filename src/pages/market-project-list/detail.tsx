@@ -1,0 +1,85 @@
+import PATH_ENUM from '@/components/routes/path';
+import BasicInfo from '@/pages/market-project-list/childrenPage/BasicInfo';
+import ContractInfo from '@/pages/market-project-list/childrenPage/ContractInfo';
+import InvoiceInfo from '@/pages/market-project-list/childrenPage/InvoiceInfo';
+import ProgressInfo from '@/pages/market-project-list/childrenPage/ProgressInfo';
+import ReceiptInfo from '@/pages/market-project-list/childrenPage/ReceiptInfo';
+import ReportInfo from '@/pages/market-project-list/childrenPage/ReportInfo';
+import MarketProjectService from '@/services/market-project.service';
+import ProjectManagementService from '@/services/project-management.service';
+import { BasicInfoVO, ContractInfoVO } from '@/types/project.types';
+import { PageHeader } from '@ant-design/pro-components';
+import { useNavigate, useParams } from '@umijs/max';
+import { Tabs } from 'antd';
+import { useAsync } from 'react-use';
+
+export default function MarketProjectListDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const projectState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchProjectById(id);
+    }
+  }, [id]);
+
+  const contractState = useAsync(async () => {
+    if (id) {
+      return await MarketProjectService.fetchContractById(id);
+    }
+  }, [id]);
+
+  const progressState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchProgressById(id);
+    }
+  }, [id]);
+
+  return (
+    projectState.value &&
+    !projectState.loading &&
+    contractState.value &&
+    !contractState.loading && (
+      <PageHeader
+        title={projectState.value[0]?.projectNumber}
+        onBack={() => navigate(PATH_ENUM.MARKET_PROJECTS_LIST)}
+        style={{ background: '#ffffff' }}
+      >
+        <Tabs
+          defaultActiveKey="basic"
+          items={[
+            {
+              label: '项目信息',
+              key: 'basic',
+              children: <BasicInfo data={projectState.value[0] as BasicInfoVO} />,
+            },
+            {
+              label: '合同信息',
+              key: 'contract',
+              children: <ContractInfo data={contractState.value[0] as ContractInfoVO} />,
+            },
+            {
+              label: '项目进度详情',
+              key: 'progress',
+              children: <ProgressInfo data={progressState.value as ProgressInfoVO} />,
+            },
+            {
+              label: '发票开具',
+              key: 'invoice',
+              children: <InvoiceInfo data={projectState.value[0] as InvoiceInfoVO} />,
+            },
+            {
+              label: '报告邮寄',
+              key: 'report',
+              children: <ReportInfo data={projectState.value[0] as ReportInfoVO} />,
+            },
+            {
+              label: '收款情况',
+              key: 'receipt',
+              children: <ReceiptInfo data={projectState.value[0] as ReceiptInfoVO} />,
+            },
+          ]}
+        ></Tabs>
+      </PageHeader>
+    )
+  );
+}

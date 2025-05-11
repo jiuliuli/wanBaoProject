@@ -1,14 +1,15 @@
-import LabelForm from "@/components/LabelForm";
-import { LabelFormItem } from "@/components/LabelForm/types";
-import PATH_ENUM from "@/components/routes/path";
-import ProjectManagementService from "@/services/project-management.service";
-import ReimburseManagementService from "@/services/reimburse-manage.service";
-import { UploadOutlined } from "@ant-design/icons";
-import { PageHeader } from "@ant-design/pro-components";
-import { useNavigate, useParams } from "@umijs/max";
-import { Button, Form, InputNumber, message, Select, Space, Upload } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
+import LabelForm from '@/components/LabelForm';
+import { LabelFormItem } from '@/components/LabelForm/types';
+import PATH_ENUM from '@/components/routes/path';
+import ProjectManagementService from '@/services/project-management.service';
+import ReimburseManagementService from '@/services/reimburse-manage.service';
+import { UploadOutlined } from '@ant-design/icons';
+import { PageHeader } from '@ant-design/pro-components';
+import { useModel, useNavigate, useParams } from '@umijs/max';
+import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space, Upload } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
 export default function ReimburseManagementEdit() {
@@ -17,7 +18,12 @@ export default function ReimburseManagementEdit() {
   const [type, setType] = useState<string>();
   const [projectOptions, setProjectOptions] = useState<{ label: string; value: string }[]>([]);
   const [projectCategory, setProjectCategory] = useState<{ label: string; value: string }[]>([]);
-  const [nonProjectCategory, setNonProjectCategory] = useState<{ label: string; value: string }[]>([]);
+  const [nonProjectCategory, setNonProjectCategory] = useState<{ label: string; value: string }[]>(
+    [],
+  );
+  const { initialState } = useModel('@@initialState');
+  const userInfo = initialState?.userInfo;
+
   const navigate = useNavigate();
   const reimburseState = useAsync(async () => {
     if (id) {
@@ -30,11 +36,17 @@ export default function ReimburseManagementEdit() {
   }, []);
 
   useEffect(() => {
-    if (id && reimburseState.value && categoryStatus.value) {
-      console.log(id);
-      form.setFieldsValue(reimburseState.value[0]);
+    if (categoryStatus.value) {
       setProjectCategory(categoryStatus.value.filter((item: any) => item.startsWith('项目')));
       setNonProjectCategory(categoryStatus.value.filter((item: any) => item.startsWith('非项目')));
+    }
+
+    if (id && reimburseState.value) {
+      const formData = { ...reimburseState.value[0] };
+      if (formData.feeTime) {
+        formData.feeTime = dayjs(formData.feeTime);
+      }
+      form.setFieldsValue(formData);
       setType('edit');
     } else {
       setType('create');
@@ -47,7 +59,7 @@ export default function ReimburseManagementEdit() {
       const options = result.map((item: any) => ({
         label: `${item.projectNumber} - ${item.projectName}`,
         value: item.projectNumber,
-        projectName: item.projectName
+        projectName: item.projectName,
       }));
       setProjectOptions(options);
     } else {
@@ -59,20 +71,26 @@ export default function ReimburseManagementEdit() {
     console.log(option);
     form.setFieldsValue({
       projectNumber: option.value,
-      projectName: option.projectName
+      projectName: option.projectName,
     });
   };
 
   const [submitState, doFetch] = useAsyncFn(
     async values => {
+      const submitData = { ...values };
+      submitData.maker = userInfo?.userName;
       if (type === 'edit') {
-        values.expenseNumber = id;
+        submitData.expenseNumber = id;
+        Object.assign(submitData, reimburseState.value[0]);
+      } else {
+        submitData.status = '进行中';
       }
+
       try {
         if (type === 'edit') {
-          await ReimburseManagementService.updateReimburse(values);
+          await ReimburseManagementService.updateReimburse(submitData);
         } else {
-          await ReimburseManagementService.createReimburse(values);
+          await ReimburseManagementService.createReimburse(submitData);
         }
         message.success(type === 'edit' ? '更新报销单成功' : '新建报销单成功');
         navigate(PATH_ENUM.REIMBURSE_MANAGEMENT);
@@ -85,12 +103,13 @@ export default function ReimburseManagementEdit() {
 
   const formlist: LabelFormItem[] = [
     {
-      label: "报销人",
-      name: "reimburser",
+      label: '报销人',
+      name: 'reimburser',
+      children: <Input defaultValue={userInfo?.userName} />,
     },
     {
-      label: "项目",
-      name: "projectNumber",
+      label: '项目编号',
+      name: 'projectNumber',
       children: (
         <Select
           allowClear
@@ -101,63 +120,95 @@ export default function ReimburseManagementEdit() {
           options={projectOptions}
           filterOption={false}
         />
-      )
+      ),
     },
     {
-      name: "projectName",
-      hidden: true
+      name: 'projectName',
+      hidden: true,
     },
     {
-      label: "报销金额",
-      name: "amount",
-      children: <InputNumber />
+      label: '发生时间',
+      name: 'feeTime',
+      rules: [{ required: true, message: '请选择发生时间' }],
+      children: <DatePicker format="YYYY-MM-DD" />,
     },
     {
-      label: "费用类型",
+      label: '报销金额',
+      name: 'amount',
+      children: <InputNumber precision={2} />,
+    },
+    {
+      label: '费用类型',
+      required: true,
+      rules: [{ required: true, message: '请选择费用类型' }],
       shouldUpdate: (prev, cur) => prev.projectNumber !== cur.projectNumber,
-      name: "category",
-      children: (form) => {
+      children: form => {
         const projectNumber = form.getFieldValue('projectNumber');
         if (projectNumber) {
-          return <Select options={projectCategory.map((item: any) => ({ label: item, value: item }))} placeholder="请选择费用类型" />
+          return (
+            <Form.Item
+              noStyle
+              name="category"
+              rules={[{ required: true, message: '请选择费用类型' }]}
+            >
+              <Select
+                options={projectCategory.map((item: any) => ({ label: item, value: item }))}
+                placeholder="请选择费用类型"
+              />
+            </Form.Item>
+          );
         } else {
-          return <Select options={nonProjectCategory.map((item: any) => ({ label: item, value: item }))} placeholder="请选择费用类型" />
+          return (
+            <Form.Item
+              noStyle
+              name="category"
+              rules={[{ required: true, message: '请选择费用类型' }]}
+            >
+              <Select
+                options={nonProjectCategory.map((item: any) => ({ label: item, value: item }))}
+                placeholder="请选择费用类型"
+              />
+            </Form.Item>
+          );
         }
-      }
+      },
     },
     {
-      label: "报销事由",
-      name: "purpose",
-      children: <TextArea />
+      label: '报销事由',
+      name: 'purpose',
+      rules: [{ required: true, message: '请输入报销事由' }],
+      children: <TextArea />,
     },
     {
-      label: "费用承担部门",
-      name: "division"
+      label: '费用承担部门',
+      name: 'division',
     },
     {
-      label: "备注",
-      name: "memo",
-      children: <TextArea />
+      label: '备注',
+      name: 'memo',
+      children: <TextArea />,
     },
     {
-      label: "收款人",
-      name: "accountName",
+      label: '收款人',
+      name: 'accountName',
     },
     {
-      label: "开户行",
-      name: "bankName",
+      label: '开户行',
+      name: 'bankName',
     },
     {
-      label: "账号",
-      name: "accountNumber",
+      label: '账号',
+      name: 'accountNumber',
     },
     {
-      label: "附件",
-      name: "attachment",
-      children: <Upload>
-        <Button icon={<UploadOutlined />}>上传附件</Button>
-      </Upload>
-    }
+      label: '附件',
+      name: 'attachment',
+      children: (
+        <Upload>
+          <Button icon={<UploadOutlined />}>上传附件</Button>
+        </Upload>
+      ),
+    },
   ];
 
   return (
@@ -175,7 +226,14 @@ export default function ReimburseManagementEdit() {
             marginRight: 10,
           }}
           onClick={() => {
-            doFetch(form.getFieldsValue());
+            form
+              .validateFields()
+              .then(values => {
+                doFetch(values);
+              })
+              .catch(error => {
+                console.log('表单验证失败:', error);
+              });
           }}
         >
           保存当前编辑
@@ -198,9 +256,12 @@ export default function ReimburseManagementEdit() {
           onFinish: doFetch,
           labelCol: { span: 3 },
           wrapperCol: { span: 20 },
+          onValuesChange: changedValues => {
+            console.log('表单值变化：', changedValues);
+          },
         }}
         formlist={formlist}
       />
-    </PageHeader >
+    </PageHeader>
   );
 }

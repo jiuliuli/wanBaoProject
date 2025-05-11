@@ -23,4 +23,12 @@ export default defineConfig({
       changeOrigin: true,
     },
   },
+  // 添加 mfsu 配置
+  mfsu: {
+    shared: {
+      react: { singleton: true },
+      'react-dom': { singleton: true },
+      axios: { singleton: true },
+    },
+  },
 });

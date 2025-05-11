@@ -1,5 +1,21 @@
 import UserService from '@/services/user.service';
-import { ContactsOutlined, DollarOutlined, HomeOutlined, LogoutOutlined, PartitionOutlined, SnippetsOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  BankOutlined,
+  BellOutlined,
+  CheckCircleOutlined,
+  ContactsOutlined,
+  DatabaseOutlined,
+  DollarOutlined,
+  FileOutlined,
+  FileTextOutlined,
+  LogoutOutlined,
+  OrderedListOutlined,
+  PlusOutlined,
+  ProjectOutlined,
+  TeamOutlined,
+  TrophyOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { history, Link, Outlet, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Avatar, Dropdown, Layout, Menu, Space, Typography } from 'antd';
@@ -10,36 +26,86 @@ const { Content, Sider } = Layout;
 const { Text } = Typography;
 
 const menuItems: MenuProps['items'] = [
+  // {
+  //   key: "/",
+  //   icon: <HomeOutlined />,
+  //   label: <Link to="/">首页</Link>,
+  // },
   {
-    key: "/",
-    icon: <HomeOutlined />,
-    label: <Link to="/">首页</Link>,
+    key: '/pending-tasks',
+    icon: <FileTextOutlined />,
+    label: <Link to="/pending-tasks">待办工作</Link>,
   },
   {
-    key: "/project-management",
-    icon: <SnippetsOutlined />,
-    label: <Link to="/project-management/list">项目管理</Link>,
+    key: '/market-project-list',
+    icon: <OrderedListOutlined />,
+    label: <Link to="/market-project-list">项目列表</Link>,
   },
-  {
-    key: '/process-management',
-    icon: <PartitionOutlined />,
-    label: <Link to="/process-management/list">流程管理</Link>,
-  },
-  {
-    key: '/finance-management',
-    icon: <DollarOutlined />,
-    label: <Link to="/reimburse-management/list">报销管理</Link>,
 
-  },
   {
-    key: '/personnel-management',
-    icon: <UserOutlined />,
-    label: <Link to="/personnel-management/list">人员管理</Link>,
+    key: '/create-project',
+    icon: <PlusOutlined />,
+    label: <Link to="/create-project">新建项目</Link>,
   },
   {
     key: '/customer-management',
+    icon: <BankOutlined />,
+    label: <Link to="/customer-management">客户管理</Link>,
+  },
+  {
+    key: '/department-management',
+    icon: <BankOutlined />,
+    label: <Link to="/department-management">部门管理</Link>,
+  },
+  {
+    key: '/contract-management',
     icon: <ContactsOutlined />,
-    label: <Link to="/customer-management/list">客户管理</Link>,
+    label: <Link to="/contract-management">合同管理</Link>,
+  },
+  {
+    key: '/project-urge',
+    icon: <BellOutlined />,
+    label: <Link to="/project-urge">项目催办</Link>,
+  },
+  {
+    key: '/work-collaboration',
+    icon: <TeamOutlined />,
+    label: <Link to="/work-collaboration">工作协同</Link>,
+  },
+  {
+    key: '/loan-application',
+    icon: <DollarOutlined />,
+    label: <Link to="/loan-application">借款申请</Link>,
+  },
+  {
+    key: '/reimburse-management',
+    icon: <FileOutlined />,
+    label: <Link to="/reimburse-management">报销管理</Link>,
+  },
+  {
+    key: '/project-settlement',
+    icon: <FileTextOutlined />,
+    label: <Link to="/project-settlement">项目结算</Link>,
+  },
+  {
+    key: '/bidding',
+    icon: <TrophyOutlined />,
+    label: <Link to="/bidding">招投标</Link>,
+  },
+  {
+    key: '/ongoing-projects',
+    icon: <ProjectOutlined />,
+    label: <Link to="/ongoing-projects">进行中项目</Link>,
+  },
+  {
+    key: '/completed-projects',
+    icon: <CheckCircleOutlined />,
+    label: <Link to="/completed-projects">已完成项目</Link>,
+  },
+  {
+    key: '/document-library',
+    icon: <DatabaseOutlined />,
+    label: <Link to="/document-library">资料库</Link>,
   },
 ];
 
@@ -78,7 +144,7 @@ const MainLayout: React.FC = () => {
         className={styles.sider}
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+        onCollapse={value => setCollapsed(value)}
       >
         <div className={styles.logoContainer}>
           {!collapsed ? (
@@ -92,56 +158,59 @@ const MainLayout: React.FC = () => {
                     marginRight: '10px',
                     verticalAlign: 'middle',
                     borderRadius: '3px',
-                    filter: 'brightness(1.1)'
+                    filter: 'brightness(1.1)',
                   }}
                 />
                 管理系统
               </Link>
             </>
-
           ) : (
             <div className={styles.logo}>
               <img
-                src={"/images/logo.png"}
+                src={'/images/logo.png'}
                 alt="logo"
                 style={{
                   height: '26px',
                   borderRadius: '3px',
-                  filter: 'brightness(1.1)'
+                  filter: 'brightness(1.1)',
                 }}
-                onClick={() => history.push("/")}
+                onClick={() => history.push('/')}
               />
             </div>
-
           )}
         </div>
 
         {initialState?.userInfo && (
           <div className={styles.userContainer}>
-            <Dropdown menu={{ items: userDropdownItems }} placement="bottomRight" trigger={['click']}>
+            <Dropdown
+              menu={{ items: userDropdownItems }}
+              placement="bottomRight"
+              trigger={['click']}
+            >
               <Space className={styles.userInfo}>
                 <Avatar size="small" icon={<UserOutlined />} />
-                {!collapsed && <Text ellipsis className={styles.userName}>{initialState.userInfo.realName}</Text>}
+                {!collapsed && (
+                  <Text ellipsis className={styles.userName}>
+                    {initialState.userInfo.realName}
+                  </Text>
+                )}
               </Space>
             </Dropdown>
           </div>
         )}
 
         {initialState?.userInfo && (
-          <Menu
-            mode="inline"
-            theme="dark"
-            items={menuItems}
-            className={styles.siderMenu}
-          />
+          <Menu mode="inline" theme="dark" items={menuItems} className={styles.siderMenu} />
         )}
       </Sider>
 
-      <Layout style={{
-        marginLeft: collapsed ? '80px' : '200px',
-        width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)',
-        transition: 'margin-left 0.2s, width 0.2s'
-      }}>
+      <Layout
+        style={{
+          marginLeft: collapsed ? '80px' : '200px',
+          width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)',
+          transition: 'margin-left 0.2s, width 0.2s',
+        }}
+      >
         <Content className={styles.content}>
           <Outlet />
         </Content>
@@ -150,4 +219,4 @@ const MainLayout: React.FC = () => {
   );
 };
 
-export default MainLayout; 
+export default MainLayout;
