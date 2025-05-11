@@ -1,20 +1,22 @@
 import UserService from '@/services/user.service';
 import {
-  BankOutlined,
+  AccountBookOutlined,
+  ApartmentOutlined,
   BellOutlined,
   CheckCircleOutlined,
-  ContactsOutlined,
+  ClusterOutlined,
   DatabaseOutlined,
-  DollarOutlined,
-  FileOutlined,
-  FileTextOutlined,
+  FileProtectOutlined,
   LogoutOutlined,
+  NotificationOutlined,
   OrderedListOutlined,
   PlusOutlined,
   ProjectOutlined,
   TeamOutlined,
   TrophyOutlined,
   UserOutlined,
+  UserSwitchOutlined,
+  WalletOutlined
 } from '@ant-design/icons';
 import { history, Link, Outlet, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
@@ -33,7 +35,7 @@ const menuItems: MenuProps['items'] = [
   // },
   {
     key: '/pending-tasks',
-    icon: <FileTextOutlined />,
+    icon: <NotificationOutlined />,
     label: <Link to="/pending-tasks">待办工作</Link>,
   },
   {
@@ -49,17 +51,22 @@ const menuItems: MenuProps['items'] = [
   },
   {
     key: '/customer-management',
-    icon: <BankOutlined />,
+    icon: <TeamOutlined />,
     label: <Link to="/customer-management">客户管理</Link>,
   },
   {
     key: '/department-management',
-    icon: <BankOutlined />,
+    icon: <ApartmentOutlined />,
     label: <Link to="/department-management">部门管理</Link>,
   },
   {
+    key: '/personnel-management',
+    icon: <UserSwitchOutlined />,
+    label: <Link to="/personnel-management">人员管理</Link>,
+  },
+  {
     key: '/contract-management',
-    icon: <ContactsOutlined />,
+    icon: <FileProtectOutlined />,
     label: <Link to="/contract-management">合同管理</Link>,
   },
   {
@@ -69,22 +76,22 @@ const menuItems: MenuProps['items'] = [
   },
   {
     key: '/work-collaboration',
-    icon: <TeamOutlined />,
+    icon: <ClusterOutlined />,
     label: <Link to="/work-collaboration">工作协同</Link>,
   },
   {
     key: '/loan-application',
-    icon: <DollarOutlined />,
+    icon: <WalletOutlined />,
     label: <Link to="/loan-application">借款申请</Link>,
   },
   {
     key: '/reimburse-management',
-    icon: <FileOutlined />,
+    icon: <AccountBookOutlined />,
     label: <Link to="/reimburse-management">报销管理</Link>,
   },
   {
     key: '/project-settlement',
-    icon: <FileTextOutlined />,
+    icon: <AccountBookOutlined />,
     label: <Link to="/project-settlement">项目结算</Link>,
   },
   {
@@ -191,7 +198,7 @@ const MainLayout: React.FC = () => {
                 <Avatar size="small" icon={<UserOutlined />} />
                 {!collapsed && (
                   <Text ellipsis className={styles.userName}>
-                    {initialState.userInfo.realName}
+                    {initialState.userInfo.userName}
                   </Text>
                 )}
               </Space>

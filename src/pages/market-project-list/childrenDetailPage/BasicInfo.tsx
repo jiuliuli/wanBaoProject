@@ -76,7 +76,7 @@ export default function BasicInfo({ data }: BasicInfoProps) {
     {
       label: '需要送审的管理部门',
       key: 'bureau',
-      children: <>{data.bureau?.join(', ')}</>,
+      children: <>{data.bureau}</>,
     },
     {
       label: '项目描述',

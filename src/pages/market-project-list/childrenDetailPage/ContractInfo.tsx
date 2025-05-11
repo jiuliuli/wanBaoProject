@@ -1,39 +1,46 @@
 import { ContractInfoVO } from '@/types/project.types';
 import { Card, Descriptions, Space, Table } from 'antd';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 
 type ContractInfoProps = {
   data: ContractInfoVO;
 };
 
 export default function ContractInfo({ data }: ContractInfoProps) {
-  const { contract, revenues } = data;
+  const [revenues, setRevenues] = useState<any[]>([]);
+  const [contract, setContract] = useState<any>(null);
+
+  useEffect(() => {
+    setRevenues(data?.revenues ?? []);
+    setContract(data?.contract ?? {});
+  }, [data]);
 
   const contractItems = [
     {
       key: 'contractNumber',
       label: '合同编号',
-      children: contract.contractNumber,
+      children: contract?.contractNumber,
     },
     {
       key: 'contractType',
       label: '合同类型',
-      children: contract.contractType,
+      children: contract?.contractType,
     },
     {
       key: 'contractAmount',
       label: '合同金额',
-      children: `¥${contract.amount.toLocaleString()}`,
+      children: `¥${contract?.amount?.toLocaleString() ?? 0}`,
     },
     {
       key: 'signDate',
       label: '签订日期',
-      children: dayjs(contract.signDate).format('YYYY-MM-DD'),
+      children: dayjs(contract?.signDate).format('YYYY-MM-DD'),
     },
     {
       key: 'payMode',
       label: '支付方式',
-      children: contract.payMode,
+      children: contract?.payMode,
     },
   ];
 
@@ -80,14 +87,14 @@ export default function ContractInfo({ data }: ContractInfoProps) {
       dataIndex: 'payment',
       key: 'payment',
       align: 'center',
-      render: (payment: number) => `¥${payment.toLocaleString()}`,
+      render: (payment: number) => `¥${payment?.toLocaleString()}`,
     },
     {
       title: '总金额',
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
-      render: (amount: number) => `¥${amount.toLocaleString()}`,
+      render: (amount: number) => `¥${amount?.toLocaleString()}`,
     },
     {
       title: '收入时间',

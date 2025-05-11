@@ -43,6 +43,11 @@ const PATH_ENUM = {
   DEPARTMENT_PERSONNEL_LIST: '/department-management/personnel-list/:id',
   DEPARTMENT_PERSONNEL_EDIT: '/department-management/personnel-edit/:id',
   DEPARTMENT_PERSONNEL_CREATE: '/department-management/personnel-create',
+
+  // 人员管理
+  PERSONNEL_MANAGEMENT: '/personnel-management',
+  PERSONNEL_CREATE: '/personnel-management/create',
+  PERSONNEL_EDIT: '/personnel-management/edit/:id',
 };
 
 export default PATH_ENUM;

@@ -1,27 +1,72 @@
-import axios from 'axios';
+import { message } from 'antd';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+
+// 创建 axios 实例
+const instance = axios.create();
+
+// 添加响应拦截器
+instance.interceptors.response.use(
+    (response: AxiosResponse) => {
+        return response;
+    },
+    (error: AxiosError) => {
+        if (error.response) {
+            // 服务器返回了错误状态码
+            const status = error.response.status;
+            const errorMessage = error.response.data?.message || '请求失败';
+
+            switch (status) {
+                case 400:
+                    message.error('请求参数错误');
+                    break;
+                case 401:
+                    message.error('未授权，请重新登录');
+                    break;
+                case 403:
+                    message.error('拒绝访问');
+                    break;
+                case 404:
+                    message.error('请求的资源不存在');
+                    break;
+                case 500:
+                    message.error('服务器错误');
+                    break;
+                default:
+                    message.error(errorMessage);
+            }
+        } else if (error.request) {
+            // 请求已发出，但没有收到响应
+            message.error('网络错误，请检查您的网络连接');
+        } else {
+            // 请求配置出错
+            message.error('请求配置错误');
+        }
+        return Promise.reject(error);
+    }
+);
 
 export const Request = {
-  get: async (url: string, params?: any) => {
-    const response = await axios.get(url, { params });
-    return response.data;
-  },
-  post: async (url: string, data: any) => {
-    const response = await axios.post(url, data);
-    return response.data;
-  },
-  put: async (url: string, data: any) => {
-    const response = await axios.put(url, data);
-    return response.data;
-  },
-  request: async (url: string, method: string, data?: any) => {
-    const response = await axios({
-      url,
-      method,
-      data,
-      headers: { 'Content-Type': 'application/json' },
-    });
-    return response.data;
-  },
+    get: async (url: string, params?: any) => {
+        const response = await instance.get(url, { params });
+        return response.data;
+    },
+    post: async (url: string, data: any) => {
+        const response = await instance.post(url, data);
+        return response.data;
+    },
+    put: async (url: string, data: any) => {
+        const response = await instance.put(url, data);
+        return response.data;
+    },
+    request: async (url: string, method: string, data?: any) => {
+        const response = await instance({
+            url,
+            method,
+            data,
+            headers: { 'Content-Type': 'application/json' },
+        });
+        return response.data;
+    },
 };
 
 export default Request;

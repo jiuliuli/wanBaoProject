@@ -37,7 +37,7 @@ const ProgressContainer = styled.div`
 `;
 
 export default function ProgressInfo({ data }: ProgressInfoProps) {
-  return (
+  return data.length ? (
     <ProgressContainer>
       {data?.map(item => (
         <Card key={item.id} className="progress-item">
@@ -78,5 +78,7 @@ export default function ProgressInfo({ data }: ProgressInfoProps) {
         </Card>
       ))}
     </ProgressContainer>
+  ) : (
+    <>暂无进度</>
   );
 }

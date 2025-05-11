@@ -25,6 +25,11 @@ export const routes = [
     component: '@/pages/market-project-list/detail',
   },
   {
+    path: '/market-project-list/edit/:id',
+    name: '项目编辑',
+    component: '@/pages/market-project-list/edit',
+  },
+  {
     path: '/create-project',
     name: '新建项目',
     component: '@/pages/create-project',
@@ -38,6 +43,21 @@ export const routes = [
     path: '/department-management',
     name: '部门管理',
     component: '@/pages/department-management',
+  },
+  {
+    path: '/personnel-management',
+    name: "人员管理",
+    component: '@/pages/personnel-management',
+  },
+  {
+    path: '/personnel-management/edit/:id',
+    name: '人员管理编辑',
+    component: '@/pages/personnel-management/edit',
+  },
+  {
+    path: '/personnel-management/create',
+    name: '人员管理创建',
+    component: '@/pages/personnel-management/edit',
   },
   {
     path: '/contract-management',
@@ -168,6 +188,16 @@ export const routes = [
     path: '/department-management/create',
     name: '部门管理创建',
     component: '@/pages/department-management/edit',
+  },
+  {
+    path: '/personnel-management',
+    name: '人员管理',
+    component: '@/pages/personnel-management',
+  },
+  {
+    path: '/personnel-management/edit/:id',
+    name: '人员管理编辑',
+    component: '@/pages/personnel-management/edit',
   },
   {
     path: '/department-management/personnel-list/:id',

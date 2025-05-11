@@ -122,3 +122,50 @@
 .newsList {
   min-height: 150px;
 }
+
+.taskCard {
+  height: 100%;
+  transition: all 0.3s;
+  border: 2px solid #f0f0f0;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.taskTags {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.statusTag {
+  margin-left: 0 !important;
+}
+
+.taskContent {
+  .taskItem {
+    display: flex;
+    margin-bottom: 8px;
+
+    :first-child {
+      width: 80px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.taskFooter {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
