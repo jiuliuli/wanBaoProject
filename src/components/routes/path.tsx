@@ -44,10 +44,15 @@ const PATH_ENUM = {
   DEPARTMENT_PERSONNEL_EDIT: '/department-management/personnel-edit/:id',
   DEPARTMENT_PERSONNEL_CREATE: '/department-management/personnel-create',
 
-  // 人员管理
+  // 人员信息维护
   PERSONNEL_MANAGEMENT: '/personnel-management',
   PERSONNEL_CREATE: '/personnel-management/create',
   PERSONNEL_EDIT: '/personnel-management/edit/:id',
+
+  // 借款申请
+  LOAN_APPLICATION: '/loan-application',
+  LOAN_APPLICATION_CREATE: '/loan-application/create',
+  LOAN_APPLICATION_EDIT: '/loan-application/edit/:id',
 };
 
 export default PATH_ENUM;

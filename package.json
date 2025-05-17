@@ -15,10 +15,13 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
+    "@ebay/nice-modal-react": "^1.2.13",
+    "@types/react-modal": "^3.16.3",
     "@umijs/max": "^4.4.6",
     "antd": "^5.4.0",
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
+    "react-modal": "^3.16.3",
     "react-use": "^17.6.0"
   },
   "devDependencies": {

@@ -15,6 +15,11 @@ export const routes = [
     component: '@/pages/pending-tasks',
   },
   {
+    path: '/personnel-management',
+    name: '人员信息维护',
+    component: '@/pages/personnel-management',
+  },
+  {
     path: '/market-project-list',
     name: '项目列表',
     component: '@/pages/market-project-list',
@@ -46,7 +51,7 @@ export const routes = [
   },
   {
     path: '/personnel-management',
-    name: "人员管理",
+    name: "人员信息维护",
     component: '@/pages/personnel-management',
   },
   {
@@ -78,6 +83,16 @@ export const routes = [
     path: '/loan-application',
     name: '借款申请',
     component: '@/pages/loan-application',
+  },
+  {
+    path: '/loan-application/edit/:id',
+    name: '借款申请编辑',
+    component: '@/pages/loan-application/edit',
+  },
+  {
+    path: '/loan-application/create',
+    name: '借款申请创建',
+    component: '@/pages/loan-application/edit',
   },
   {
     path: '/reimburse-management',
@@ -190,11 +205,6 @@ export const routes = [
     component: '@/pages/department-management/edit',
   },
   {
-    path: '/personnel-management',
-    name: '人员管理',
-    component: '@/pages/personnel-management',
-  },
-  {
     path: '/personnel-management/edit/:id',
     name: '人员管理编辑',
     component: '@/pages/personnel-management/edit',
@@ -228,6 +238,21 @@ export const routes = [
     path: '/process-management/create',
     name: '流程管理创建',
     component: '@/pages/process-management/edit',
+  },
+  {
+    path: '/salary-distribution',
+    name: '工资发放',
+    component: '@/pages/salary-distribution',
+  },
+  {
+    path: '/professional-info-maintenance',
+    name: '行业专业信息维护',
+    component: '@/pages/professional-info-maintenance',
+  },
+  {
+    path: '/personnel-level-maintenance',
+    name: '人员级别维护',
+    component: '@/pages/personnel-level-maintenance',
   },
   {
     path: '*',

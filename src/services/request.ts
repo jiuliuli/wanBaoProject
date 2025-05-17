@@ -2,8 +2,24 @@ import { message } from 'antd';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 // 创建 axios 实例
-const instance = axios.create();
+const instance = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL,
+});
 
+instance.interceptors.request.use(
+    (config: any) => {
+        const token = JSON.parse(localStorage.getItem('userInfo') || '{}').userName;
+        if (config.url?.includes('?')) {
+            config.url = config.url + `&token=${token}`;
+        } else {
+            config.url = config.url + `?token=${token}`;
+        }
+        return config;
+    },
+    (error: AxiosError) => {
+        return Promise.reject(error);
+    }
+);
 // 添加响应拦截器
 instance.interceptors.response.use(
     (response: AxiosResponse) => {
@@ -56,6 +72,10 @@ export const Request = {
     },
     put: async (url: string, data: any) => {
         const response = await instance.put(url, data);
+        return response.data;
+    },
+    delete: async (url: string) => {
+        const response = await instance.delete(url);
         return response.data;
     },
     request: async (url: string, method: string, data?: any) => {
