@@ -16,7 +16,7 @@ import {
   TrophyOutlined,
   UserOutlined,
   UserSwitchOutlined,
-  WalletOutlined
+  WalletOutlined,
 } from '@ant-design/icons';
 import NiceModal from '@ebay/nice-modal-react';
 import { history, Link, Outlet, useModel } from '@umijs/max';
@@ -50,9 +50,9 @@ const menuItems: MenuProps['items'] = [
     label: <Link to="/professional-info-maintenance">行业专业信息维护</Link>,
   },
   {
-    key: '/personnel-level-maintenance',
+    key: '/parameter-configuration-maintenance',
     icon: <UserSwitchOutlined />,
-    label: <Link to="/personnel-level-maintenance">人员级别维护</Link>,
+    label: <Link to="/parameter-configuration-maintenance">参数配置维护</Link>,
   },
   {
     key: '/loan-application',
@@ -64,7 +64,7 @@ const menuItems: MenuProps['items'] = [
     icon: <AccountBookOutlined />,
     label: <Link to="/reimburse-management">报销管理</Link>,
   },
-  
+
   {
     key: '/market-project-list',
     icon: <OrderedListOutlined />,

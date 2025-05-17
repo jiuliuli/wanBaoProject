@@ -51,7 +51,7 @@ export const routes = [
   },
   {
     path: '/personnel-management',
-    name: "人员信息维护",
+    name: '人员信息维护',
     component: '@/pages/personnel-management',
   },
   {
@@ -250,9 +250,9 @@ export const routes = [
     component: '@/pages/professional-info-maintenance',
   },
   {
-    path: '/personnel-level-maintenance',
-    name: '人员级别维护',
-    component: '@/pages/personnel-level-maintenance',
+    path: '/parameter-configuration-maintenance',
+    name: '参数配置维护',
+    component: '@/pages/parameter-configuration-maintenance',
   },
   {
     path: '*',

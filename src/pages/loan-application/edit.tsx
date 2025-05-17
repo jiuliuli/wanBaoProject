@@ -5,6 +5,7 @@ import LoanApplicationService from '@/services/loanApplication.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
 import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Space, Upload } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
@@ -21,7 +22,14 @@ export default function LoanApplicationEdit() {
 
   useEffect(() => {
     if (id && loanApplicationState.value) {
-      form.setFieldsValue(loanApplicationState.value[0]);
+      const formData = { ...loanApplicationState.value[0] };
+      if (formData.payTime) {
+        formData.payTime = dayjs(formData.payTime);
+      }
+      if (formData.returnTime) {
+        formData.returnTime = dayjs(formData.returnTime);
+      }
+      form.setFieldsValue(formData);
       setType('edit');
     } else {
       setType('create');
