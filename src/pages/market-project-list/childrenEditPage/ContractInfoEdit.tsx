@@ -73,9 +73,9 @@ export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditPro
           <InputNumber style={{ width: '100%' }} />
         </Form.Item>
         <Form.Item
-          label="签订日期"
+          label="签订时间"
           name={['contract', 'signDate']}
-          rules={[{ required: true, message: '请选择签订日期' }]}
+          rules={[{ required: true, message: '请选择签订时间' }]}
         >
           <DatePicker style={{ width: '100%' }} />
         </Form.Item>

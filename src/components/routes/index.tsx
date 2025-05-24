@@ -21,7 +21,7 @@ export const routes = [
   },
   {
     path: '/market-project-list',
-    name: '项目列表',
+    name: '(市场)项目列表',
     component: '@/pages/market-project-list',
   },
   {
@@ -36,12 +36,12 @@ export const routes = [
   },
   {
     path: '/create-project',
-    name: '新建项目',
+    name: '(市场)新建项目',
     component: '@/pages/create-project',
   },
   {
     path: '/customer-management',
-    name: '客户管理',
+    name: '企业管理',
     component: '@/pages/customer-management',
   },
   {
@@ -176,17 +176,17 @@ export const routes = [
   },
   {
     path: '/customer-management',
-    name: '客户管理',
+    name: '企业管理',
     component: '@/pages/customer-management/index',
   },
   {
     path: '/customer-management/edit/:id',
-    name: '客户管理编辑',
+    name: '企业管理编辑',
     component: '@/pages/customer-management/edit',
   },
   {
     path: '/customer-management/create',
-    name: '客户管理创建',
+    name: '企业管理创建',
     component: '@/pages/customer-management/edit',
   },
   {

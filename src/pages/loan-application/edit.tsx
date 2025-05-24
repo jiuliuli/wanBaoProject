@@ -43,7 +43,10 @@ export default function LoanApplicationEdit() {
       }
       try {
         if (type === 'edit') {
-          await LoanApplicationService.updateLoanApplication(values);
+          await LoanApplicationService.updateLoanApplication({
+            ...loanApplicationState.value[0],
+            ...values,
+          });
         } else {
           await LoanApplicationService.createLoanApplication(values);
         }

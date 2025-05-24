@@ -8,7 +8,7 @@ const MarketProjectService = {
   },
 
   async updateContractInfo(values: any) {
-    const url = `/v1/updateContract`
+    const url = `/v1/updateContract`;
     return Request.put(url, values).then(res => res.data);
   },
 
@@ -20,10 +20,9 @@ const MarketProjectService = {
   },
 
   async updateReportInfo(id: string, values: any) {
-    return request(`/v1/market-project/report/${id}`, {
-      method: 'PUT',
-      data: values,
-    });
+    console.log(values.records);
+    const url = `/v1/editDelivery`;
+    return Request.put(url, values).then((res: any) => res.data);
   },
 
   async updateReceiptInfo(id: string, values: any) {

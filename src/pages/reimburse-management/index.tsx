@@ -4,13 +4,14 @@ import { useTableDataFn } from '@/hooks/useTableDataFn';
 import ReimburseManagementService from '@/services/reimburse-manage.service';
 import { useNavigate } from '@umijs/max';
 import { Button, Table } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync } from 'react-use';
 import styles from '../styles.less';
 
 type TableItem = Record<string, any>;
 
-const getColumns = (navigate: (path: string) => void, categoryStatus: any) => [
+const getColumns = (navigate: (path: string) => void) => [
   {
     title: '报销人',
     dataIndex: 'reimburser',
@@ -24,8 +25,8 @@ const getColumns = (navigate: (path: string) => void, categoryStatus: any) => [
     align: 'center' as const,
   },
   {
-    title: "费用类型",
-    dataIndex: "category",
+    title: '费用类型',
+    dataIndex: 'category',
     width: 120,
     align: 'center' as const,
   },
@@ -48,15 +49,15 @@ const getColumns = (navigate: (path: string) => void, categoryStatus: any) => [
     align: 'center' as const,
   },
   {
-    title: "费用发生时间",
+    title: '费用发生时间',
     dataIndex: 'feeTime',
     width: 120,
     align: 'center' as const,
-    render: (feeTime: string) => feeTime?.split('T')[0],
+    render: (text: any) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
   },
   {
-    title: "备注",
-    dataIndex: "memo",
+    title: '备注',
+    dataIndex: 'memo',
     width: 200,
     align: 'center' as const,
   },
@@ -65,10 +66,16 @@ const getColumns = (navigate: (path: string) => void, categoryStatus: any) => [
     align: 'center' as const,
     width: 120,
     render: (record: TableItem) => {
-      return <Button type="link" onClick={() => navigate(PATH_ENUM.REIMBURSE_DETAIL.replace(':id', record.expenseNumber))}>查看</Button>;
+      return (
+        <Button
+          type="link"
+          onClick={() => navigate(PATH_ENUM.REIMBURSE_DETAIL.replace(':id', record.expenseNumber))}
+        >
+          查看
+        </Button>
+      );
     },
   },
-
 ];
 
 export default function ReimburseManagementList() {
@@ -101,8 +108,6 @@ export default function ReimburseManagementList() {
         </Button>
       </div>
 
-
-
       <SearchForm
         className={styles['search-form']}
         onFinish={values => {
@@ -132,7 +137,7 @@ export default function ReimburseManagementList() {
         <Table
           rowKey="id"
           loading={state.loading}
-          columns={getColumns(navigate, categoryStatus.value)}
+          columns={getColumns(navigate)}
           {...state.value}
           scroll={{ x: 1000 }}
           pagination={{

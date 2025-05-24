@@ -4,7 +4,7 @@ import { useTableDataFn } from '@/hooks/useTableDataFn';
 import ProjectManagementService from '@/services/project-management.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { Link, useNavigate } from '@umijs/max';
-import { Button, Table } from 'antd';
+import { Button, Table, Tag } from 'antd';
 import { useEffect, useState } from 'react';
 import styles from '../styles.less';
 
@@ -23,10 +23,6 @@ const getColumns = (navigate: (path: string) => void) => [
     align: 'center',
   },
   {
-    title: '签订时间',
-    align: 'center',
-  },
-  {
     title: '合同额',
     align: 'center',
     dataIndex: 'amount',
@@ -34,6 +30,7 @@ const getColumns = (navigate: (path: string) => void) => [
   {
     title: '项目进度',
     align: 'center',
+    dataIndex: 'progress',
   },
   {
     title: '编制人',
@@ -55,7 +52,7 @@ const getColumns = (navigate: (path: string) => void) => [
   },
   {
     title: '计划完成时间',
-    dataIndex: 'finishedTime',
+    dataIndex: 'endTime',
     align: 'center',
     render: (text: string) => {
       return text ? text.split('T')[0] : '';
@@ -63,7 +60,17 @@ const getColumns = (navigate: (path: string) => void) => [
   },
   {
     title: '紧急程度',
+    dataIndex: 'rank',
     align: 'center',
+    render: (text: string) => {
+      return text === '紧急' ? (
+        <Tag color="red">紧急</Tag>
+      ) : text === '重要' ? (
+        <Tag color="blue">重要</Tag>
+      ) : (
+        <Tag color="green">普通</Tag>
+      );
+    },
   },
   {
     title: '操作',
@@ -108,7 +115,7 @@ export default function MarketProjectList() {
 
   return (
     <div className={styles.pageContainer}>
-      <PageHeader title={'项目列表'} style={{ background: '#ffffff' }}>
+      <PageHeader title={'市场项目列表'} style={{ background: '#ffffff' }}>
         <SearchForm
           className={styles['search-form']}
           onFinish={values => {

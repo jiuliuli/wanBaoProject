@@ -3,7 +3,6 @@ import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
 import ProjectManagementService from '@/services/project-management.service';
 import ReimburseManagementService from '@/services/reimburse-manage.service';
-import { UploadOutlined } from '@ant-design/icons';
 import { PageHeader } from '@ant-design/pro-components';
 import { useModel, useNavigate, useParams } from '@umijs/max';
 import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space, Upload } from 'antd';
@@ -78,10 +77,12 @@ export default function ReimburseManagementEdit() {
   const [submitState, doFetch] = useAsyncFn(
     async values => {
       const submitData = { ...values };
+      console.log('submitData', submitData);
       submitData.maker = userInfo?.userName;
       if (type === 'edit') {
         submitData.expenseNumber = id;
-        Object.assign(submitData, reimburseState.value[0]);
+        submitData.status = reimburseState.value[0].status;
+        Object.assign(reimburseState.value[0], submitData);
       } else {
         submitData.status = '进行中';
       }
@@ -105,7 +106,8 @@ export default function ReimburseManagementEdit() {
     {
       label: '报销人',
       name: 'reimburser',
-      children: <Input defaultValue={userInfo?.userName} />,
+      initialValue: userInfo?.userName,
+      children: <Input />,
     },
     {
       label: '项目编号',
@@ -135,6 +137,7 @@ export default function ReimburseManagementEdit() {
     {
       label: '报销金额',
       name: 'amount',
+      rules: [{ required: true, message: '请输入报销金额' }],
       children: <InputNumber precision={2} />,
     },
     {
@@ -181,6 +184,7 @@ export default function ReimburseManagementEdit() {
     },
     {
       label: '费用承担部门',
+      rules: [{ required: true, message: '请选择费用承担部门' }],
       name: 'division',
     },
     {
@@ -191,21 +195,38 @@ export default function ReimburseManagementEdit() {
     {
       label: '收款人',
       name: 'accountName',
+      rules: [{ required: true, message: '请输入收款人' }],
     },
     {
       label: '开户行',
       name: 'bankName',
+      rules: [{ required: true, message: '请输入开户行' }],
     },
     {
       label: '账号',
       name: 'accountNumber',
+      rules: [{ required: true, message: '请输入账号' }],
     },
     {
       label: '附件',
       name: 'attachment',
       children: (
-        <Upload>
-          <Button icon={<UploadOutlined />}>上传附件</Button>
+        <Upload
+          action={`/v1/singleFileUpload?token=${userInfo?.userName}`}
+          listType="text"
+          onChange={({ file }) => {
+            if (file.status === 'done') {
+              message.success(`${file.name} 上传成功`);
+              console.log('file.response.data', file.response.data);
+              form.setFieldsValue({
+                attachment: file.response.data,
+              });
+            } else if (file.status === 'error') {
+              message.error(`${file.name} 上传失败`);
+            }
+          }}
+        >
+          <Button>点击上传</Button>
         </Upload>
       ),
     },
@@ -256,9 +277,6 @@ export default function ReimburseManagementEdit() {
           onFinish: doFetch,
           labelCol: { span: 3 },
           wrapperCol: { span: 20 },
-          onValuesChange: changedValues => {
-            console.log('表单值变化：', changedValues);
-          },
         }}
         formlist={formlist}
       />

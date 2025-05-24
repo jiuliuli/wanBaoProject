@@ -158,11 +158,18 @@ export default function BasicInfoEdit({ data, onSubmit }: BasicInfoEditProps) {
           />
         </Form.Item>
         <Form.Item
-          label="需要送审的管理部门"
-          name="bureau"
-          rules={[{ required: true, message: '请输入需要送审的管理部门' }]}
+          label="需要送审市级管理部门"
+          name="cityBureau"
+          rules={[{ required: true, message: '请输入需要送审的市级管理部门' }]}
         >
-          <Input placeholder="请输入需要送审的应急管理局,多个以逗号隔开" />
+          <Input placeholder="请输入需要送审的市级管理部门,多个以逗号隔开" />
+        </Form.Item>
+        <Form.Item
+          label="需要送审区级管理部门"
+          name="districtBureau"
+          rules={[{ required: true, message: '请输入需要送审的区级管理部门' }]}
+        >
+          <Input placeholder="请输入需要送审的区级管理部门,多个以逗号隔开" />
         </Form.Item>
         <Form.Item
           label="项目描述"

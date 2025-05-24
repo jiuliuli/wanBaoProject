@@ -1,9 +1,8 @@
-import { ReceiptInfoVO } from '@/types/project.types';
 import { Button, DatePicker, Form, InputNumber, Select } from 'antd';
 import dayjs from 'dayjs';
 
 interface ReceiptInfoEditProps {
-  data: ReceiptInfoVO;
+  data: any;
   onSubmit: (values: any) => Promise<void>;
 }
 

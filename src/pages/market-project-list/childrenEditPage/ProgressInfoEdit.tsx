@@ -1,13 +1,12 @@
-import { ProgressInfoVO } from '@/types/project.types';
-import { Button, DatePicker, Form, Input } from 'antd';
+import LabelForm from '@/components/LabelForm';
+import { Form } from 'antd';
 import dayjs from 'dayjs';
 
 interface ProgressInfoEditProps {
-  data: ProgressInfoVO;
   onSubmit: (values: any) => Promise<void>;
 }
 
-export default function ProgressInfoEdit({ data, onSubmit }: ProgressInfoEditProps) {
+export default function ProgressInfoEdit({ onSubmit }: ProgressInfoEditProps) {
   const [form] = Form.useForm();
 
   const handleSubmit = async (values: any) => {
@@ -15,54 +14,52 @@ export default function ProgressInfoEdit({ data, onSubmit }: ProgressInfoEditPro
     if (values.startTime) {
       values.startTime = dayjs(values.startTime).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
-    if (values.endTime) {
-      values.endTime = dayjs(values.endTime).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-    }
     if (values.finishedTime) {
       values.finishedTime = dayjs(values.finishedTime).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
     await onSubmit(values);
   };
 
+  const formList = [
+    {
+      label: '操作人',
+      name: 'operator',
+      rules: [{ required: true, message: '请输入操作人' }],
+    },
+    {
+      label: '操作',
+      name: 'operation',
+      rules: [{ required: true, message: '请输入操作' }],
+    },
+    {
+      label: '优先级',
+      name: 'rank',
+      rules: [{ required: true, message: '请选择优先级' }],
+    },
+    {
+      label: '开始时间',
+      name: 'startTime',
+      rules: [{ required: true, message: '请选择开始时间' }],
+    },
+    {
+      label: '完成时间',
+      name: 'finishedTime',
+    },
+    {
+      label: '意见',
+      name: 'opinion',
+    },
+  ];
+
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      initialValues={{
-        ...data,
-        startTime: data.startTime ? dayjs(data.startTime) : undefined,
-        endTime: data.endTime ? dayjs(data.endTime) : undefined,
-        finishedTime: data.finishedTime ? dayjs(data.finishedTime) : undefined,
+    <LabelForm
+      props={{
+        form,
+        onFinish: handleSubmit,
+        labelCol: { span: 3 },
+        wrapperCol: { span: 20 },
       }}
-      onFinish={handleSubmit}
-    >
-      <div style={{ padding: '24px' }}>
-        <Form.Item
-          label="当前进度"
-          name="currentProgress"
-          rules={[{ required: true, message: '请输入当前进度' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="开始时间"
-          name="startTime"
-          rules={[{ required: true, message: '请选择开始时间' }]}
-        >
-          <DatePicker style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item label="结束时间" name="endTime">
-          <DatePicker style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item label="完成时间" name="finishedTime">
-          <DatePicker style={{ width: '100%' }} />
-        </Form.Item>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" htmlType="submit">
-            保存
-          </Button>
-        </div>
-      </div>
-    </Form>
+      formlist={formList}
+    />
   );
 }

@@ -68,18 +68,18 @@ const menuItems: MenuProps['items'] = [
   {
     key: '/market-project-list',
     icon: <OrderedListOutlined />,
-    label: <Link to="/market-project-list">项目列表</Link>,
+    label: <Link to="/market-project-list">(市场)项目列表</Link>,
   },
 
   {
     key: '/create-project',
     icon: <PlusOutlined />,
-    label: <Link to="/create-project">新建项目</Link>,
+    label: <Link to="/create-project">(市场)新建项目</Link>,
   },
   {
     key: '/customer-management',
     icon: <TeamOutlined />,
-    label: <Link to="/customer-management">客户管理</Link>,
+    label: <Link to="/customer-management">企业管理</Link>,
   },
   {
     key: '/department-management',

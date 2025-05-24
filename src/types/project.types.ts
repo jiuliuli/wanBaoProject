@@ -85,7 +85,6 @@ export interface BasicInfoVO {
   createBy: string;
   createTime: string;
   contactPerson?: string;
-  contactPhone?: string;
   urgencyLevel?: string;
   orderTime?: string;
   currentProgress?: string;
@@ -102,6 +101,14 @@ export interface BasicInfoVO {
   signFee?: number;
   cooperateFee?: number;
   otherFee?: number;
+  mailingAddress?: string;
+  mailAddress?: string;
+  rank?: string;
+  signDate?: string;
+  mobile?: string;
+  memo?: string;
+  cityBureau?: string[];
+  districtBureau?: string[];
 }
 
 export interface ContractVO {
@@ -170,4 +177,21 @@ export interface RiskInfoVO {
   project_name: string;
   short_name: string;
   customer_name: string;
+}
+
+export interface ProgressInfoVO {
+  projectNumber: string;
+  projectName: string;
+  shortName: string;
+  customerName: string;
+  progress: string;
+  progressDate: string;
+}
+
+export interface ReportInfoVO {
+  id: number;
+  projectNumber: string;
+  reportName: string;
+  reportDate: string;
+  reportAmount: number;
 }

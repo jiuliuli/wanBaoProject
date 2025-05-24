@@ -4,7 +4,6 @@ import { Button, DatePicker, Form, Input, message, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
-const { Option } = Select;
 
 const BasicInfoForm = (props: any) => {
   const [form] = Form.useForm();
@@ -18,6 +17,7 @@ const BasicInfoForm = (props: any) => {
         entryDate: props.data.entryDate ? dayjs(props.data.entryDate) : undefined,
       };
       form.setFieldsValue(formData);
+      console.log(formData);
     }
   }, [props.data]);
 
@@ -110,29 +110,19 @@ const BasicInfoForm = (props: any) => {
     },
     {
       label: '员工等级',
-      name: 'employeeLevel',
+      name: 'rank',
       children: (
-        <Select>
-          <Option value="1级">1级</Option>
-          <Option value="2级">2级</Option>
-          <Option value="3级">3级</Option>
-          <Option value="4级">4级</Option>
-        </Select>
+        <Radio.Group
+          options={[
+            { label: '1', value: 1 },
+            { label: '2', value: 2 },
+            { label: '3', value: 3 },
+            { label: '4', value: 4 },
+          ]}
+        />
       ),
     },
     { label: '入职时间', name: 'entryDate', children: <DatePicker style={{ width: '100%' }} /> },
-    {
-      label: '注安级别',
-      name: 'rank',
-      children: (
-        <Select>
-          <Option value="高级">高级</Option>
-          <Option value="中级">中级</Option>
-          <Option value="初级">初级</Option>
-          <Option value="无">无</Option>
-        </Select>
-      ),
-    },
     { label: '职称专业', name: 'titleMajor' },
   ];
 
