@@ -7,6 +7,7 @@ import { useAsync, useAsyncFn } from 'react-use';
 
 const CertificateInfoForm = (props: any) => {
   const [form] = Form.useForm();
+  console.log(props.userName);
   useEffect(() => {
     if (props.data && props.userName) {
       form.setFieldsValue({ ...props.data, name: props.userName });
@@ -36,6 +37,7 @@ const CertificateInfoForm = (props: any) => {
       label: '姓名',
       name: 'name',
       required: true,
+      initialValue: props.userName,
       children: <Input disabled value={props.userName} />,
     },
     { label: '专业', name: 'educationMajor' },

@@ -23,11 +23,6 @@ const getColumns = (navigate: any) => [
     align: 'center',
   },
   {
-    title: '来源',
-    dataIndex: 'source',
-    align: 'center',
-  },
-  {
     title: '邮寄地址',
     dataIndex: 'mailAddress',
     align: 'center',

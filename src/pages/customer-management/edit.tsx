@@ -81,18 +81,6 @@ export default function CustomerManagementEdit() {
       rules: [{ required: true, message: '请输入创建人' }],
     },
     {
-      label: '来源客户',
-      name: 'source',
-      children: (
-        <Radio.Group
-          options={[
-            { label: '自营', value: '自营' },
-            { label: '合作', value: '合作' },
-          ]}
-        />
-      ),
-    },
-    {
       label: '行业类型',
       name: 'industryType',
       rules: [{ required: true, message: '请选择行业类型' }],
@@ -164,7 +152,7 @@ export default function CustomerManagementEdit() {
 
   return (
     <PageHeader
-      title={id ? `编辑${id}` : '新建客户信息'}
+      title={id ? `编辑${id}` : '新建企业信息'}
       onBack={() => navigate(PATH_ENUM.CUSTOMER_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >

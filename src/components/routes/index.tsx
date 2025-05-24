@@ -70,6 +70,16 @@ export const routes = [
     component: '@/pages/contract-management',
   },
   {
+    path: '/contract-management/create',
+    name: '合同创建',
+    component: '@/pages/contract-management/edit',
+  },
+  {
+    path: '/contract-management/edit/:id',
+    name: '合同编辑',
+    component: '@/pages/contract-management/edit',
+  },
+  {
     path: '/project-urge',
     name: '项目催办',
     component: '@/pages/project-urge',

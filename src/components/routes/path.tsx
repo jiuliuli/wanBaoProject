@@ -18,6 +18,11 @@ const PATH_ENUM = {
   CUSTOMER_CREATE: '/customer-management/create',
   CUSTOMER_EDIT: '/customer-management/edit/:id',
 
+  // 合同管理
+  CONTRACT_MANAGEMENT: '/contract-management',
+  CONTRACT_CREATE: '/contract-management/create',
+  CONTRACT_EDIT: '/contract-management/edit/:id',
+
   // 流程管理
   PROCESS_MANAGEMENT: '/process-management/list',
   PROCESS_CREATE: '/process-management/create',

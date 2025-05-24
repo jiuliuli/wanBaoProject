@@ -1,26 +1,14 @@
-
-interface ContractDataType {
-    contract: {
-        contractNumber: string;
-        contractType: string;
-        amount: number;
-        signDate: string;
-        payMode: string;
-    };
-    revenues: Array<{
-        revenueNumber: string;
-        title: string;
-        operator: string;
-        projectNumber: string;
-        contractNumber: string;
-        phase: number;
-        qualification: string | null;
-        payment: number;
-        amount: number;
-        revenueTime: string;
-        revenueMode: string | null;
-        invoice: string;
-        attachment: string | null;
-        memo: string | null;
-    }>;
+export interface Contract {
+  contractNumber: string;
+  title: string;
+  contractType: string;
+  amount: number;
+  signDate: string;
+  payMode: string;
+  status: string;
+  document: string | null;
+  projectName: string;
+  establisher: string;
+  progress: string;
+  division: string;
 }

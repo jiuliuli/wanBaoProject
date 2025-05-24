@@ -1,17 +1,18 @@
 import { Card, Typography } from 'antd';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 const { Title } = Typography;
 
 interface PageTemplateProps {
   title: string;
+  children?: ReactNode;
 }
 
-const PageTemplate: React.FC<PageTemplateProps> = ({ title }) => {
+const PageTemplate: React.FC<PageTemplateProps> = ({ title, children }) => {
   return (
     <Card>
       <Title level={2}>{title}</Title>
-      <p>页面内容还在开发中...</p>
+      {children}
     </Card>
   );
 };

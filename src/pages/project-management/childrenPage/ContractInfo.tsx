@@ -2,7 +2,7 @@ import { Card, Descriptions, Space, Table } from 'antd';
 import dayjs from 'dayjs';
 
 type ContractInfoProps = {
-  data: ContractDataType;
+  data: any;
 };
 
 export default function ContractInfo({ data }: ContractInfoProps) {
