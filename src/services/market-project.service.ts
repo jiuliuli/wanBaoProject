@@ -3,7 +3,7 @@ import Request from './request';
 
 const MarketProjectService = {
   fetchContractById: async (id: string) => {
-    const url = `/v1/getContract/${id}`;
+    const url = `/v1/getContractDetail/${id}`;
     return Request.get(url).then(res => res.data);
   },
 

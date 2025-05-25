@@ -37,6 +37,11 @@ const PATH_ENUM = {
   MARKET_PROJECTS_LIST: '/market-project-list',
   MARKET_PROJECTS_EDIT: '/market-project-list/edit/:id',
 
+  // 项目列表(技术)
+  TECHNICAL_PROJECTS_DETAIL: '/technical-project-list/detail/:id',
+  TECHNICAL_PROJECTS_LIST: '/technical-project-list',
+  TECHNICAL_PROJECTS_EDIT: '/technical-project-list/edit/:id',
+
   // 已完成项目
   COMPLETED_PROJECTS_DETAIL: '/completed-projects/detail/:id',
   COMPLETED_PROJECTS_LIST: '/completed-projects',

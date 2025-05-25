@@ -70,7 +70,11 @@ const menuItems: MenuProps['items'] = [
     icon: <OrderedListOutlined />,
     label: <Link to="/market-project-list">(市场)项目列表</Link>,
   },
-
+  {
+    key: '/technical-project-list',
+    icon: <OrderedListOutlined />,
+    label: <Link to="/technical-project-list">(技术)项目列表</Link>,
+  },
   {
     key: '/create-project',
     icon: <PlusOutlined />,

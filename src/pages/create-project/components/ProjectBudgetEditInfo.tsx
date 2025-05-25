@@ -1,109 +1,73 @@
 import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
-import { useNavigate } from '@umijs/max';
-import { Button, InputNumber, Radio } from 'antd';
+import ProjectManagementService from '@/services/project-management.service';
+import { Button, InputNumber } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { useAsyncFn } from 'react-use';
+import { useEffect, useState } from 'react';
+import { useAsync, useAsyncFn } from 'react-use';
 
-export default function ProjectBudgetEditInfo() {
-    const navigate = useNavigate();
+type Props = {
+    amount: number;
+    onFinish: (values: any) => void;
+}
+
+export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
     const [form] = useForm();
+    const [dayCount, setDayCount] = useState(0);
+    const [pass, setPass] = useState(true);
 
     const [submitState, doFetch] = useAsyncFn(async () => {
-        // 保存成功后跳转到合同信息tab
-        navigate('?tab=ContractEditInfo');
+        onFinish(form.getFieldsValue());
     });
+
+    const percentState = useAsync(async () => {
+        return await ProjectManagementService.fetchPercent();
+    });
+
+    useEffect(() => {
+        setDayCount(percentState.value?.find((item: any) => item.item === '平均日工资').value);
+    }, [percentState.value]);
 
     const formItems: LabelFormItem[] = [
         {
-            label: '渠道费',
-            name: 'channelFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入渠道费" />,
-        },
-        {
             label: '工时',
-            name: 'workHours',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入工时" />,
-        },
-        {
-            label: '差旅费',
-            name: 'travelExpense',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入差旅费" />,
-        },
-        {
-            label: '评审费',
-            name: 'reviewFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入评审费" />,
-        },
-        {
-            label: '公司协助发生的费用',
-            name: 'companyAssistanceFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入公司协助发生的费用" />,
-        },
-        {
-            label: '委外成本',
-            name: 'outsourcingCost',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入委外成本" />,
-        },
-        {
-            label: '技术提成',
-            name: 'technicalCommission',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入技术提成" />,
-        },
-        {
-            label: '市场提成',
-            name: 'marketCommission',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入市场提成" />,
-        },
-        {
-            label: '签字费',
-            name: 'signatureFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入签字费" />,
-        },
-        {
-            label: '装订费',
-            name: 'bindingFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入装订费" />,
-        },
-        {
-            label: '招待费',
-            name: 'entertainmentFee',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入招待费" />,
-        },
-        {
-            label: '分摊成本',
-            name: 'sharedCost',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入分摊成本" />,
-        },
-        {
-            label: '其他',
-            name: 'otherCost',
-            required: true,
-            children: <InputNumber style={{ width: '100%' }} placeholder="请输入其他费用" />,
-        },
-        {
-            label: '成本核算结果',
-            name: 'costCalculationResult',
-            required: true,
+            name: 'taskDays',
             children: (
-                <Radio.Group>
-                    <Radio value="pass">通过</Radio>
-                    <Radio value="fail">不通过</Radio>
-                </Radio.Group>
+                <InputNumber
+                    onChange={(value: any) => form.setFieldsValue({ compileCost: value * dayCount })}
+                />
             ),
         },
+        { label: '差旅费', name: 'travelFee', children: <InputNumber /> },
+        { label: '打印装订费', name: 'printFee', children: <InputNumber /> },
+        { label: '招待费', name: 'entertainFee', children: <InputNumber /> },
+        { label: '渠道费', name: 'channelFee', children: <InputNumber /> },
+
+        { label: '编制成本', name: 'compileCost', children: <InputNumber disabled /> },
+        { label: '委外成本', name: 'delegateCost', children: <InputNumber /> },
+        { label: '分摊成本', name: 'apportionFee', children: <InputNumber /> },
+        { label: '市场提成', name: 'marketCommission', children: <InputNumber /> },
+        { label: '技术提成', name: 'technicalCommission', children: <InputNumber /> },
+        {
+            label: '审核人审核费',
+            name: 'firstAudit',
+            children: <InputNumber disabled />,
+        },
+        {
+            label: '技术负责人审核费',
+            name: 'techAudit',
+            children: <InputNumber disabled />,
+        },
+        {
+            label: '项目负责人审核费',
+            name: 'projectAudit',
+            children: <InputNumber disabled />,
+        },
+        { label: '评审费', name: 'reviewAudit', children: <InputNumber /> },
+        { label: '签字费', name: 'signFee', children: <InputNumber /> },
+        { label: '公司协助发生的费用', name: 'cooperateFee', children: <InputNumber /> },
+        { label: '增值税费', name: 'taxFee', children: <InputNumber /> },
+        { label: '其他费用', name: 'otherFee', children: <InputNumber /> },
     ];
 
     return (
@@ -112,11 +76,58 @@ export default function ProjectBudgetEditInfo() {
                 props={{
                     form,
                     onFinish: doFetch,
+                    onValuesChange: (changedValues, allValues) => {
+                        const {
+                            taskDays,
+                            travelFee = 0,
+                            printFee = 0,
+                            entertainFee = 0,
+                            channelFee = 0,
+                            compileCost = 0,
+                            delegateCost = 0,
+                            apportionFee = 0,
+                            marketCommission = 0,
+                            technicalCommission = 0,
+                            firstAudit = 0,
+                            techAudit = 0,
+                            projectAudit = 0,
+                            reviewAudit = 0,
+                            signFee = 0,
+                            cooperateFee = 0,
+                            taxFee = 0,
+                            otherFee = 0,
+                        } = allValues;
+
+                        // 计算所有费用总和
+                        const totalCost =
+                            travelFee +
+                            printFee +
+                            entertainFee +
+                            channelFee +
+                            compileCost +
+                            delegateCost +
+                            apportionFee +
+                            marketCommission +
+                            technicalCommission +
+                            firstAudit +
+                            techAudit +
+                            projectAudit +
+                            reviewAudit +
+                            signFee +
+                            cooperateFee +
+                            taxFee +
+                            otherFee;
+
+                        // 计算成本核算结果
+                        const result = amount - (amount * 0.07) - (taskDays * dayCount) - totalCost;
+                        setPass(result > 0);
+                    }
                 }}
                 formlist={formItems}
             />
+            <>成本核算结果: {pass ? <span style={{ color: 'green' }}>通过</span> : <span style={{ color: 'red' }}>不通过</span>}</>
             <div style={{ textAlign: 'center', marginTop: 24 }}>
-                <Button type="primary" onClick={() => form.submit()} loading={submitState.loading}>
+                <Button type="primary" onClick={() => form.submit()} loading={submitState.loading} disabled={!pass}>
                     保存并继续
                 </Button>
             </div>

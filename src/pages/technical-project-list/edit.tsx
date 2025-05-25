@@ -94,7 +94,7 @@ export default function MarketProjectListEdit() {
               label: '报告邮寄',
               key: 'report',
               children: (
-                <ReportInfoEdit data={reportSendState.value} onSubmit={handleReportSubmit} id={id} />
+                <ReportInfoEdit data={reportSendState.value} onSubmit={handleReportSubmit} />
               ),
             },
           ]}

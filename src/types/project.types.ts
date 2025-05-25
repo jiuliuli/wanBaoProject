@@ -109,6 +109,7 @@ export interface BasicInfoVO {
   memo?: string;
   cityBureau?: string[];
   districtBureau?: string[];
+  progress?: string;
 }
 
 export interface ContractVO {

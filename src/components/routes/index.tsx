@@ -26,13 +26,28 @@ export const routes = [
   },
   {
     path: '/market-project-list/detail/:id',
-    name: '项目详情',
+    name: '市场项目详情',
     component: '@/pages/market-project-list/detail',
   },
   {
     path: '/market-project-list/edit/:id',
-    name: '项目编辑',
+    name: '市场项目编辑',
     component: '@/pages/market-project-list/edit',
+  },
+  {
+    path: '/technical-project-list',
+    name: '(技术)项目列表',
+    component: '@/pages/technical-project-list',
+  },
+  {
+    path: '/technical-project-list/detail/:id',
+    name: '技术项目详情',
+    component: '@/pages/technical-project-list/detail',
+  },
+  {
+    path: '/technical-project-list/edit/:id',
+    name: '技术项目编辑',
+    component: '@/pages/technical-project-list/edit',
   },
   {
     path: '/create-project',

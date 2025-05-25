@@ -6,7 +6,7 @@ interface ReportInfoEditProps {
   onSubmit: (values: any) => Promise<void>;
 }
 
-export default function ReportInfoEdit({ onSubmit, id }: ReportInfoEditProps) {
+export default function ReportInfoEdit({ onSubmit }: ReportInfoEditProps) {
   const [form] = Form.useForm();
   const [dataList, setDataList] = useState<any[]>([]);
 
@@ -54,9 +54,8 @@ export default function ReportInfoEdit({ onSubmit, id }: ReportInfoEditProps) {
                       label="项目编号"
                       name={[field.name, 'projectNumber']}
                       rules={[{ required: true, message: '请输入项目编号' }]}
-                      initialValue={id}
                     >
-                      <Input disabled={true} />
+                      <Input />
                     </Form.Item>
                     <Form.Item
                       label="版本"
