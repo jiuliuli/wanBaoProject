@@ -107,7 +107,7 @@ export default function ReimburseManagementEdit() {
       label: '报销人',
       name: 'reimburser',
       initialValue: userInfo?.userName,
-      children: <Input />,
+      children: <Input disabled />,
     },
     {
       label: '项目编号',

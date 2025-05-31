@@ -8,7 +8,7 @@ import styles from '../styles.less';
 
 const getColumns = (navigate: any) => [
   {
-    title: '公司名称',
+    title: '客户名称',
     dataIndex: 'customerName',
     align: 'center',
   },
@@ -101,7 +101,7 @@ export default function CustomerManagement() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.header}>
-        <h2 className={styles.title}>企业管理</h2>
+        <h2 className={styles.title}>客户管理</h2>
         <Button
           type="primary"
           onClick={() => navigate(PATH_ENUM.CUSTOMER_CREATE)}

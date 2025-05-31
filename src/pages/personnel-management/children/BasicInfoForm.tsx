@@ -1,4 +1,5 @@
 import LabelForm from '@/components/LabelForm';
+import DepartmentService from '@/services/department.service';
 import PersonnelService from '@/services/personnel.service';
 import { Button, DatePicker, Form, Input, message, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
@@ -7,6 +8,13 @@ import { useAsync, useAsyncFn } from 'react-use';
 
 const BasicInfoForm = (props: any) => {
   const [form] = Form.useForm();
+
+  const divisionState = useAsync(async () => {
+    return await DepartmentService.fetchDepartmentList({});
+  }, []);
+
+  console.log(divisionState.value);
+
   useEffect(() => {
     if (props.data) {
       // 转换日期格式
@@ -60,7 +68,7 @@ const BasicInfoForm = (props: any) => {
 
   const formlist = [
     { label: '真实姓名', name: 'realName', required: true },
-    { label: '登录名', name: 'userName', required: true },
+    { label: '登录账号', name: 'userName', required: true },
     { label: '初始密码', name: 'password', required: true, children: <Input.Password /> },
     {
       label: '地区',
@@ -75,7 +83,19 @@ const BasicInfoForm = (props: any) => {
         />
       ),
     },
-    { label: '部门', name: 'division', required: true },
+    {
+      label: '部门',
+      name: 'division',
+      required: true,
+      children: (
+        <Select
+          options={divisionState.value?.map((item: any) => ({
+            label: item.divisionName,
+            value: item.divisionName,
+          }))}
+        />
+      ),
+    },
     {
       label: '性别',
       name: 'gender',
@@ -123,12 +143,11 @@ const BasicInfoForm = (props: any) => {
       ),
     },
     { label: '入职时间', name: 'entryDate', children: <DatePicker style={{ width: '100%' }} /> },
-    { label: '职称专业', name: 'titleMajor' },
   ];
 
   return (
     <>
-      {(roleState.value || props.type === 'create') && (
+      {divisionState.value && (roleState.value || props.type === 'create') && (
         <>
           <LabelForm
             props={{

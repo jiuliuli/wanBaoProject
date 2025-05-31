@@ -10,11 +10,6 @@ export const routes = [
     component: '@/pages/Home',
   },
   {
-    path: '/pending-tasks',
-    name: '待办工作',
-    component: '@/pages/pending-tasks',
-  },
-  {
     path: '/personnel-management',
     name: '人员信息维护',
     component: '@/pages/personnel-management',
@@ -56,7 +51,7 @@ export const routes = [
   },
   {
     path: '/customer-management',
-    name: '企业管理',
+    name: '客户管理',
     component: '@/pages/customer-management',
   },
   {
@@ -201,7 +196,7 @@ export const routes = [
   },
   {
     path: '/customer-management',
-    name: '企业管理',
+    name: '客户管理',
     component: '@/pages/customer-management/index',
   },
   {

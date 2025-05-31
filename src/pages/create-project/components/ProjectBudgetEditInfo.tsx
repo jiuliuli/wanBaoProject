@@ -7,130 +7,145 @@ import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
 type Props = {
-    amount: number;
-    onFinish: (values: any) => void;
-}
+  amount: number;
+  onFinish: (values: any) => void;
+};
 
 export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
-    const [form] = useForm();
-    const [dayCount, setDayCount] = useState(0);
-    const [pass, setPass] = useState(true);
+  const [form] = useForm();
+  const [dayCount, setDayCount] = useState(0);
+  const [pass, setPass] = useState(true);
 
-    const [submitState, doFetch] = useAsyncFn(async () => {
-        onFinish(form.getFieldsValue());
-    });
+  const [submitState, doFetch] = useAsyncFn(async () => {
+    onFinish(form.getFieldsValue());
+  });
 
-    const percentState = useAsync(async () => {
-        return await ProjectManagementService.fetchPercent();
-    });
+  const percentState = useAsync(async () => {
+    return await ProjectManagementService.fetchPercent();
+  });
 
-    useEffect(() => {
-        setDayCount(percentState.value?.find((item: any) => item.item === '平均日工资').value);
-    }, [percentState.value]);
+  useEffect(() => {
+    setDayCount(percentState.value?.find((item: any) => item.item === '平均日工资').value);
+  }, [percentState.value]);
 
-    const formItems: LabelFormItem[] = [
-        {
-            label: '工时',
-            name: 'taskDays',
-            children: (
-                <InputNumber
-                    onChange={(value: any) => form.setFieldsValue({ compileCost: value * dayCount })}
-                />
-            ),
-        },
-        { label: '差旅费', name: 'travelFee', children: <InputNumber /> },
-        { label: '打印装订费', name: 'printFee', children: <InputNumber /> },
-        { label: '招待费', name: 'entertainFee', children: <InputNumber /> },
-        { label: '渠道费', name: 'channelFee', children: <InputNumber /> },
+  const formItems: LabelFormItem[] = [
+    {
+      label: '工时',
+      name: 'taskDays',
+      children: (
+        <InputNumber
+          onChange={(value: any) => form.setFieldsValue({ compileCost: value * dayCount })}
+        />
+      ),
+    },
+    { label: '差旅费', name: 'travelFee', children: <InputNumber /> },
+    { label: '打印装订费', name: 'printFee', children: <InputNumber /> },
+    { label: '招待费', name: 'entertainFee', children: <InputNumber /> },
+    { label: '渠道费', name: 'channelFee', children: <InputNumber /> },
 
-        { label: '编制成本', name: 'compileCost', children: <InputNumber disabled /> },
-        { label: '委外成本', name: 'delegateCost', children: <InputNumber /> },
-        { label: '分摊成本', name: 'apportionFee', children: <InputNumber /> },
-        { label: '市场提成', name: 'marketCommission', children: <InputNumber /> },
-        { label: '技术提成', name: 'technicalCommission', children: <InputNumber /> },
-        {
-            label: '审核人审核费',
-            name: 'firstAudit',
-            children: <InputNumber disabled />,
-        },
-        {
-            label: '技术负责人审核费',
-            name: 'techAudit',
-            children: <InputNumber disabled />,
-        },
-        {
-            label: '项目负责人审核费',
-            name: 'projectAudit',
-            children: <InputNumber disabled />,
-        },
-        { label: '评审费', name: 'reviewAudit', children: <InputNumber /> },
-        { label: '签字费', name: 'signFee', children: <InputNumber /> },
-        { label: '公司协助发生的费用', name: 'cooperateFee', children: <InputNumber /> },
-        { label: '增值税费', name: 'taxFee', children: <InputNumber /> },
-        { label: '其他费用', name: 'otherFee', children: <InputNumber /> },
-    ];
+    { label: '编制成本', name: 'compileCost', children: <InputNumber disabled /> },
+    { label: '委外成本', name: 'delegateCost', children: <InputNumber /> },
+    { label: '分摊成本', name: 'apportionFee', children: <InputNumber /> },
+    { label: '市场提成', name: 'marketCommission', children: <InputNumber /> },
+    { label: '技术提成', name: 'technicalCommission', children: <InputNumber /> },
+    {
+      label: '审核人审核费',
+      name: 'firstAudit',
+      initialValue: amount * 0.01,
+      children: <InputNumber disabled />,
+    },
+    {
+      label: '技术负责人审核费',
+      name: 'techAudit',
+      initialValue: amount * 0.04,
+      children: <InputNumber disabled />,
+    },
+    {
+      label: '项目负责人审核费',
+      name: 'projectAudit',
+      initialValue: amount * 0.05,
+      children: <InputNumber disabled />,
+    },
+    { label: '评审费', name: 'reviewAudit', children: <InputNumber /> },
+    { label: '签字费', name: 'signFee', children: <InputNumber /> },
+    { label: '公司协助发生的费用', name: 'cooperateFee', children: <InputNumber /> },
+    { label: '增值税费', name: 'taxFee', children: <InputNumber /> },
+    { label: '其他费用', name: 'otherFee', children: <InputNumber /> },
+  ];
 
-    return (
-        <div>
-            <LabelForm
-                props={{
-                    form,
-                    onFinish: doFetch,
-                    onValuesChange: (changedValues, allValues) => {
-                        const {
-                            taskDays,
-                            travelFee = 0,
-                            printFee = 0,
-                            entertainFee = 0,
-                            channelFee = 0,
-                            compileCost = 0,
-                            delegateCost = 0,
-                            apportionFee = 0,
-                            marketCommission = 0,
-                            technicalCommission = 0,
-                            firstAudit = 0,
-                            techAudit = 0,
-                            projectAudit = 0,
-                            reviewAudit = 0,
-                            signFee = 0,
-                            cooperateFee = 0,
-                            taxFee = 0,
-                            otherFee = 0,
-                        } = allValues;
+  return (
+    <div>
+      <LabelForm
+        props={{
+          form,
+          onFinish: doFetch,
+          onValuesChange: (changedValues, allValues) => {
+            const {
+              taskDays,
+              travelFee = 0,
+              printFee = 0,
+              entertainFee = 0,
+              channelFee = 0,
+              compileCost = 0,
+              delegateCost = 0,
+              apportionFee = 0,
+              marketCommission = 0,
+              technicalCommission = 0,
+              firstAudit = 0,
+              techAudit = 0,
+              projectAudit = 0,
+              reviewAudit = 0,
+              signFee = 0,
+              cooperateFee = 0,
+              taxFee = 0,
+              otherFee = 0,
+            } = allValues;
 
-                        // 计算所有费用总和
-                        const totalCost =
-                            travelFee +
-                            printFee +
-                            entertainFee +
-                            channelFee +
-                            compileCost +
-                            delegateCost +
-                            apportionFee +
-                            marketCommission +
-                            technicalCommission +
-                            firstAudit +
-                            techAudit +
-                            projectAudit +
-                            reviewAudit +
-                            signFee +
-                            cooperateFee +
-                            taxFee +
-                            otherFee;
+            // 计算所有费用总和
+            const totalCost =
+              travelFee +
+              printFee +
+              entertainFee +
+              channelFee +
+              compileCost +
+              delegateCost +
+              apportionFee +
+              marketCommission +
+              technicalCommission +
+              firstAudit +
+              techAudit +
+              projectAudit +
+              reviewAudit +
+              signFee +
+              cooperateFee +
+              taxFee +
+              otherFee;
 
-                        // 计算成本核算结果
-                        const result = amount - (amount * 0.07) - (taskDays * dayCount) - totalCost;
-                        setPass(result > 0);
-                    }
-                }}
-                formlist={formItems}
-            />
-            <>成本核算结果: {pass ? <span style={{ color: 'green' }}>通过</span> : <span style={{ color: 'red' }}>不通过</span>}</>
-            <div style={{ textAlign: 'center', marginTop: 24 }}>
-                <Button type="primary" onClick={() => form.submit()} loading={submitState.loading} disabled={!pass}>
-                    保存并继续
-                </Button>
-            </div>
-        </div>
-    );
+            // 计算成本核算结果
+            const result = amount - amount * 0.07 - taskDays * dayCount - totalCost;
+            setPass(result > 0);
+          },
+        }}
+        formlist={formItems}
+      />
+      <>
+        成本核算结果:{' '}
+        {pass ? (
+          <span style={{ color: 'green' }}>通过</span>
+        ) : (
+          <span style={{ color: 'red' }}>不通过</span>
+        )}
+      </>
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <Button
+          type="primary"
+          onClick={() => form.submit()}
+          loading={submitState.loading}
+          disabled={!pass}
+        >
+          保存并继续
+        </Button>
+      </div>
+    </div>
+  );
 }

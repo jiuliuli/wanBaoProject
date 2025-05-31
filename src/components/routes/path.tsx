@@ -13,7 +13,7 @@ const PATH_ENUM = {
   PROJECT_EDIT: '/project-management/edit/:id',
   ALL_PROJECT_LIST: '/project-management/all-list',
 
-  // 企业管理
+  // 客户管理
   CUSTOMER_MANAGEMENT: '/customer-management',
   CUSTOMER_CREATE: '/customer-management/create',
   CUSTOMER_EDIT: '/customer-management/edit/:id',

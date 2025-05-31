@@ -2,9 +2,21 @@ import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
 import LoanApplicationService from '@/services/loanApplication.service';
+import PersonnelService from '@/services/personnel.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Space, Upload } from 'antd';
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Radio,
+  Select,
+  Space,
+  Upload,
+} from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
@@ -14,11 +26,17 @@ export default function LoanApplicationEdit() {
   const [form] = Form.useForm();
   const [type, setType] = useState<string>();
   const navigate = useNavigate();
+  const [userName] = useState<string>(localStorage.getItem('user') || '');
+
   const loanApplicationState = useAsync(async () => {
     if (id) {
       return await LoanApplicationService.fetchLoanApplicationById(id);
     }
   }, [id]);
+
+  const staffListState = useAsync(async () => {
+    return await PersonnelService.fetchPersonnelList({});
+  });
 
   useEffect(() => {
     if (id && loanApplicationState.value) {
@@ -70,7 +88,20 @@ export default function LoanApplicationEdit() {
       label: '借款人',
       name: 'debtor',
       initialValue: JSON.parse(localStorage.getItem('userInfo') || '{}').userName,
-      children: <Input />,
+      children: (
+        <Select
+          showSearch
+          placeholder="请选择借款人"
+          optionFilterProp="children"
+          filterOption={(input: string, option: any) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          }
+          options={staffListState.value?.map((staff: any) => ({
+            value: staff.userName,
+            label: staff.userName,
+          }))}
+        />
+      ),
     },
     {
       label: '借款事由',
@@ -81,6 +112,11 @@ export default function LoanApplicationEdit() {
       label: '借款金额',
       name: 'amount',
       children: <InputNumber addonAfter="元" />,
+    },
+    {
+      label: '项目编号',
+      name: 'projectNumber',
+      children: <Input />,
     },
     {
       label: '计划借款时间',
@@ -121,7 +157,7 @@ export default function LoanApplicationEdit() {
       name: 'attachment',
       children: (
         <Upload
-          action="/v1/singleFileUpload"
+          action={`/v1/singleFileUpload?token=${userName}`}
           listType="text"
           onChange={({ file }) => {
             if (file.status === 'done') {
@@ -179,18 +215,20 @@ export default function LoanApplicationEdit() {
         </Button>
       </Space>
 
-      {(type === 'create' || loanApplicationState.value) && (
-        <LabelForm
-          props={{
-            form,
-            onFinish: doFetch,
-            labelCol: { span: 3 },
-            wrapperCol: { span: 20 },
-          }}
-          formlist={formlist}
-          defaultRules
-        />
-      )}
+      {(type === 'create' || loanApplicationState.value) &&
+        staffListState.value &&
+        staffListState.value.length > 0 && (
+          <LabelForm
+            props={{
+              form,
+              onFinish: doFetch,
+              labelCol: { span: 3 },
+              wrapperCol: { span: 20 },
+            }}
+            formlist={formlist}
+            defaultRules
+          />
+        )}
     </PageHeader>
   );
 }

@@ -3,6 +3,7 @@ import ProjectManagementService from '@/services/project-management.service';
 import { BasicInfoVO } from '@/types/project.types';
 import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Select, Upload } from 'antd';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { useAsync } from 'react-use';
 
 interface BasicInfoEditProps {
@@ -12,6 +13,7 @@ interface BasicInfoEditProps {
 
 export default function BasicInfoEdit({ data, onSubmit }: BasicInfoEditProps) {
   const [form] = Form.useForm();
+  const [userName] = useState<string>(localStorage.getItem('user') || '');
 
   const industryTypeOptions = useAsync(async () => {
     return await IndustryService.fetchIndustryList();
@@ -375,7 +377,7 @@ export default function BasicInfoEdit({ data, onSubmit }: BasicInfoEditProps) {
           rules={[{ required: true, message: '请上传前期文件' }]}
         >
           <Upload
-            action="/v1/singleFileUpload"
+            action={`/v1/singleFileUpload?token=${userName}`}
             listType="text"
             onChange={({ file }) => {
               if (file.status === 'done') {

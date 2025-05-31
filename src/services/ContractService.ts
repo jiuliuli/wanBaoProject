@@ -7,9 +7,9 @@ export const ContractService = {
     return Request.get(url).then((res: any) => res.data);
   },
 
-  getContractById: async (id: string): Promise<Contract> => {
-    const url = `/v1/getContractDetail?contractNumber=${id}`;
-    return Request.get(url).then((res: any) => res.data);
+  getContractById: async (id: string): Promise<any> => {
+    const url = `/v1/getContractDetail/${id}`;
+    return Request.get(url).then((res: any) => res.data[0]);
   },
 
   createContract: async (data: Omit<Contract, 'document'>): Promise<void> => {
@@ -17,8 +17,8 @@ export const ContractService = {
     await Request.post(url, data);
   },
 
-  updateContract: async (id: string, data: Omit<Contract, 'document'>): Promise<void> => {
-    const url = `/v1/updateContract/${id}`;
+  updateContract: async (data: Omit<Contract, 'document'>): Promise<void> => {
+    const url = `/v1/updateContract`;
     await Request.put(url, data);
   },
 };

@@ -8,7 +8,6 @@ import {
   DatabaseOutlined,
   FileProtectOutlined,
   LogoutOutlined,
-  NotificationOutlined,
   OrderedListOutlined,
   PlusOutlined,
   ProjectOutlined,
@@ -34,11 +33,6 @@ const menuItems: MenuProps['items'] = [
   //   icon: <HomeOutlined />,
   //   label: <Link to="/">首页</Link>,
   // },
-  {
-    key: '/pending-tasks',
-    icon: <NotificationOutlined />,
-    label: <Link to="/pending-tasks">待办工作</Link>,
-  },
   {
     key: '/personnel-management',
     icon: <UserSwitchOutlined />,
@@ -83,7 +77,7 @@ const menuItems: MenuProps['items'] = [
   {
     key: '/customer-management',
     icon: <TeamOutlined />,
-    label: <Link to="/customer-management">企业管理</Link>,
+    label: <Link to="/customer-management">客户管理</Link>,
   },
   {
     key: '/department-management',

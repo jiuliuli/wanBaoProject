@@ -7,7 +7,7 @@ import IndustryService from '@/services/industry.service';
 import { getSelectOptions } from '@/utils/format';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Button, DatePicker, Form, Input, message, Radio, Select, Space } from 'antd';
+import { Button, DatePicker, Form, Input, message, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
@@ -68,7 +68,7 @@ export default function CustomerManagementEdit() {
 
   const formlist: LabelFormItem[] = [
     {
-      label: '公司名称',
+      label: '客户名称',
       name: 'customerName',
     },
     {
@@ -79,6 +79,8 @@ export default function CustomerManagementEdit() {
       label: '创建人',
       name: 'establisher',
       rules: [{ required: true, message: '请输入创建人' }],
+      initialValue: JSON.parse(localStorage.getItem('userInfo') || '{}').userName,
+      children: <Input disabled />,
     },
     {
       label: '行业类型',
@@ -125,6 +127,7 @@ export default function CustomerManagementEdit() {
     {
       label: '开票类型',
       name: 'invoiceType',
+      initialValue: '增值税专用发票',
       children: <Radio.Group options={getSelectOptions(INVOICE_TYPE_TEXT)} />,
     },
     {
@@ -156,32 +159,6 @@ export default function CustomerManagementEdit() {
       onBack={() => navigate(PATH_ENUM.CUSTOMER_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
-      <Space>
-        <Button
-          type="primary"
-          loading={submitState.loading}
-          style={{
-            marginBottom: 20,
-            marginRight: 10,
-          }}
-          onClick={() => {
-            doFetch(form.getFieldsValue());
-          }}
-        >
-          保存当前编辑
-        </Button>
-
-        <Button
-          style={{
-            marginBottom: 20,
-            marginRight: 10,
-          }}
-          onClick={() => navigate(PATH_ENUM.CUSTOMER_MANAGEMENT)}
-        >
-          取消
-        </Button>
-      </Space>
-
       {industryListState.value && (
         <LabelForm
           props={{
@@ -194,6 +171,19 @@ export default function CustomerManagementEdit() {
           defaultRules={true}
         />
       )}
+      <Button
+        type="primary"
+        loading={submitState.loading}
+        style={{
+          display: 'block',
+          margin: '0 auto',
+        }}
+        onClick={() => {
+          doFetch(form.getFieldsValue());
+        }}
+      >
+        保存当前编辑
+      </Button>
     </PageHeader>
   );
 }

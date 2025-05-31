@@ -11,4 +11,23 @@ export interface Contract {
   establisher: string;
   progress: string;
   division: string;
+  revenues?: Revenue[];
+}
+
+export interface Revenue {
+  revenueNumber: string;
+  title: string;
+  operator: string;
+  projectNumber: string;
+  contractNumber: string;
+  phase: string;
+  qualification: string | null;
+  payment: number;
+  amount: number;
+  revenueTime: string;
+  revenueMode: string | null;
+  invoiceTime: string | null;
+  invoice: string;
+  attachment: string | null;
+  memo: string | null;
 }
