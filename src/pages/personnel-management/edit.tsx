@@ -71,9 +71,6 @@ export default function PersonnelManagementEdit() {
             <Tabs.TabPane tab="工资和社保管理" key="salarySocial">
               <SalarySocialForm props={{ form }} />
             </Tabs.TabPane>
-            {/* <Tabs.TabPane tab="工资发放" key="salary_pay">
-                                <SalaryPayForm props={{ form }} />
-                            </Tabs.TabPane> */}
             <Tabs.TabPane tab="离职管理【先不做】" key="leave">
               <div />
             </Tabs.TabPane>

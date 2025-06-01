@@ -77,7 +77,6 @@ export default function ReimburseManagementEdit() {
   const [submitState, doFetch] = useAsyncFn(
     async values => {
       const submitData = { ...values };
-      console.log('submitData', submitData);
       submitData.maker = userInfo?.userName;
       if (type === 'edit') {
         submitData.expenseNumber = id;

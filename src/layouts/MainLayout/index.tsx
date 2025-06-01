@@ -90,6 +90,11 @@ const menuItems: MenuProps['items'] = [
     label: <Link to="/contract-management">合同管理</Link>,
   },
   {
+    key: '/salary-distribution',
+    icon: <WalletOutlined />,
+    label: <Link to="/salary-distribution">工资发放</Link>,
+  },
+  {
     key: '/project-urge',
     icon: <BellOutlined />,
     label: <Link to="/project-urge">项目催办</Link>,
@@ -124,11 +129,6 @@ const menuItems: MenuProps['items'] = [
     key: '/document-library',
     icon: <DatabaseOutlined />,
     label: <Link to="/document-library">资料库</Link>,
-  },
-  {
-    key: '/salary-distribution',
-    icon: <WalletOutlined />,
-    label: <Link to="/salary-distribution">工资发放</Link>,
   },
   {
     key: '/industry-info-maintenance',

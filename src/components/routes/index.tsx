@@ -265,6 +265,16 @@ export const routes = [
     component: '@/pages/salary-distribution',
   },
   {
+    path: '/salary-distribution/edit/:id',
+    name: '工资发放编辑',
+    component: '@/pages/salary-distribution/edit',
+  },
+  {
+    path: '/salary-distribution/create',
+    name: '工资发放创建',
+    component: '@/pages/salary-distribution/edit',
+  },
+  {
     path: '/professional-info-maintenance',
     name: '行业专业信息维护',
     component: '@/pages/professional-info-maintenance',

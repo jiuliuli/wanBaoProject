@@ -71,7 +71,7 @@ export default function MarketProjectListEdit() {
     !contractState.loading && (
       <PageHeader
         title="编辑项目"
-        onBack={() => navigate(PATH_ENUM.MARKET_PROJECTS_LIST)}
+        onBack={() => navigate(PATH_ENUM.TECHNICAL_PROJECTS_LIST)}
         style={{ background: '#ffffff' }}
       >
         <Tabs

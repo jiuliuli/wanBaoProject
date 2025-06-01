@@ -63,6 +63,10 @@ const PATH_ENUM = {
   LOAN_APPLICATION: '/loan-application',
   LOAN_APPLICATION_CREATE: '/loan-application/create',
   LOAN_APPLICATION_EDIT: '/loan-application/edit/:id',
+
+  // 工资发放
+  SALARY_DISTRIBUTION: '/salary-distribution',
+  SALARY_DISTRIBUTION_EDIT: '/salary-distribution/edit/:id',
 };
 
 export default PATH_ENUM;

@@ -15,7 +15,7 @@ const getColumns = (navigate: (path: string) => void) => [
     dataIndex: 'projectNumber',
     align: 'center',
     render: (text: string) => {
-      return <Link to={`${PATH_ENUM.MARKET_PROJECTS_DETAIL}`.replace(':id', text)}>{text}</Link>;
+      return <Link to={`${PATH_ENUM.TECHNICAL_PROJECTS_DETAIL}`.replace(':id', text)}>{text}</Link>;
     },
   },
   {
@@ -37,7 +37,7 @@ const getColumns = (navigate: (path: string) => void) => [
     },
   },
   {
-    title: "市场人员",
+    title: '市场人员',
     dataIndex: 'establisher',
     align: 'center',
   },
@@ -64,10 +64,10 @@ const getColumns = (navigate: (path: string) => void) => [
     },
   },
   {
-    title: "项目状态",
+    title: '项目状态',
     dataIndex: 'status',
     align: 'center',
-    render: (text: string) => <AutoTag options={['正常', '停滞', '终止']} value={text} />
+    render: (text: string) => <AutoTag options={['正常', '停滞', '终止']} value={text} />,
   },
   {
     title: '操作',
@@ -78,7 +78,7 @@ const getColumns = (navigate: (path: string) => void) => [
           <Button
             type="link"
             onClick={() => {
-              navigate(`${PATH_ENUM.MARKET_PROJECTS_DETAIL}`.replace(':id', data.projectNumber));
+              navigate(`${PATH_ENUM.TECHNICAL_PROJECTS_DETAIL}`.replace(':id', data.projectNumber));
             }}
           >
             查看
@@ -86,7 +86,7 @@ const getColumns = (navigate: (path: string) => void) => [
           <Button
             type="link"
             onClick={() => {
-              navigate(`${PATH_ENUM.MARKET_PROJECTS_EDIT}`.replace(':id', data.projectNumber));
+              navigate(`${PATH_ENUM.TECHNICAL_PROJECTS_EDIT}`.replace(':id', data.projectNumber));
             }}
           >
             编辑
@@ -98,7 +98,7 @@ const getColumns = (navigate: (path: string) => void) => [
 ];
 
 export default function TechnicalProjectList() {
-  const [params] = useState({});
+  const [params] = useState({ finished: false });
   const navigate = useNavigate();
 
   const [state, doFetch] = useTableDataFn({

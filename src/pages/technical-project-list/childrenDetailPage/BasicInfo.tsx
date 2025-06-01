@@ -1,6 +1,8 @@
+import AutoTag from '@/components/AutoTag';
 import { BasicInfoVO } from '@/types/project.types';
 import { Card, Space } from 'antd';
 import Descriptions, { DescriptionsItemType } from 'antd/es/descriptions';
+import dayjs from 'dayjs';
 
 type BasicInfoProps = {
   data: BasicInfoVO;
@@ -26,7 +28,7 @@ export default function BasicInfo({ data }: BasicInfoProps) {
     {
       label: '下单时间',
       key: 'signDate',
-      children: <>{data.signDate}</>,
+      children: dayjs(data.signDate).format('YYYY-MM-DD'),
     },
     {
       label: '市场人员',
@@ -36,12 +38,17 @@ export default function BasicInfo({ data }: BasicInfoProps) {
     {
       label: '计划完成时间',
       key: 'endTime',
-      children: <>{data.endTime}</>,
+      children: dayjs(data.endTime).format('YYYY-MM-DD'),
     },
     {
       label: '紧急程度',
       key: 'rank',
       children: <>{data.rank}</>,
+    },
+    {
+      label: '项目状态',
+      key: 'status',
+      children: <AutoTag options={['正常', '停滞', '终止']} value={data.status} />,
     },
   ];
 

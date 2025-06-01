@@ -101,7 +101,7 @@ const getColumns = (navigate: (path: string) => void) => [
 ];
 
 export default function MarketProjectList() {
-  const [params] = useState({});
+  const [params] = useState({ finished: false });
   const navigate = useNavigate();
 
   const [state, doFetch] = useTableDataFn({
