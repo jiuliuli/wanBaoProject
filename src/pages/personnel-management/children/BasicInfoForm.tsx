@@ -70,7 +70,7 @@ const BasicInfoForm = (props: any) => {
     { label: '初始密码', name: 'password', required: true, children: <Input.Password /> },
     {
       label: '手机号',
-      name: 'mobile',
+      name: 'contact',
       required: true,
       children: <Input placeholder="请输入手机号" />,
     },
@@ -149,14 +149,22 @@ const BasicInfoForm = (props: any) => {
     },
     { label: '入职时间', name: 'entryDate', children: <DatePicker style={{ width: '100%' }} /> },
     {
-      label: "是否是持证人员",
+      label: '是否是持证人员',
       required: true,
       rules: [{ required: true, message: '请选择是否是持证人员' }],
       name: 'isCertificate',
       initialValue: true,
-      children: <Radio.Group options={[{ label: '是', value: true }, { label: '否', value: false }]} onChange={(e) => {
-        setIsCertificate(e.target.value);
-      }} />
+      children: (
+        <Radio.Group
+          options={[
+            { label: '是', value: true },
+            { label: '否', value: false },
+          ]}
+          onChange={e => {
+            setIsCertificate(e.target.value);
+          }}
+        />
+      ),
     },
   ];
 
@@ -175,7 +183,9 @@ const BasicInfoForm = (props: any) => {
           />
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <Button type="primary" onClick={doFetch} loading={state.loading}>
-              {isCertificate ? '保存并跳转到 「 持证人员证书管理 」' : '保存并跳转到 「 工资和社保管理 」'}
+              {isCertificate
+                ? '保存并跳转到 「 持证人员证书管理 」'
+                : '保存并跳转到 「 工资和社保管理 」'}
             </Button>
           </div>
         </>

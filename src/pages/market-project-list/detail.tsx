@@ -1,5 +1,6 @@
 import PATH_ENUM from '@/components/routes/path';
 import BasicInfo from '@/pages/market-project-list/childrenDetailPage/BasicInfo';
+import BudgetInfo from '@/pages/market-project-list/childrenDetailPage/BudgetInfo';
 import ContractInfo from '@/pages/market-project-list/childrenDetailPage/ContractInfo';
 import InvoiceInfo from '@/pages/market-project-list/childrenDetailPage/InvoiceInfo';
 import ProgressInfo from '@/pages/market-project-list/childrenDetailPage/ProgressInfo';
@@ -67,6 +68,11 @@ export default function MarketProjectListDetail() {
               label: '项目进度详情',
               key: 'progress',
               children: <ProgressInfo data={progressState.value} />,
+            },
+            {
+              label: '项目预算',
+              key: 'budget',
+              children: <BudgetInfo data={projectState.value[0] as BasicInfoVO} />,
             },
             {
               label: '发票管理',

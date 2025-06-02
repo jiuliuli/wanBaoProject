@@ -1,5 +1,6 @@
 import { ContractInfoVO } from '@/types/project.types';
 import { Card, Table } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 type InvoiceInfoProps = {
@@ -19,6 +20,7 @@ export default function InvoiceInfo({ data }: InvoiceInfoProps) {
       dataIndex: 'invoiceTime',
       key: 'invoiceTime',
       align: 'center',
+      render: (text: string) => dayjs(text).format('YYYY-MM-DD'),
     },
     {
       title: '合同额',

@@ -74,19 +74,19 @@ export default function MarketProjectListDetail() {
               children: <ProjectNotes data={projectNotesState.value} />,
             },
             {
-              label: "项目组成员",
-              key: "projectMembers",
+              label: '项目组成员',
+              key: 'projectMembers',
               children: <ProjectMembers data={projectMembersState.value} />,
             },
             {
-              label: "过控整理",
-              key: "overControl",
+              label: '过控整理',
+              key: 'overControl',
               children: <OverControl data={overControlState.value} />,
             },
             {
-              label: "报告审核",
-              key: "reportAudit",
-              children: <ReportAudit />,
+              label: '报告审核',
+              key: 'reportAudit',
+              children: <ReportAudit data={projectNotesState.value} />,
             },
             // {
             //   label: "申请出版",

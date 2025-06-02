@@ -22,7 +22,6 @@ export default function ProjectNotes({ data }: ProjectNotesProps) {
             size="middle"
             labelStyle={{ fontWeight: 'bold', background: '#fafafa' }}
           >
-            <Descriptions.Item label="项目编号">{item.projectNumber}</Descriptions.Item>
             <Descriptions.Item label="合同编号">{item.contractNumber}</Descriptions.Item>
             <Descriptions.Item label="记事点">{item.spotName}</Descriptions.Item>
             <Descriptions.Item label="发起人">{item.sponsor}</Descriptions.Item>

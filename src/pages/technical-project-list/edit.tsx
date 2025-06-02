@@ -70,7 +70,7 @@ export default function MarketProjectListEdit() {
     contractState.value &&
     !contractState.loading && (
       <PageHeader
-        title="详情项目"
+        title="编辑项目"
         onBack={() => navigate(PATH_ENUM.TECHNICAL_PROJECTS_LIST)}
         style={{ background: '#ffffff' }}
       >

@@ -70,7 +70,7 @@ export default function MarketProjectListEdit() {
     contractState.value &&
     !contractState.loading && (
       <PageHeader
-        title="详情项目"
+        title="编辑项目"
         onBack={() => navigate(PATH_ENUM.MARKET_PROJECTS_LIST)}
         style={{ background: '#ffffff' }}
       >
@@ -94,7 +94,11 @@ export default function MarketProjectListEdit() {
               label: '报告邮寄',
               key: 'report',
               children: (
-                <ReportInfoEdit data={reportSendState.value} onSubmit={handleReportSubmit} id={id} />
+                <ReportInfoEdit
+                  data={reportSendState.value}
+                  onSubmit={handleReportSubmit}
+                  id={id!}
+                />
               ),
             },
           ]}

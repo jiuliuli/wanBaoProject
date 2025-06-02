@@ -4,11 +4,13 @@ import { useState } from 'react';
 
 interface ReportInfoEditProps {
   onSubmit: (values: any) => Promise<void>;
+  id: number | string;
+  data: any[];
 }
 
-export default function ReportInfoEdit({ onSubmit, id }: ReportInfoEditProps) {
+export default function ReportInfoEdit({ onSubmit, id, data }: ReportInfoEditProps) {
   const [form] = Form.useForm();
-  const [dataList, setDataList] = useState<any[]>([]);
+  const [dataList, setDataList] = useState<any[]>(data);
 
   const handleAdd = () => {
     const newItem = {

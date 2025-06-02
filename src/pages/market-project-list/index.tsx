@@ -92,7 +92,7 @@ const getColumns = (navigate: (path: string) => void) => [
               navigate(`${PATH_ENUM.MARKET_PROJECTS_EDIT}`.replace(':id', data.projectNumber));
             }}
           >
-            详情
+            编辑
           </Button>
         </>
       );
