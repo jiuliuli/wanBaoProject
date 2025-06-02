@@ -38,7 +38,7 @@ const getColumns = (doFetch: () => void) => [
           })
         }
       >
-        编辑
+        详情
       </Button>
     ),
   },

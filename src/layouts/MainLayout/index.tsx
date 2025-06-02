@@ -58,7 +58,11 @@ const menuItems: MenuProps['items'] = [
     icon: <AccountBookOutlined />,
     label: <Link to="/reimburse-management">报销管理</Link>,
   },
-
+  {
+    key: '/revenue-management',
+    icon: <WalletOutlined />,
+    label: <Link to="/revenue-management">收款管理</Link>,
+  },
   {
     key: '/market-project-list',
     icon: <OrderedListOutlined />,
@@ -77,7 +81,7 @@ const menuItems: MenuProps['items'] = [
   {
     key: '/customer-management',
     icon: <TeamOutlined />,
-    label: <Link to="/customer-management">客户管理</Link>,
+    label: <Link to="/customer-management">企业管理</Link>,
   },
   {
     key: '/department-management',

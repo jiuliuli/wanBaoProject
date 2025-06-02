@@ -1,5 +1,10 @@
 import PATH_ENUM from '@/components/routes/path';
 import BasicInfo from '@/pages/technical-project-list/childrenDetailPage/BasicInfo';
+import MaterialList from '@/pages/technical-project-list/childrenDetailPage/MaterialList';
+import OverControl from '@/pages/technical-project-list/childrenDetailPage/OverControl';
+import ProjectMembers from '@/pages/technical-project-list/childrenDetailPage/ProjectMembers';
+import ProjectNotes from '@/pages/technical-project-list/childrenDetailPage/ProjectNotes';
+import ReportAudit from '@/pages/technical-project-list/childrenDetailPage/ReportAudit';
 import ProjectManagementService from '@/services/project-management.service';
 
 import { PageHeader } from '@ant-design/pro-components';
@@ -22,7 +27,23 @@ export default function MarketProjectListDetail() {
     }
   }, [id]);
 
-  console.log(materialListState.value);
+  const projectMembersState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchProjectMembersById(id);
+    }
+  }, [id]);
+
+  const projectNotesState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchProjectNotesById(id);
+    }
+  }, [id]);
+
+  const overControlState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchOverControlById(id);
+    }
+  }, [id]);
 
   return (
     projectState.value &&
@@ -42,31 +63,31 @@ export default function MarketProjectListDetail() {
               key: 'basic',
               children: <BasicInfo data={projectState.value[0]} />,
             },
-            // {
-            //   label: '资料清单',
-            //   key: 'materialList',
-            //   children: <MaterialList data={contractState.value[0]} />,
-            // },
-            // {
-            //   label: '项目记事',
-            //   key: 'projectNotes',
-            //   children: <ProjectNotes data={projectNotesState.value} />,
-            // },
-            // {
-            //   label: "项目组成员",
-            //   key: "projectMembers",
-            //   children: <ProjectMembers data={projectMembersState.value} />,
-            // },
-            // {
-            //   label: "过控整理",
-            //   key: "overControl",
-            //   children: <OverControl data={overControlState.value} />,
-            // },
-            // {
-            //   label: "报告审核",
-            //   key: "reportAudit",
-            //   children: <ReportAudit data={reportAuditState.value} />,
-            // },
+            {
+              label: '资料清单',
+              key: 'materialList',
+              children: <MaterialList data={materialListState.value} />,
+            },
+            {
+              label: '项目记事',
+              key: 'projectNotes',
+              children: <ProjectNotes data={projectNotesState.value} />,
+            },
+            {
+              label: "项目组成员",
+              key: "projectMembers",
+              children: <ProjectMembers data={projectMembersState.value} />,
+            },
+            {
+              label: "过控整理",
+              key: "overControl",
+              children: <OverControl data={overControlState.value} />,
+            },
+            {
+              label: "报告审核",
+              key: "reportAudit",
+              children: <ReportAudit />,
+            },
             // {
             //   label: "申请出版",
             //   key: "publish",

@@ -51,6 +51,22 @@ const ProjectManagementService = {
     const url = `/v1/getResource/${id}`;
     return Request.get(url).then((res: any) => res.data);
   },
+  fetchProjectMembersById: async (id: string) => {
+    const url = `/v1/getMember/${id}`;
+    return Request.get(url).then((res: any) => res.data);
+  },
+  fetchProjectNotesById: async (id: string) => {
+    const url = `/v1/getNoteProcedure/${id}`;
+    return Request.get(url).then((res: any) => res.data);
+  },
+  fetchOverControlById: async (id: string) => {
+    const url = `/v1/getControl/${id}`;
+    return Request.get(url).then((res: any) => res.data);
+  },
+  downloadFile: async (fileName: string, fileId: string) => {
+    const url = `/v1/downloadFile/${fileName}/${fileId}`;
+    return Request.get(url).then((res: any) => res.data);
+  },
 };
 
 export default ProjectManagementService;

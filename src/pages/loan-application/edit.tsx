@@ -185,7 +185,7 @@ export default function LoanApplicationEdit() {
 
   return (
     <PageHeader
-      title={id ? `编辑${id}` : '新建借款申请'}
+      title={id ? `详情${id}` : '新建借款申请'}
       onBack={() => navigate(PATH_ENUM.LOAN_APPLICATION)}
       style={{ background: '#ffffff' }}
     >
@@ -201,7 +201,7 @@ export default function LoanApplicationEdit() {
             doFetch(form.getFieldsValue());
           }}
         >
-          保存当前编辑
+          保存当前详情
         </Button>
 
         <Button

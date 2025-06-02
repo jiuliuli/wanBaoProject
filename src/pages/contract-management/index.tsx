@@ -84,7 +84,7 @@ const getColumns = (navigate: any): ColumnsType<Contract> => [
           type="link"
           onClick={() => navigate(PATH_ENUM.CONTRACT_EDIT.replace(':id', record.contractNumber))}
         >
-          编辑
+          详情
         </Button>
       </Space>
     ),

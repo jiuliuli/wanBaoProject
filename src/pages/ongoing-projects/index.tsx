@@ -75,7 +75,7 @@ const getColumns = (navigate: (path: string) => void) => [
               navigate(`${PATH_ENUM.ONGOING_PROJECTS_DETAIL}`.replace(':id', data.projectNumber));
             }}
           >
-            编辑
+            详情
           </Button>
         </>
       );

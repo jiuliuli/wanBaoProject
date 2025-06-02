@@ -19,7 +19,7 @@ export default function BasicInfo({ data }: BasicInfoProps) {
       children: <strong>{data.projectName}</strong>,
     },
     {
-      label: '客户名称',
+      label: '企业名称',
       key: 'customerName',
       children: <>{data.customerName}</>,
     },

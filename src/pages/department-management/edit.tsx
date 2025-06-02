@@ -72,7 +72,7 @@ export default function DepartmentManagementEdit() {
 
     return (
         <PageHeader
-            title={id ? `编辑${id}` : '新建部门信息'}
+            title={id ? `详情${id}` : '新建部门信息'}
             onBack={() => navigate(PATH_ENUM.DEPARTMENT_MANAGEMENT)}
             style={{ background: '#ffffff' }}
         >
@@ -88,7 +88,7 @@ export default function DepartmentManagementEdit() {
                         doFetch(form.getFieldsValue());
                     }}
                 >
-                    保存当前编辑
+                    保存当前详情
                 </Button>
 
                 <Button

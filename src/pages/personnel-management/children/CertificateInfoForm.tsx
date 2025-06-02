@@ -7,7 +7,6 @@ import { useAsync, useAsyncFn } from 'react-use';
 
 const CertificateInfoForm = (props: any) => {
   const [form] = Form.useForm();
-  console.log(props.userName);
   useEffect(() => {
     if (props.data && props.userName) {
       form.setFieldsValue({ ...props.data, name: props.userName });

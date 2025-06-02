@@ -8,7 +8,7 @@ import styles from '../styles.less';
 
 const getColumns = (navigate: any) => [
   {
-    title: '客户名称',
+    title: '企业名称',
     dataIndex: 'customerName',
     align: 'center',
   },
@@ -77,7 +77,7 @@ const getColumns = (navigate: any) => [
             type="link"
             onClick={() => navigate(PATH_ENUM.CUSTOMER_EDIT.replace(':id', data.customerName))}
           >
-            编辑
+            详情
           </Button>
         </div>
       );
@@ -101,7 +101,7 @@ export default function CustomerManagement() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.header}>
-        <h2 className={styles.title}>客户管理</h2>
+        <h2 className={styles.title}>企业管理</h2>
         <Button
           type="primary"
           onClick={() => navigate(PATH_ENUM.CUSTOMER_CREATE)}

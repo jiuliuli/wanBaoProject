@@ -32,7 +32,7 @@ const getColumns = (navigate: any) => [
                     type="link"
                     onClick={() => navigate(PATH_ENUM.DEPARTMENT_EDIT.replace(':id', data.divisionName))}
                 >
-                    编辑
+                    详情
                 </Button>
                 {/* <Button
           type="link"

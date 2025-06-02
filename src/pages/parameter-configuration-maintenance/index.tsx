@@ -34,7 +34,7 @@ const ParameterConfigurationMaintenance = () => {
       const values = await form.validateFields();
       if (editingItem) {
         await ParameterConfigurationService.updateParameter(values);
-        message.success('编辑成功');
+        message.success('详情成功');
       }
       setModalVisible(false);
       doFetch();
@@ -52,7 +52,7 @@ const ParameterConfigurationMaintenance = () => {
       align: 'center',
       render: (_: any, record: any) => (
         <Button type="link" onClick={() => openModal(record)}>
-          编辑
+          详情
         </Button>
       ),
     },
@@ -74,7 +74,7 @@ const ParameterConfigurationMaintenance = () => {
         pagination={false}
       />
       <Modal
-        title={editingItem ? '编辑参数' : '新建参数'}
+        title={editingItem ? '详情参数' : '新建参数'}
         open={modalVisible}
         onOk={handleOk}
         onCancel={() => setModalVisible(false)}

@@ -51,7 +51,7 @@ export const routes = [
   },
   {
     path: '/customer-management',
-    name: '客户管理',
+    name: '企业管理',
     component: '@/pages/customer-management',
   },
   {
@@ -118,6 +118,21 @@ export const routes = [
     path: '/reimburse-management',
     name: '报销管理',
     component: '@/pages/reimburse-management',
+  },
+  {
+    path: '/revenue-management',
+    name: '收款管理',
+    component: '@/pages/revenue-management',
+  },
+  {
+    path: '/revenue-management/edit/:id',
+    name: '收款管理编辑',
+    component: '@/pages/revenue-management/edit',
+  },
+  {
+    path: '/revenue-management/create',
+    name: '收款管理创建',
+    component: '@/pages/revenue-management/edit',
   },
   {
     path: '/project-settlement',
@@ -196,7 +211,7 @@ export const routes = [
   },
   {
     path: '/customer-management',
-    name: '客户管理',
+    name: '企业管理',
     component: '@/pages/customer-management/index',
   },
   {

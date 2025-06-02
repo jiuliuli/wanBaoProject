@@ -64,7 +64,7 @@ const getColumns = (navigate: (path: string) => void) => [
         type="link"
         onClick={() => navigate(PATH_ENUM.LOAN_APPLICATION_EDIT.replace(':id', record.loanNumber))}
       >
-        编辑
+        详情
       </Button>
     ),
   },

@@ -13,7 +13,7 @@ const PATH_ENUM = {
   PROJECT_EDIT: '/project-management/edit/:id',
   ALL_PROJECT_LIST: '/project-management/all-list',
 
-  // 客户管理
+  // 企业管理
   CUSTOMER_MANAGEMENT: '/customer-management',
   CUSTOMER_CREATE: '/customer-management/create',
   CUSTOMER_EDIT: '/customer-management/edit/:id',
@@ -67,6 +67,11 @@ const PATH_ENUM = {
   // 工资发放
   SALARY_DISTRIBUTION: '/salary-distribution',
   SALARY_DISTRIBUTION_EDIT: '/salary-distribution/edit/:id',
+
+  // 收款管理
+  REVENUE_MANAGEMENT: '/revenue-management',
+  REVENUE_MANAGEMENT_EDIT: '/revenue-management/edit/:id',
+  REVENUE_MANAGEMENT_CREATE: '/revenue-management/create',
 };
 
 export default PATH_ENUM;

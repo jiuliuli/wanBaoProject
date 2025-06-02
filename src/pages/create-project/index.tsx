@@ -29,7 +29,7 @@ const CreateProject: React.FC = () => {
     }
   }, [searchParams]);
 
-  const [state, onSubmit] = useAsyncFn(async (finalData) => {
+  const [, onSubmit] = useAsyncFn(async (finalData) => {
     try {
       await ProjectManagementService.createProject(Object.assign({}, finalData.basicInfo, finalData.budgetInfo, finalData.riskInfo));
       message.success('项目创建成功');
@@ -62,21 +62,6 @@ const CreateProject: React.FC = () => {
             onSubmit(formDataRef.current);
           }} />
         </TabPane>
-        {/* <TabPane tab="合同信息" key="ContractEditInfo">
-          <ContractEditInfo />
-        </TabPane>
-        <TabPane tab="风险评估" key="RiskEditInfo">
-          <RiskEditInfo />
-        </TabPane>
-        <TabPane tab="发票开具" key="InvoiceEditInfo">
-          <InvoiceEditInfo />
-        </TabPane>
-        <TabPane tab="报告邮寄" key="ReportMailEditInfo">
-          <ReportMailEditInfo />
-        </TabPane>
-        <TabPane tab="收款情况" key="PaymentStatusEditInfo">
-          <PaymentStatusEditInfo />
-        </TabPane> */}
       </Tabs>
     </PageHeader>
   );

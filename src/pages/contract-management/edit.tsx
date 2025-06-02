@@ -78,7 +78,7 @@ const ContractEdit: React.FC = () => {
     staffListState.value &&
     staffListState.value.length > 0 && (
       <PageHeader
-        title={type === 'edit' ? '编辑合同' : '新建合同'}
+        title={type === 'edit' ? '合同详情' : '新建合同'}
         onBack={() => navigate(PATH_ENUM.CONTRACT_MANAGEMENT)}
         style={{ background: '#ffffff' }}
       >
@@ -181,108 +181,142 @@ const ContractEdit: React.FC = () => {
               </Upload>
             </Form.Item>
 
-            <h3>收入信息</h3>
-            <Form.List name="revenues">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                      <Form.Item {...restField} name={[name, 'revenueNumber']}>
-                        <Input placeholder="收款编号" />
+            <h3>{type === "edit" ? "收入信息" : "付款约定"}</h3>
+
+            {
+              type === "create" ? <Form.List name="revenues">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                        <Form.Item {...restField} name={[name, 'phase']}>
+                          <Input placeholder="付款期数" />
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'qualification']}>
+                          <Input placeholder="付款条件" />
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'amount']}>
+                          <InputNumber placeholder="付款额" suffix="元" />
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'memo']}>
+                          <Input placeholder="备注" style={{ width: 500 }} />
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => remove(name)} />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                        添加付款约定记录
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List> :
+                <Form.List name="revenues">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }) => (
+                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                          <Form.Item {...restField} name={[name, 'revenueNumber']}>
+                            <Input placeholder="收款编号" />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'title']}
+                            rules={[{ required: true, message: '请输入收款标题' }]}
+                          >
+                            <Input placeholder="收款标题" />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'operator']}
+                            initialValue={JSON.parse(localStorage.getItem('userInfo') || '{}').userName}
+                            rules={[{ required: true, message: '请输入操作人' }]}
+                          >
+                            <Select
+                              showSearch
+                              placeholder="请选择操作人"
+                              optionFilterProp="children"
+                              filterOption={(input: string, option: any) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                              }
+                              options={staffListState.value?.map((staff: any) => ({
+                                value: staff.userName,
+                                label: staff.userName,
+                              }))}
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'phase']}
+                            rules={[{ required: true, message: '请输入阶段' }]}
+                          >
+                            <Select placeholder="阶段">
+                              <Option value="首付款">首付款</Option>
+                              <Option value="中期款">中期款</Option>
+                              <Option value="尾款">尾款</Option>
+                            </Select>
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'payment']}
+                            rules={[{ required: true, message: '请输入付款金额' }]}
+                          >
+                            <InputNumber
+                              style={{ width: 80 }}
+                              min={0}
+                              precision={2}
+                              placeholder="付款金额"
+                              prefix="¥"
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'amount']}
+                            rules={[{ required: true, message: '请输入总金额' }]}
+                          >
+                            <InputNumber
+                              style={{ width: 80 }}
+                              min={0}
+                              precision={2}
+                              placeholder="总金额"
+                              prefix="¥"
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'revenueTime']}
+                            rules={[{ required: true, message: '请选择收款时间' }]}
+                          >
+                            <DatePicker placeholder="收款时间" style={{ width: 150 }} />
+                          </Form.Item>
+                          <Form.Item {...restField} name={[name, 'revenueMode']}>
+                            <Input placeholder="收款方式" style={{ width: 100 }} />
+                          </Form.Item>
+                          <Form.Item {...restField} name={[name, 'invoice']}>
+                            <Select placeholder="发票状态" style={{ width: 100 }}>
+                              <Option value="未到款">未到款</Option>
+                              <Option value="已到款">已到款</Option>
+                            </Select>
+                          </Form.Item>
+                          <Form.Item {...restField} name={[name, 'memo']}>
+                            <Input placeholder="备注" />
+                          </Form.Item>
+                          <MinusCircleOutlined onClick={() => remove(name)} />
+                        </Space>
+                      ))}
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                          {/* 添加付款约定记录 */}
+                          添加收入记录
+                        </Button>
                       </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'title']}
-                        rules={[{ required: true, message: '请输入收款标题' }]}
-                      >
-                        <Input placeholder="收款标题" />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'operator']}
-                        initialValue={JSON.parse(localStorage.getItem('userInfo') || '{}').userName}
-                        rules={[{ required: true, message: '请输入操作人' }]}
-                      >
-                        <Select
-                          showSearch
-                          placeholder="请选择操作人"
-                          optionFilterProp="children"
-                          filterOption={(input: string, option: any) =>
-                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                          }
-                          options={staffListState.value?.map((staff: any) => ({
-                            value: staff.userName,
-                            label: staff.userName,
-                          }))}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'phase']}
-                        rules={[{ required: true, message: '请输入阶段' }]}
-                      >
-                        <Select placeholder="阶段">
-                          <Option value="首付款">首付款</Option>
-                          <Option value="中期款">中期款</Option>
-                          <Option value="尾款">尾款</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'payment']}
-                        rules={[{ required: true, message: '请输入付款金额' }]}
-                      >
-                        <InputNumber
-                          style={{ width: 80 }}
-                          min={0}
-                          precision={2}
-                          placeholder="付款金额"
-                          prefix="¥"
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'amount']}
-                        rules={[{ required: true, message: '请输入总金额' }]}
-                      >
-                        <InputNumber
-                          style={{ width: 80 }}
-                          min={0}
-                          precision={2}
-                          placeholder="总金额"
-                          prefix="¥"
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'revenueTime']}
-                        rules={[{ required: true, message: '请选择收款时间' }]}
-                      >
-                        <DatePicker placeholder="收款时间" style={{ width: 150 }} />
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'revenueMode']}>
-                        <Input placeholder="收款方式" style={{ width: 100 }} />
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'invoice']}>
-                        <Select placeholder="发票状态" style={{ width: 100 }}>
-                          <Option value="未到款">未到款</Option>
-                          <Option value="已到款">已到款</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'memo']}>
-                        <Input placeholder="备注" />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                      添加收款记录
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
+                    </>
+                  )}
+                </Form.List>
+            }
+
+
 
             <Form.Item>
               <Button

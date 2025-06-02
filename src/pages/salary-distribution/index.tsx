@@ -14,9 +14,9 @@ import styles from '../styles.less';
 
 const getColumns = (navigate: (path: string) => void, divisionList: any[]) => [
   {
-    title: '员工登录名',
-    dataIndex: 'userName',
-    key: 'userName',
+    title: '员工真实姓名',
+    dataIndex: 'realName',
+    key: 'realName',
     align: 'center',
   },
   {
@@ -141,7 +141,7 @@ const getColumns = (navigate: (path: string) => void, divisionList: any[]) => [
         type="link"
         onClick={() => navigate(PATH_ENUM.SALARY_DISTRIBUTION_EDIT.replace(':id', record.userName))}
       >
-        编辑
+        详情
       </Button>
     ),
   },

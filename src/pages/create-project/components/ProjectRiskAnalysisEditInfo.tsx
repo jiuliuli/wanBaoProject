@@ -122,46 +122,7 @@ export default function ProjectRiskAnalysisEditInfo({ onFinish }: Props) {
       initialValue: true,
       children: <Switch checkedChildren="是" unCheckedChildren="否" />,
     },
-    // {
-    //     label: '是否外聘专家',
-    //     name: 'expert',
-    //     children: (
-    //         <Radio.Group
-    //             options={[
-    //                 { label: '是', value: '是' },
-    //                 { label: '否', value: '否' },
-    //             ]}
-    //         />
-    //     ),
-    // },
-    // {
-    //     label: '项目规模',
-    //     name: 'projectScale',
-    //     children: (
-    //         <Radio.Group
-    //             options={[
-    //                 { label: '大', value: '大' },
-    //                 { label: '中', value: '中' },
-    //                 { label: '小', value: '小' },
-    //             ]}
-    //         />
-    //     ),
-    // },
-    // {
-    //     label: '技术风险',
-    //     name: 'technicalVenture',
-    //     children: (
-    //         <Radio.Group
-    //             options={[
-    //                 { label: '高', value: '高' },
-    //                 { label: '中', value: '中' },
-    //                 { label: '低', value: '低' },
-    //             ]}
-    //         />
-    //     ),
-    // },
     { label: '主要风险', name: 'mainVenture' },
-    // { label: '风险因素', name: 'ventureFactor' },
   ];
 
   return (
@@ -177,7 +138,7 @@ export default function ProjectRiskAnalysisEditInfo({ onFinish }: Props) {
       />
       <div style={{ textAlign: 'center', marginTop: 24 }}>
         <Button type="primary" onClick={() => form.submit()} loading={submitState.loading}>
-          新建项目
+          保存项目
         </Button>
       </div>
     </div>

@@ -68,7 +68,7 @@ const getColumns = (navigate: any) => [
         type="link"
         onClick={() => navigate(PATH_ENUM.PERSONNEL_EDIT.replace(':id', data.userName))}
       >
-        编辑
+        详情
       </Button>
     ),
   },

@@ -25,7 +25,7 @@ const showEditProfessionalModal = NiceModal.create<Props>(({ data, onFinish }) =
       await IndustryService.updateIndustry(values);
       onFinish();
       modal.hide();
-      message.success('编辑成功');
+      message.success('详情成功');
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +33,7 @@ const showEditProfessionalModal = NiceModal.create<Props>(({ data, onFinish }) =
 
   return (
     <Modal
-      title={`编辑专业`}
+      title={`详情专业`}
       open={modal.visible}
       onOk={() => form.submit()}
       onCancel={() => modal.hide()}

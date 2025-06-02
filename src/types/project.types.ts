@@ -196,3 +196,13 @@ export interface ReportInfoVO {
   reportDate: string;
   reportAmount: number;
 }
+
+export interface OverControlItem {
+  id: number;
+  projectNumber: string;
+  name: string;
+  category: string;
+  document: string;
+  quantity: number;
+  memo: string | null;
+}

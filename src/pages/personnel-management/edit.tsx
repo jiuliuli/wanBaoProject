@@ -3,7 +3,7 @@ import BasicInfoForm from '@/pages/personnel-management/children/BasicInfoForm';
 import PersonnelService from '@/services/personnel.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Form, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAsync } from 'react-use';
 import CertificateInfoForm from './children/CertificateInfoForm';
@@ -20,13 +20,14 @@ export default function PersonnelManagementEdit() {
     return await PersonnelService.getPersonnelById(id);
   }, [id]);
 
-  const [form] = Form.useForm();
   const [type] = useState<string>(id ? 'edit' : 'create');
 
   const certificateState = useAsync(async () => {
     if (!id) return;
     return await PersonnelService.getCertificateById(id);
   }, [id]);
+
+
 
   useEffect(() => {
     if (userInfo.value) {
@@ -36,7 +37,7 @@ export default function PersonnelManagementEdit() {
 
   return (
     <PageHeader
-      title={userInfo.value ? `编辑${userInfo.value[0]?.realName}` : '新建人员'}
+      title={userInfo.value ? `详情${userInfo.value[0]?.realName}` : '新建人员'}
       onBack={() => navigate(PATH_ENUM.PERSONNEL_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
@@ -49,9 +50,9 @@ export default function PersonnelManagementEdit() {
               getUserName={(userName: string) => {
                 setUserName(userName);
               }}
-              onNext={() => {
+              onNext={(isCertificate: boolean) => {
                 setValid(true);
-                setActiveKey('certificate');
+                setActiveKey(isCertificate ? 'certificate' : 'salarySocial');
               }}
             />
           )}
@@ -69,7 +70,7 @@ export default function PersonnelManagementEdit() {
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab="工资和社保管理" key="salarySocial">
-              <SalarySocialForm props={{ form }} />
+              <SalarySocialForm userName={userName} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="离职管理【先不做】" key="leave">
               <div />

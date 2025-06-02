@@ -1,13 +1,10 @@
 import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
-import { INVOICE_TYPE_TEXT } from '@/constants/customer.constants';
 import CustomerManagementService from '@/services/customer.service';
-import IndustryService from '@/services/industry.service';
-import { getSelectOptions } from '@/utils/format';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Button, DatePicker, Form, Input, message, Radio, Select } from 'antd';
+import { Button, DatePicker, Form, Input, message, Radio } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
@@ -22,12 +19,6 @@ export default function CustomerManagementEdit() {
       return await CustomerManagementService.fetchCustomerById(id);
     }
   }, [id]);
-
-  const industryListState = useAsync(async () => {
-    return await IndustryService.fetchIndustryList();
-  });
-
-  console.log(customerState.value);
 
   useEffect(() => {
     if (id && customerState.value) {
@@ -68,7 +59,7 @@ export default function CustomerManagementEdit() {
 
   const formlist: LabelFormItem[] = [
     {
-      label: '客户名称',
+      label: '企业名称',
       name: 'customerName',
     },
     {
@@ -81,18 +72,6 @@ export default function CustomerManagementEdit() {
       rules: [{ required: true, message: '请输入创建人' }],
       initialValue: JSON.parse(localStorage.getItem('userInfo') || '{}').userName,
       children: <Input disabled />,
-    },
-    {
-      label: '行业类型',
-      name: 'industryType',
-      rules: [{ required: true, message: '请选择行业类型' }],
-      children: (
-        <Select
-          options={industryListState.value
-            ?.map((item: any) => item.industryType)
-            .map((item: any) => ({ label: item, value: item }))}
-        />
-      ),
     },
     {
       label: '法定代表人',
@@ -128,7 +107,7 @@ export default function CustomerManagementEdit() {
       label: '开票类型',
       name: 'invoiceType',
       initialValue: '增值税专用发票',
-      children: <Radio.Group options={getSelectOptions(INVOICE_TYPE_TEXT)} />,
+      children: <Radio.Group options={[{ label: '增值税专用发票', value: '增值税专用发票' }, { label: '增值税普通发票', value: '增值税普通发票' }]} />,
     },
     {
       label: '开户行',
@@ -155,11 +134,11 @@ export default function CustomerManagementEdit() {
 
   return (
     <PageHeader
-      title={id ? `编辑${id}` : '新建企业信息'}
+      title={id ? `详情${id}` : '新建企业信息'}
       onBack={() => navigate(PATH_ENUM.CUSTOMER_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
-      {industryListState.value && (
+      {customerState.value || type === 'create' && (
         <LabelForm
           props={{
             form,
@@ -182,7 +161,7 @@ export default function CustomerManagementEdit() {
           doFetch(form.getFieldsValue());
         }}
       >
-        保存当前编辑
+        保存当前详情
       </Button>
     </PageHeader>
   );

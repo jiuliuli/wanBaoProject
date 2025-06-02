@@ -6,7 +6,7 @@ import MaterialInfo from '@/pages/project-management/childrenPage/MaterialInfo';
 import MemberInfo from '@/pages/project-management/childrenPage/MemberInfo';
 import ProcessInfo from '@/pages/project-management/childrenPage/ProcessInfo';
 import RiskInfo from '@/pages/project-management/childrenPage/RiskInfo';
-import ContractManagementService from '@/services/contract.service';
+import { ContractService } from '@/services/ContractService';
 import MemberManagementService from '@/services/member.service';
 import ProjectManagementService from '@/services/project-management.service';
 import {
@@ -32,7 +32,7 @@ export default function ProjectManagementDetail() {
 
   const contractState = useAsync(async () => {
     if (id) {
-      return await ContractManagementService.fetchContractByProjectId(id);
+      return await ContractService.getContractById(id);
     }
   }, [id]);
 

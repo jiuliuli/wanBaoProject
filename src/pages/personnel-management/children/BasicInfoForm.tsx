@@ -3,17 +3,16 @@ import DepartmentService from '@/services/department.service';
 import PersonnelService from '@/services/personnel.service';
 import { Button, DatePicker, Form, Input, message, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
 const BasicInfoForm = (props: any) => {
   const [form] = Form.useForm();
+  const [isCertificate, setIsCertificate] = useState<boolean | undefined>(true);
 
   const divisionState = useAsync(async () => {
     return await DepartmentService.fetchDepartmentList({});
   }, []);
-
-  console.log(divisionState.value);
 
   useEffect(() => {
     if (props.data) {
@@ -25,7 +24,6 @@ const BasicInfoForm = (props: any) => {
         entryDate: props.data.entryDate ? dayjs(props.data.entryDate) : undefined,
       };
       form.setFieldsValue(formData);
-      console.log(formData);
     }
   }, [props.data]);
 
@@ -51,7 +49,7 @@ const BasicInfoForm = (props: any) => {
       } else {
         await PersonnelService.updatePersonnel({ ...props.data, ...submitData });
       }
-      props.onNext(submitData);
+      props.onNext(form.getFieldValue('isCertificate'));
       props.getUserName(submitData.userName);
     } catch (error) {
       message.error('保存失败');
@@ -71,9 +69,16 @@ const BasicInfoForm = (props: any) => {
     { label: '登录账号', name: 'userName', required: true },
     { label: '初始密码', name: 'password', required: true, children: <Input.Password /> },
     {
+      label: '手机号',
+      name: 'mobile',
+      required: true,
+      children: <Input placeholder="请输入手机号" />,
+    },
+    {
       label: '地区',
       name: 'region',
       required: true,
+      initialValue: '全国',
       children: (
         <Select
           options={Object.entries(regionState.value || {}).map(([key, value]) => ({
@@ -143,6 +148,16 @@ const BasicInfoForm = (props: any) => {
       ),
     },
     { label: '入职时间', name: 'entryDate', children: <DatePicker style={{ width: '100%' }} /> },
+    {
+      label: "是否是持证人员",
+      required: true,
+      rules: [{ required: true, message: '请选择是否是持证人员' }],
+      name: 'isCertificate',
+      initialValue: true,
+      children: <Radio.Group options={[{ label: '是', value: true }, { label: '否', value: false }]} onChange={(e) => {
+        setIsCertificate(e.target.value);
+      }} />
+    },
   ];
 
   return (
@@ -160,7 +175,7 @@ const BasicInfoForm = (props: any) => {
           />
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <Button type="primary" onClick={doFetch} loading={state.loading}>
-              保存并执行下一步
+              {isCertificate ? '保存并跳转到 「 持证人员证书管理 」' : '保存并跳转到 「 工资和社保管理 」'}
             </Button>
           </div>
         </>

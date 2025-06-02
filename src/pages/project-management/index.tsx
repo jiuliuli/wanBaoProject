@@ -45,7 +45,7 @@ const ProjectCard = ({
               navigate(PATH_ENUM.PROJECT_EDIT.replace(':id', project.projectNumber.toString()))
             }
           >
-            编辑
+            详情
           </Button>
         </div>
       }
@@ -67,7 +67,7 @@ const ProjectCard = ({
         ) : null}
         {project.customerName ? (
           <p>
-            <strong>客户名称：</strong>
+            <strong>企业名称：</strong>
             {project.customerName}
           </p>
         ) : null}

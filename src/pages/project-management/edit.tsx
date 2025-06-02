@@ -74,7 +74,7 @@ export default function ProjectManagementEdit() {
       required: true,
     },
     {
-      label: '客户名称',
+      label: '企业名称',
       name: 'customer_name',
       required: true,
     },
@@ -169,7 +169,7 @@ export default function ProjectManagementEdit() {
 
   return (
     <PageHeader
-      title={id ? `编辑${id}` : '(市场)新建项目'}
+      title={id ? `详情${id}` : '(市场)新建项目'}
       onBack={() => navigate(PATH_ENUM.PROJECT_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
@@ -185,7 +185,7 @@ export default function ProjectManagementEdit() {
             doFetch(form.getFieldsValue());
           }}
         >
-          保存当前编辑
+          保存当前详情
         </Button>
 
         <Button

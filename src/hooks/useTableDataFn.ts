@@ -45,7 +45,6 @@ export function useTableDataFn<P = any, R = any>({
         };
 
         const result = await Fetch(mergedParams);
-        console.log('result', result);
 
         setState({
           loading: false,

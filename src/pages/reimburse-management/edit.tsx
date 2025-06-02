@@ -233,7 +233,7 @@ export default function ReimburseManagementEdit() {
 
   return (
     <PageHeader
-      title={id ? `编辑${id}` : '新建报销单'}
+      title={id ? `详情${id}` : '新建报销单'}
       onBack={() => navigate(PATH_ENUM.REIMBURSE_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
@@ -256,7 +256,7 @@ export default function ReimburseManagementEdit() {
               });
           }}
         >
-          保存当前编辑
+          保存当前详情
         </Button>
 
         <Button

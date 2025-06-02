@@ -46,5 +46,17 @@ const PersonnelService = {
     const url = `/v1/batchAddStaff`;
     return Request.post(url, file).then(res => res.data);
   },
+  getSalarySocialById: async (id: string) => {
+    const url = `/v1/getStaffBase?userName=${id}`;
+    return Request.get(url).then(res => res.data);
+  },
+  createSalarySocial: async (values: any) => {
+    const url = `/v1/addStaffBase`;
+    return Request.post(url, values).then(res => res.data);
+  },
+  updateSalarySocial: async (values: any) => {
+    const url = `/v1/editStaffBase`;
+    return Request.put(url, values).then(res => res.data);
+  },
 };
 export default PersonnelService;
