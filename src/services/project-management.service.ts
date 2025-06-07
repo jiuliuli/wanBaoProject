@@ -67,6 +67,10 @@ const ProjectManagementService = {
     const url = `/v1/downloadFile/${fileName}/${fileId}`;
     return Request.get(url).then((res: any) => res.data);
   },
+  fetchArchiveById: async (id: string) => {
+    const url = `/v1/getArchive/${id}`;
+    return Request.get(url).then((res: any) => res.data);
+  },
 };
 
 export default ProjectManagementService;

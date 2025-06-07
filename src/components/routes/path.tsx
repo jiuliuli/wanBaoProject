@@ -1,5 +1,6 @@
 const PATH_ENUM = {
   HOME: '/',
+  RESET_PASSWORD: '/reset-password',
 
   // 报销管理
   REIMBURSE_MANAGEMENT: '/reimburse-management/list',

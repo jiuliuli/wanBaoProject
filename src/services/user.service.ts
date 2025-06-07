@@ -26,15 +26,6 @@ const UserService = {
       message.error('登录请求失败，请稍后重试');
       return null;
     }
-    // const userInfo = {
-    //     userId: '1',
-    //     userName: 'admin',
-    //     realName: '管理员',
-    //     roles: ['admin'],
-    //     isAdmin: true,
-    // }
-    // localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    // return userInfo;
   },
 
   logout: () => {
@@ -59,6 +50,16 @@ const UserService = {
   isLoggedIn: (): boolean => {
     return !!localStorage.getItem('userInfo');
   },
+
+  resetPassword: async (params: { userName: string; oldPassword: string; newPassword: string }): Promise<boolean> => {
+    const url = `/v1/changePassword`;
+    return Request.put(url, {
+      userName: params.userName,
+      password: params.oldPassword,
+      power: params.newPassword,
+    }).then(res => res.data);
+  }
+
 };
 
 export default UserService;

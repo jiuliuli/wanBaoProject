@@ -41,7 +41,6 @@ export default function ProjectManagementEdit() {
       if (type === 'edit') {
         values.id = Number(id);
       }
-      console.log('values', values);
       try {
         if (type === 'edit') {
           await ProjectManagementService.updateProject(values);
@@ -66,11 +65,6 @@ export default function ProjectManagementEdit() {
     {
       label: '项目编号',
       name: 'project_number',
-      required: true,
-    },
-    {
-      label: '项目简称',
-      name: 'short_name',
       required: true,
     },
     {

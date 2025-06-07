@@ -1,3 +1,4 @@
+import PATH_ENUM from '@/components/routes/path';
 import UserService from '@/services/user.service';
 import {
   AccountBookOutlined,
@@ -7,6 +8,7 @@ import {
   ClusterOutlined,
   DatabaseOutlined,
   FileProtectOutlined,
+  LockOutlined,
   LogoutOutlined,
   OrderedListOutlined,
   PlusOutlined,
@@ -22,17 +24,13 @@ import { history, Link, Outlet, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Avatar, Dropdown, Layout, Menu, Space, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './styles.less';
 
 const { Content, Sider } = Layout;
 const { Text } = Typography;
 
 const menuItems: MenuProps['items'] = [
-  // {
-  //   key: "/",
-  //   icon: <HomeOutlined />,
-  //   label: <Link to="/">首页</Link>,
-  // },
   {
     key: '/personnel-management',
     icon: <UserSwitchOutlined />,
@@ -144,16 +142,22 @@ const menuItems: MenuProps['items'] = [
 const MainLayout: React.FC = () => {
   const { initialState, refresh } = useModel('@@initialState');
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 检查用户是否已登录
-    if (!UserService.isLoggedIn()) {
-      history.push('/login');
-    } else if (!initialState?.userInfo) {
-      // 如果已登录但状态中没有用户信息，则刷新状态
-      refresh();
+    if (location.pathname !== '/login' && location.pathname !== '/reset-password') {
+      if (!UserService.isLoggedIn()) {
+        history.push('/login');
+      } else if (!initialState?.userInfo) {
+        refresh();
+      }
     }
-  }, [initialState, refresh]);
+  }, [initialState, refresh, location.pathname]);
+
+  if (location.pathname === '/login') {
+    return <Outlet />;
+  }
 
   const handleLogout = () => {
     UserService.logout();
@@ -161,6 +165,12 @@ const MainLayout: React.FC = () => {
 
   // 用户下拉菜单
   const userDropdownItems: MenuProps['items'] = [
+    {
+      key: 'reset-password',
+      icon: <LockOutlined />,
+      label: '修改密码',
+      onClick: () => navigate(PATH_ENUM.RESET_PASSWORD),
+    },
     {
       key: 'logout',
       icon: <LogoutOutlined />,

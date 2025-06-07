@@ -15,6 +15,13 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
   const [form] = useForm();
   const [dayCount, setDayCount] = useState(0);
   const [pass, setPass] = useState(true);
+  const [result, setResult] = useState(amount - amount * 0.17);
+
+  useEffect(() => {
+    form.resetFields();
+    setResult(amount - amount * 0.17);
+    setPass(true);
+  }, [amount, form]);
 
   const [submitState, doFetch] = useAsyncFn(async () => {
     onFinish(form.getFieldsValue());
@@ -124,6 +131,7 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
             // 计算成本核算结果
             const result = amount - amount * 0.07 - taskDays * dayCount - totalCost;
             setPass(result > 0);
+            setResult(result);
           },
         }}
         formlist={formItems}
@@ -131,9 +139,9 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
       <>
         成本核算结果:{' '}
         {pass ? (
-          <span style={{ color: 'green' }}>通过</span>
+          <span style={{ color: 'green' }}>通过 - 毛利润：{result}</span>
         ) : (
-          <span style={{ color: 'red' }}>不通过</span>
+          <span style={{ color: 'red' }}>不通过 - 毛利润：{result}</span>
         )}
       </>
       <div style={{ textAlign: 'center', marginTop: 24 }}>

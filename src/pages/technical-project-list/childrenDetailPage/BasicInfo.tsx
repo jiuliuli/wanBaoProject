@@ -11,11 +11,6 @@ type BasicInfoProps = {
 export default function BasicInfo({ data }: BasicInfoProps) {
   const items: DescriptionsItemType[] = [
     {
-      label: '项目编号',
-      key: 'projectNumber',
-      children: <strong>{data.projectNumber}</strong>,
-    },
-    {
       label: '项目名称',
       key: 'projectName',
       children: <strong>{data.projectName}</strong>,

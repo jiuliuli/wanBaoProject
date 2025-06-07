@@ -108,13 +108,6 @@ const ContractManagement: React.FC = () => {
     <div className={styles.pageContainer}>
       <div className={styles.header}>
         <h2 className={styles.title}>合同管理</h2>
-        <Button
-          type="primary"
-          onClick={() => navigate(PATH_ENUM.CONTRACT_CREATE)}
-          className={styles.createButton}
-        >
-          新建合同
-        </Button>
       </div>
 
       <SearchForm

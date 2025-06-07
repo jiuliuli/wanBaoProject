@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 import styles from '../styles.less';
 
-const getColumns = (navigate: any) => [
+const getColumns = (navigate: any, doFetch: any) => [
   {
     title: '姓名',
     dataIndex: 'realName',
@@ -64,12 +64,29 @@ const getColumns = (navigate: any) => [
     title: '操作',
     align: 'center',
     render: (text: any, data: any) => (
-      <Button
-        type="link"
-        onClick={() => navigate(PATH_ENUM.PERSONNEL_EDIT.replace(':id', data.userName))}
-      >
-        详情
-      </Button>
+      <>
+        <Button
+          type="link"
+          onClick={() => navigate(PATH_ENUM.PERSONNEL_EDIT.replace(':id', data.userName))}
+        >
+          详情
+        </Button>
+        <Button
+          type="link"
+          onClick={() => Modal.confirm({
+            title: `确定删除 「 ${data.realName} 」吗？`,
+            okText: '删除',
+            cancelText: '取消',
+            onOk: async () => {
+              await PersonnelService.deletePersonnel(data.userName);
+              message.success('删除成功');
+              doFetch();
+            },
+          })}
+        >
+          删除
+        </Button>
+      </>
     ),
   },
 ];
@@ -159,7 +176,7 @@ export default function PersonnelManagement() {
         <Table
           rowKey="id"
           loading={state.loading}
-          columns={getColumns(navigate) as any}
+          columns={getColumns(navigate, doFetch) as any}
           {...state.value}
           scroll={{ x: 1000 }}
           pagination={{

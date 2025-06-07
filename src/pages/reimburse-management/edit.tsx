@@ -1,6 +1,7 @@
 import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
+import DepartmentService from '@/services/department.service';
 import ProjectManagementService from '@/services/project-management.service';
 import ReimburseManagementService from '@/services/reimburse-manage.service';
 import { PageHeader } from '@ant-design/pro-components';
@@ -67,12 +68,17 @@ export default function ReimburseManagementEdit() {
   };
 
   const handleProjectSelect = (value: string, option: any) => {
-    console.log(option);
     form.setFieldsValue({
       projectNumber: option.value,
       projectName: option.projectName,
     });
   };
+
+  const divisionListState = useAsync(async () => {
+    return await DepartmentService.fetchDepartmentList({});
+  }, []);
+
+
 
   const [submitState, doFetch] = useAsyncFn(
     async values => {
@@ -185,6 +191,10 @@ export default function ReimburseManagementEdit() {
       label: '费用承担部门',
       rules: [{ required: true, message: '请选择费用承担部门' }],
       name: 'division',
+      children: <Select options={divisionListState.value?.map((division: any) => ({
+        value: division.divisionName,
+        label: division.divisionName,
+      }))} />,
     },
     {
       label: '备注',
@@ -216,7 +226,6 @@ export default function ReimburseManagementEdit() {
           onChange={({ file }) => {
             if (file.status === 'done') {
               message.success(`${file.name} 上传成功`);
-              console.log('file.response.data', file.response.data);
               form.setFieldsValue({
                 attachment: file.response.data,
               });

@@ -20,8 +20,6 @@ export default function ContractEditInfo() {
           : undefined,
       }));
     }
-
-    console.log(values);
   };
 
   return (

@@ -36,8 +36,6 @@ export default function ProjectManagementDetail() {
     }
   }, [id]);
 
-  console.log('contractState', contractState.value);
-
   // const processState = useAsync(async () => {
   //     if (id) {
   //         return await ProcessManagementService.fetchProcessByProjectId(id);
@@ -49,8 +47,6 @@ export default function ProjectManagementDetail() {
       return await MemberManagementService.fetchMemberByProjectId(id);
     }
   }, [id]);
-
-  console.log('contractState', contractState.value);
 
   return (
     projectState.value &&

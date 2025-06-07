@@ -12,7 +12,6 @@ const showAddRank = NiceModal.create<Props>(({ onFinish }) => {
 
   const [, onSubmit] = useAsyncFn(async () => {
     const values = await form.validateFields();
-    console.log(values);
     onFinish();
   }, [form, onFinish]);
 

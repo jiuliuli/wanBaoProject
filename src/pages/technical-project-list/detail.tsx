@@ -1,4 +1,5 @@
 import PATH_ENUM from '@/components/routes/path';
+import Archive from '@/pages/technical-project-list/childrenDetailPage/Archive';
 import BasicInfo from '@/pages/technical-project-list/childrenDetailPage/BasicInfo';
 import MaterialList from '@/pages/technical-project-list/childrenDetailPage/MaterialList';
 import OverControl from '@/pages/technical-project-list/childrenDetailPage/OverControl';
@@ -45,6 +46,12 @@ export default function MarketProjectListDetail() {
     }
   }, [id]);
 
+  const archiveState = useAsync(async () => {
+    if (id) {
+      return await ProjectManagementService.fetchArchiveById(id);
+    }
+  }, [id]);
+
   return (
     projectState.value &&
     !projectState.loading &&
@@ -88,16 +95,16 @@ export default function MarketProjectListDetail() {
               key: 'reportAudit',
               children: <ReportAudit data={projectNotesState.value} />,
             },
-            // {
-            //   label: "申请出版",
-            //   key: "publish",
-            //   children: <Publish data={publishState.value} />,
-            // },
-            // {
-            //   label: "存档文件",
-            //   key: "archive",
-            //   children: <Archive data={archiveState.value} />,
-            // },
+            {
+              label: "申请出版",
+              key: "publish",
+              // children: <Publish data={publishState.value} />,
+            },
+            {
+              label: "存档文件",
+              key: "archive",
+              children: <Archive data={archiveState.value} />,
+            },
           ]}
         ></Tabs>
       </PageHeader>

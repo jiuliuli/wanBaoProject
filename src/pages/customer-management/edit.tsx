@@ -138,7 +138,7 @@ export default function CustomerManagementEdit() {
       onBack={() => navigate(PATH_ENUM.CUSTOMER_MANAGEMENT)}
       style={{ background: '#ffffff' }}
     >
-      {customerState.value || type === 'create' && (
+      {(customerState.value || type === 'create') && (
         <LabelForm
           props={{
             form,

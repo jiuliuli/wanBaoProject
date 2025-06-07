@@ -58,5 +58,9 @@ const PersonnelService = {
     const url = `/v1/editStaffBase`;
     return Request.put(url, values).then(res => res.data);
   },
+  deletePersonnel: async (userName: string) => {
+    const url = `/v1/deleteStaff/${userName}`;
+    return Request.delete(url).then(res => res.data);
+  },
 };
 export default PersonnelService;

@@ -198,7 +198,6 @@ export default function ProgressInfo({ data }: ProgressInfoProps) {
             <Descriptions.Item label="完成时间">
               {new Date(selectedData.finishedTime ?? new Date()).toLocaleString()}
             </Descriptions.Item>
-            <Descriptions.Item label="转签人">{selectedData.transfer}</Descriptions.Item>
             <Descriptions.Item label="处理结果">
               {selectedData.result === '同意' ? (
                 <Tag color="green">同意</Tag>

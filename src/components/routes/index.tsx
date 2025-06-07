@@ -10,6 +10,11 @@ export const routes = [
     component: '@/pages/Home',
   },
   {
+    path: '/reset-password',
+    name: '修改密码',
+    component: '@/pages/reset-password',
+  },
+  {
     path: '/personnel-management',
     name: '人员信息维护',
     component: '@/pages/personnel-management',
@@ -243,21 +248,6 @@ export const routes = [
     path: '/personnel-management/edit/:id',
     name: '人员管理编辑',
     component: '@/pages/personnel-management/edit',
-  },
-  {
-    path: '/department-management/personnel-list/:id',
-    name: '部门人员列表',
-    component: '@/pages/department-management/personList',
-  },
-  {
-    path: '/department-management/personnel-edit/:id',
-    name: '部门人员编辑',
-    component: '@/pages/department-management/personEdit',
-  },
-  {
-    path: '/department-management/personnel-create',
-    name: '部门人员创建',
-    component: '@/pages/department-management/personEdit',
   },
   {
     path: '/process-management/list',

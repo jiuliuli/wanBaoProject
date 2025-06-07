@@ -1,7 +1,7 @@
 import UserService from '@/services/user.service';
 import { LoginParams } from '@/types/user.types';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { history, useModel } from '@umijs/max';
+import { history, useModel, useNavigate } from '@umijs/max';
 import { Alert, Button, Checkbox, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
@@ -11,10 +11,23 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string>('');
   const { refresh } = useModel('@@initialState');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (UserService.isLoggedIn()) {
       history.push('/');
+    }
+    // 检查是否有保存的登录信息
+    const savedLoginInfo = localStorage.getItem('savedLoginInfo');
+    if (savedLoginInfo) {
+      try {
+        const { userName, password, remember } = JSON.parse(savedLoginInfo);
+        if (remember) {
+          form.setFieldsValue({ userName, password, remember });
+        }
+      } catch (error) {
+        console.error('解析保存的登录信息失败:', error);
+      }
     }
   }, []);
 
@@ -24,6 +37,17 @@ const LoginPage: React.FC = () => {
     try {
       const userInfo = await UserService.login(values);
       if (userInfo) {
+        // 如果选择了记住我，保存登录信息
+        if (values.remember) {
+          localStorage.setItem('savedLoginInfo', JSON.stringify({
+            userName: values.userName,
+            password: values.password,
+            remember: true
+          }));
+        } else {
+          // 如果没有选择记住我，清除保存的登录信息
+          localStorage.removeItem('savedLoginInfo');
+        }
         message.success('登录成功！');
         await refresh();
         history.push('/');

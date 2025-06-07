@@ -138,7 +138,7 @@ export default function ProjectRiskAnalysisEditInfo({ onFinish }: Props) {
       />
       <div style={{ textAlign: 'center', marginTop: 24 }}>
         <Button type="primary" onClick={() => form.submit()} loading={submitState.loading}>
-          保存项目
+          保存新建项目
         </Button>
       </div>
     </div>

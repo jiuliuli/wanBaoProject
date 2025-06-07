@@ -47,13 +47,6 @@ export default function BasicInfoEdit({ data, onSubmit }: BasicInfoEditProps) {
           <Input />
         </Form.Item>
         <Form.Item
-          label="项目简称"
-          name="shortName"
-          rules={[{ required: true, message: '请输入项目简称' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           label="企业名称"
           name="customerName"
           rules={[{ required: true, message: '请输入企业名称' }]}

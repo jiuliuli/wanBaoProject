@@ -4,7 +4,7 @@ import PATH_ENUM from '@/components/routes/path';
 import DepartmentService from '@/services/department.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Button, Form, message, Space, Switch } from 'antd';
+import { Button, Form, message, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
@@ -57,12 +57,8 @@ export default function DepartmentManagementEdit() {
             name: 'divisionName',
         },
         {
-            label: '是否可用',
-            name: 'valid',
-            children: <Switch
-                checkedChildren="可用"
-                unCheckedChildren="禁用"
-            />
+            label: '部门主管',
+            name: 'realName',
         },
         {
             label: '备注',

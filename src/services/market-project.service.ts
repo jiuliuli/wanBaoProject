@@ -20,7 +20,6 @@ const MarketProjectService = {
   },
 
   async updateReportInfo(id: string, values: any) {
-    console.log(values.records);
     const url = `/v1/editDelivery`;
     return Request.put(url, values).then((res: any) => res.data);
   },

@@ -1,5 +1,6 @@
 import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
+import CustomerManagementService from '@/services/customer.service';
 import IndustryService from '@/services/industry.service';
 import ProjectManagementService from '@/services/project-management.service';
 import { useModel } from '@umijs/max';
@@ -41,6 +42,10 @@ export default function ProjecEditInfo({ onFinish }: Props) {
     onFinish(values);
   });
 
+  const customerListState = useAsync(async () => {
+    return await CustomerManagementService.fetchCustomerList({});
+  });
+
   const formlist: LabelFormItem[] = [
     {
       label: '项目名称',
@@ -48,14 +53,17 @@ export default function ProjecEditInfo({ onFinish }: Props) {
       rules: [{ required: true, message: '请输入项目名称' }],
     },
     {
-      label: '项目简称',
-      name: 'shortName',
-      rules: [{ required: true, message: '请输入项目简称' }],
-    },
-    {
       label: '企业名称',
       name: 'customerName',
       rules: [{ required: true, message: '请输入企业名称' }],
+      children: <Select
+        showSearch
+        filterOption={(input, option) => (option?.label as string)?.toLowerCase().includes(input.toLowerCase())}
+        options={customerListState.value?.map((item: any) => ({
+          value: item.customerName,
+          label: item.customerName,
+        }))}
+      />,
     },
     {
       label: '市场类型',

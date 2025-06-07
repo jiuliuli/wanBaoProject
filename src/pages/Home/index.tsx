@@ -31,7 +31,7 @@ const Home: React.FC = () => {
 
       <Card
         title="待处理项目"
-        bordered={false}
+        variant="borderless"
         style={{ marginTop: 24 }}
       >
         <Row gutter={[16, 16]}>

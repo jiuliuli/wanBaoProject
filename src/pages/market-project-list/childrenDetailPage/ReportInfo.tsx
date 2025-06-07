@@ -37,7 +37,7 @@ export default function ReportInfo({ data }: ReportInfoProps) {
       align: 'center',
     },
     {
-      title: '邮寄号',
+      title: '快递单号',
       dataIndex: 'deliveryNumber',
       align: 'center',
     },

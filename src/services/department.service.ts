@@ -18,6 +18,10 @@ const DepartmentService = {
         const url = `/v1/editDivision`;
         return Request.put(url, data).then(res => res.data);
     },
+    deleteDepartment: async (divisionName: string) => {
+        const url = `/v1/deleteDivision/${divisionName}`;
+        return Request.delete(url).then(res => res.data);
+    },
 };
 
 export default DepartmentService;

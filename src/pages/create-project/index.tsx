@@ -1,3 +1,4 @@
+import ContractInfoEditInfo from '@/pages/create-project/components/ContractInfoEditInfo';
 import ProjecEditInfo from '@/pages/create-project/components/ProjecEditInfo';
 import ProjectBudgetEditInfo from '@/pages/create-project/components/ProjectBudgetEditInfo';
 import ProjectRiskAnalysisEditInfo from '@/pages/create-project/components/ProjectRiskAnalysisEditInfo';
@@ -21,6 +22,8 @@ const CreateProject: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [activeKey, setActiveKey] = useState('ProjecEditInfo');
+  const [projectNumber, setProjectNumber] = useState('');
+  const [projectHidden, setProjectHidden] = useState(true);
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -31,7 +34,10 @@ const CreateProject: React.FC = () => {
 
   const [, onSubmit] = useAsyncFn(async (finalData) => {
     try {
-      await ProjectManagementService.createProject(Object.assign({}, finalData.basicInfo, finalData.budgetInfo, finalData.riskInfo));
+      const res = await ProjectManagementService.createProject(Object.assign({}, finalData.basicInfo, finalData.budgetInfo, finalData.riskInfo));
+      setProjectNumber(res.projectNumber);
+      setProjectHidden(false);
+      setActiveKey('ContractInfoEditInfo');
       message.success('项目创建成功');
     } catch (error) {
       console.log(error);
@@ -62,6 +68,14 @@ const CreateProject: React.FC = () => {
             onSubmit(formDataRef.current);
           }} />
         </TabPane>
+        {
+          !projectHidden && (
+            <TabPane tab="合同信息" key="ContractInfoEditInfo">
+              <ContractInfoEditInfo projectNumber={projectNumber} />
+            </TabPane>
+          )
+        }
+
       </Tabs>
     </PageHeader>
   );
