@@ -66,6 +66,7 @@ const getColumns = (navigate: (path: string) => void) => [
       >
         详情
       </Button>
+
     ),
   },
 ];

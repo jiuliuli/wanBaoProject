@@ -11,7 +11,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
 const CreateProject: React.FC = () => {
-  // 用 useRef 保存所有表单数据
   const formDataRef = useRef({
     basicInfo: {
       amount: 0,
@@ -24,6 +23,9 @@ const CreateProject: React.FC = () => {
   const [activeKey, setActiveKey] = useState('ProjecEditInfo');
   const [projectNumber, setProjectNumber] = useState('');
   const [projectHidden, setProjectHidden] = useState(true);
+  const [amount, setAmount] = useState(0);
+  const [projectName, setProjectName] = useState('');
+  const [createProjectButton, setCreateProjectButton] = useState(true);
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -36,8 +38,11 @@ const CreateProject: React.FC = () => {
     try {
       const res = await ProjectManagementService.createProject(Object.assign({}, finalData.basicInfo, finalData.budgetInfo, finalData.riskInfo));
       setProjectNumber(res.projectNumber);
+      setProjectName(res.projectName);
+      setAmount(res.amount);
       setProjectHidden(false);
       setActiveKey('ContractInfoEditInfo');
+      setCreateProjectButton(false)
       message.success('项目创建成功');
     } catch (error) {
       console.log(error);
@@ -63,7 +68,8 @@ const CreateProject: React.FC = () => {
           }} />
         </TabPane>
         <TabPane tab="风险分析" key="ProjectRiskAnalysisEditInfo">
-          <ProjectRiskAnalysisEditInfo onFinish={(riskValues) => {
+          <ProjectRiskAnalysisEditInfo  createProjectButton = {createProjectButton}
+          onFinish={(riskValues) => {
             formDataRef.current.riskInfo = riskValues;
             onSubmit(formDataRef.current);
           }} />
@@ -71,7 +77,7 @@ const CreateProject: React.FC = () => {
         {
           !projectHidden && (
             <TabPane tab="合同信息" key="ContractInfoEditInfo">
-              <ContractInfoEditInfo projectNumber={projectNumber} />
+              <ContractInfoEditInfo projectNumber={projectNumber} projectName={projectName} amount={amount} />
             </TabPane>
           )
         }

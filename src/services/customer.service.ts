@@ -14,7 +14,7 @@ const CustomerManagementService = {
     return Request.post(url, values).then(res => res.data);
   },
   updateCustomer: (values: CustomerVO) => {
-    const url = `/v1/editCustomer`;
+    const url = `/v1/editCustomer?oldCustomerName=${values.customerName}`;
     return Request.put(url, values).then(res => res.data);
   },
 };

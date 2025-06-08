@@ -76,7 +76,7 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
     { label: '评审费', name: 'reviewAudit', children: <InputNumber /> },
     { label: '签字费', name: 'signFee', children: <InputNumber /> },
     { label: '公司协助发生的费用', name: 'cooperateFee', children: <InputNumber /> },
-    { label: '增值税费', name: 'taxFee', children: <InputNumber /> },
+    { label: '增值税费', name: 'taxFee', initialValue: amount * 0.07, children: <InputNumber precision={2} /> },
     { label: '其他费用', name: 'otherFee', children: <InputNumber /> },
   ];
 

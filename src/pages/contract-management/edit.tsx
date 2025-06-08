@@ -2,10 +2,10 @@ import PATH_ENUM from '@/components/routes/path';
 import { ContractService } from '@/services/ContractService';
 import PersonnelService from '@/services/personnel.service';
 import { Revenue } from '@/types/contract.types';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
-import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space, Upload } from 'antd';
+import { Button, Card, DatePicker, Form, Input, InputNumber, message, Select, Upload } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAsync } from 'react-use';
@@ -61,9 +61,6 @@ const ContractEdit: React.FC = () => {
         submitData.contract.contractNumber = id;
         await ContractService.updateContract(submitData);
         message.success('更新合同成功');
-      } else {
-        await ContractService.createContract(submitData);
-        message.success('创建合同成功');
       }
       navigate(PATH_ENUM.CONTRACT_MANAGEMENT);
     } catch (error) {
@@ -82,7 +79,13 @@ const ContractEdit: React.FC = () => {
         onBack={() => navigate(PATH_ENUM.CONTRACT_MANAGEMENT)}
         style={{ background: '#ffffff' }}
       >
-        <Form form={form} layout="horizontal" onFinish={handleSubmit}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleSubmit}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+        >
           <div style={{ padding: '24px' }}>
             <h3>合同信息</h3>
             <Form.Item
@@ -183,55 +186,32 @@ const ContractEdit: React.FC = () => {
 
             <h3>{type === "edit" ? "收入信息" : "付款约定"}</h3>
 
-            {
-              type === "create" ? <Form.List name="revenues">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map(({ key, name, ...restField }) => (
-                      <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                        <Form.Item {...restField} name={[name, 'phase']}>
-                          <Input placeholder="付款期数" />
-                        </Form.Item>
-                        <Form.Item {...restField} name={[name, 'qualification']}>
-                          <Input placeholder="付款条件" />
-                        </Form.Item>
-                        <Form.Item {...restField} name={[name, 'amount']}>
-                          <InputNumber placeholder="付款额" suffix="元" />
-                        </Form.Item>
-                        <Form.Item {...restField} name={[name, 'memo']}>
-                          <Input placeholder="备注" style={{ width: 500 }} />
-                        </Form.Item>
-                        <MinusCircleOutlined onClick={() => remove(name)} />
-                      </Space>
-                    ))}
-                    <Form.Item>
-                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                        添加付款约定记录
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List> :
-                <Form.List name="revenues">
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map(({ key, name, ...restField }) => (
-                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                          <Form.Item {...restField} name={[name, 'revenueNumber']}>
+            <Form.List name="revenues">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <div key={key} style={{ position: 'relative', marginBottom: 16 }}>
+                      <Card bodyStyle={{ padding: '16px' }}>
+                        <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                          <Form.Item {...restField} name={[name, 'revenueNumber']} label="收款编号" style={{ flex: 1 }}>
                             <Input placeholder="收款编号" />
                           </Form.Item>
                           <Form.Item
                             {...restField}
                             name={[name, 'title']}
+                            label="收款标题"
                             rules={[{ required: true, message: '请输入收款标题' }]}
+                            style={{ flex: 1 }}
                           >
                             <Input placeholder="收款标题" />
                           </Form.Item>
                           <Form.Item
                             {...restField}
                             name={[name, 'operator']}
+                            label="操作人"
                             initialValue={JSON.parse(localStorage.getItem('userInfo') || '{}').userName}
                             rules={[{ required: true, message: '请输入操作人' }]}
+                            style={{ flex: 1 }}
                           >
                             <Select
                               showSearch
@@ -249,7 +229,9 @@ const ContractEdit: React.FC = () => {
                           <Form.Item
                             {...restField}
                             name={[name, 'phase']}
+                            label="阶段"
                             rules={[{ required: true, message: '请输入阶段' }]}
+                            style={{ flex: 1 }}
                           >
                             <Select placeholder="阶段">
                               <Option value="首付款">首付款</Option>
@@ -260,23 +242,29 @@ const ContractEdit: React.FC = () => {
                           <Form.Item
                             {...restField}
                             name={[name, 'payment']}
+                            label="付款金额"
                             rules={[{ required: true, message: '请输入付款金额' }]}
+                            style={{ flex: 1 }}
                           >
                             <InputNumber
-                              style={{ width: 80 }}
+                              style={{ width: '100%' }}
                               min={0}
                               precision={2}
                               placeholder="付款金额"
                               prefix="¥"
                             />
                           </Form.Item>
+                        </div>
+                        <div style={{ display: 'flex', gap: '16px' }}>
                           <Form.Item
                             {...restField}
                             name={[name, 'amount']}
+                            label="总金额"
                             rules={[{ required: true, message: '请输入总金额' }]}
+                            style={{ flex: 1 }}
                           >
                             <InputNumber
-                              style={{ width: 80 }}
+                              style={{ width: '100%' }}
                               min={0}
                               precision={2}
                               placeholder="总金额"
@@ -286,37 +274,61 @@ const ContractEdit: React.FC = () => {
                           <Form.Item
                             {...restField}
                             name={[name, 'revenueTime']}
+                            label="收款时间"
                             rules={[{ required: true, message: '请选择收款时间' }]}
+                            style={{ flex: 1 }}
                           >
-                            <DatePicker placeholder="收款时间" style={{ width: 150 }} />
+                            <DatePicker placeholder="收款时间" style={{ width: '100%' }} />
                           </Form.Item>
-                          <Form.Item {...restField} name={[name, 'revenueMode']}>
-                            <Input placeholder="收款方式" style={{ width: 100 }} />
+                          <Form.Item {...restField} name={[name, 'revenueMode']} label="收款方式" style={{ flex: 1 }}>
+                            <Input placeholder="收款方式" />
                           </Form.Item>
-                          <Form.Item {...restField} name={[name, 'invoice']}>
-                            <Select placeholder="发票状态" style={{ width: 100 }}>
+                          <Form.Item {...restField} name={[name, 'invoice']} label="发票状态" style={{ flex: 1 }}>
+                            <Select placeholder="发票状态">
                               <Option value="未到款">未到款</Option>
                               <Option value="已到款">已到款</Option>
                             </Select>
                           </Form.Item>
-                          <Form.Item {...restField} name={[name, 'memo']}>
+                          <Form.Item {...restField} name={[name, 'memo']} label="备注" style={{ flex: 1 }}>
                             <Input placeholder="备注" />
                           </Form.Item>
-                          <MinusCircleOutlined onClick={() => remove(name)} />
-                        </Space>
-                      ))}
-                      <Form.Item>
-                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                          {/* 添加付款约定记录 */}
-                          添加收入记录
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </Form.List>
-            }
-
-
+                        </div>
+                      </Card>
+                      <div
+                        onClick={() => remove(name)}
+                        style={{
+                          position: 'absolute',
+                          right: -8,
+                          top: -8,
+                          width: '20px',
+                          height: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: '#fff',
+                          borderRadius: '50%',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <CloseOutlined
+                          style={{
+                            fontSize: '12px',
+                            color: '#ff4d4f',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      {/* 添加付款约定记录 */}
+                      添加收入记录
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
 
             <Form.Item>
               <Button

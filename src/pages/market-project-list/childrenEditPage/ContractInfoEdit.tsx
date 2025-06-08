@@ -83,6 +83,7 @@ export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditPro
           label="付款方式"
           name={['contract', 'payMode']}
           rules={[{ required: true, message: '请选择付款方式' }]}
+          initialValue="银行转账"
         >
           <Select>
             <Select.Option value="银行转账">银行转账</Select.Option>

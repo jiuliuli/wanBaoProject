@@ -3,6 +3,7 @@ import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
 import LoanApplicationService from '@/services/loanApplication.service';
 import PersonnelService from '@/services/personnel.service';
+import ProjectManagementService from '@/services/project-management.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useNavigate, useParams } from '@umijs/max';
 import {
@@ -36,6 +37,10 @@ export default function LoanApplicationEdit() {
 
   const staffListState = useAsync(async () => {
     return await PersonnelService.fetchPersonnelList({});
+  });
+
+  const projectListState = useAsync(async () => {
+    return await ProjectManagementService.fetchProjectList({ finished: false });
   });
 
   useEffect(() => {
@@ -116,7 +121,17 @@ export default function LoanApplicationEdit() {
     {
       label: '项目编号',
       name: 'projectNumber',
-      children: <Input />,
+      rules: [{ required: true, message: '请输入项目编号' }],
+      required: false,
+      children: <Select
+        showSearch
+        filterOption={(input: string, option: any) =>
+          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+        }
+        options={projectListState.value?.map((project: any) => ({
+          value: project.projectNumber,
+          label: project.projectNumber,
+        }))} />
     },
     {
       label: '计划借款时间',
@@ -131,6 +146,7 @@ export default function LoanApplicationEdit() {
     {
       label: '付款方式',
       name: 'payMode',
+      initialValue: '银行',
       children: (
         <Radio.Group
           options={[
@@ -191,20 +207,6 @@ export default function LoanApplicationEdit() {
     >
       <Space>
         <Button
-          type="primary"
-          loading={submitState.loading}
-          style={{
-            marginBottom: 20,
-            marginRight: 10,
-          }}
-          onClick={() => {
-            doFetch(form.getFieldsValue());
-          }}
-        >
-          保存当前详情
-        </Button>
-
-        <Button
           style={{
             marginBottom: 20,
             marginRight: 10,
@@ -229,6 +231,34 @@ export default function LoanApplicationEdit() {
             defaultRules
           />
         )}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          type="primary"
+          loading={submitState.loading}
+          style={{
+            marginBottom: 20,
+            marginRight: 60,
+          }}
+          onClick={() => {
+            doFetch(form.getFieldsValue());
+          }}
+        >
+          保存当前详情
+        </Button>
+        {/* <Button
+          type="primary"
+          loading={submitState.loading}
+          style={{
+            marginBottom: 20,
+            marginRight: 10,
+          }}
+          onClick={() => {
+            console.log(form.getFieldsValue());
+          }}
+        >
+          保存并提交(没给接口)
+        </Button> */}
+      </div>
     </PageHeader>
   );
 }

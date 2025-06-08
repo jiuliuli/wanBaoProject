@@ -12,7 +12,7 @@ export default function OverControl({ data }: OverControlProps) {
     const fileName = document.split(':')[0];
     const fileId = document.split(':')[1];
     try {
-      const res = await ProjectManagementService.downloadFile(fileName, fileId);
+      await ProjectManagementService.downloadFile(fileName, fileId);
       message.success('下载成功');
     } catch (error) {
       message.error('下载失败');

@@ -15,7 +15,7 @@ const PersonnelService = {
     return Request.get(url).then(res => res.data);
   },
   updatePersonnel: async (values: any) => {
-    const url = `/v1/editStaff`;
+    const url = `/v1/editStaff?oldUserName=${values.userName}`;
     return Request.put(url, values).then(res => res.data);
   },
   createPersonnel: async (values: any) => {

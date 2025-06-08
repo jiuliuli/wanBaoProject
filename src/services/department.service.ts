@@ -15,7 +15,7 @@ const DepartmentService = {
         return Request.post(url, data).then(res => res.data);
     },
     updateDepartment: async (data: any) => {
-        const url = `/v1/editDivision`;
+        const url = `/v1/editDivision?oldDivisionName=${data.divisionName}`;
         return Request.put(url, data).then(res => res.data);
     },
     deleteDepartment: async (divisionName: string) => {

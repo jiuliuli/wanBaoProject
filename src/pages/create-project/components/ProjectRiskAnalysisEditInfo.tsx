@@ -2,18 +2,22 @@ import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
 import { Button, Radio, Switch } from 'antd';
 import { useForm } from 'antd/es/form/Form';
+import { useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
 type Props = {
   onFinish: (values: any) => void;
+  createProjectButton: boolean;
 };
 
-export default function ProjectRiskAnalysisEditInfo({ onFinish }: Props) {
+export default function ProjectRiskAnalysisEditInfo({ onFinish, createProjectButton }: Props) {
   const [form] = useForm();
 
   const [submitState, doFetch] = useAsyncFn(async values => {
     onFinish(values);
   });
+
+  const [createProjectButtonState, setCreateProjectButtonState] = useState<boolean>(createProjectButton);
 
   const formlist: LabelFormItem[] = [
     {
@@ -137,7 +141,7 @@ export default function ProjectRiskAnalysisEditInfo({ onFinish }: Props) {
         formlist={formlist}
       />
       <div style={{ textAlign: 'center', marginTop: 24 }}>
-        <Button type="primary" onClick={() => form.submit()} loading={submitState.loading}>
+        <Button type="primary" onClick={() => form.submit()} loading={submitState.loading} disabled={!createProjectButtonState}>
           保存新建项目
         </Button>
       </div>

@@ -43,31 +43,6 @@ const getColumns = (navigate: any) => [
     align: 'center',
   },
   {
-    title: '开票类型',
-    dataIndex: 'invoiceType',
-    align: 'center',
-  },
-  {
-    title: '开票地址',
-    dataIndex: 'invoiceAddress',
-    align: 'center',
-  },
-  {
-    title: '开户行',
-    dataIndex: 'bankName',
-    align: 'center',
-  },
-  {
-    title: '账号',
-    dataIndex: 'accountNumber',
-    align: 'center',
-  },
-  {
-    title: '财务电话',
-    dataIndex: 'financialTel',
-    align: 'center',
-  },
-  {
     title: '操作',
     align: 'center',
     render: (data: any) => {

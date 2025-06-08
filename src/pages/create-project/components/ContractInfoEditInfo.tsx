@@ -3,15 +3,20 @@ import { ContractService } from "@/services/ContractService";
 import PersonnelService from "@/services/personnel.service";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "@umijs/max";
-import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space, Upload } from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Select, Space, Upload } from "antd";
 import { useState } from "react";
 import { useAsync } from "react-use";
 
 type Props = {
     projectNumber: string;
+    projectName: string;
+    amount: number;
 }
 
-export default function ContractInfoEditInfo({ projectNumber }: Props) {
+export default function ContractInfoEditInfo({ projectNumber, projectName, amount }: Props) {
+    console.log("projectNumber", projectNumber);
+    console.log("projectName", projectName);
+    console.log("amount", amount);
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
@@ -50,8 +55,9 @@ export default function ContractInfoEditInfo({ projectNumber }: Props) {
                         name={['contract', 'title']}
                         label="合同标题"
                         rules={[{ required: true, message: '请输入合同标题' }]}
+                        initialValue={projectName}
                     >
-                        <Input placeholder="请输入合同标题" />
+                        <Input placeholder="请输入合同标题" disabled />
                     </Form.Item>
                     <Form.Item
                         initialValue={projectNumber}
@@ -77,6 +83,7 @@ export default function ContractInfoEditInfo({ projectNumber }: Props) {
                         name={['contract', 'amount']}
                         label="合同金额"
                         rules={[{ required: true, message: '请输入合同金额' }]}
+                        initialValue={amount}
                     >
                         <InputNumber
                             style={{ width: '100%' }}
@@ -84,6 +91,7 @@ export default function ContractInfoEditInfo({ projectNumber }: Props) {
                             precision={2}
                             placeholder="请输入合同金额"
                             prefix="¥"
+                            disabled
                         />
                     </Form.Item>
 
@@ -99,8 +107,9 @@ export default function ContractInfoEditInfo({ projectNumber }: Props) {
                         name={['contract', 'payMode']}
                         label="支付方式"
                         rules={[{ required: true, message: '请输入支付方式' }]}
+                        initialValue="转账"
                     >
-                        <Input placeholder="请输入支付方式" />
+                        <Radio.Group options={["现金", "转账", "承兑", "支票"]} />
                     </Form.Item>
 
                     <Form.Item name={['contract', 'document']} label="合同文档">
@@ -131,16 +140,16 @@ export default function ContractInfoEditInfo({ projectNumber }: Props) {
                             <>
                                 {fields.map(({ key, name, ...restField }) => (
                                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                        <Form.Item {...restField} name={[name, 'phase']}>
+                                        <Form.Item {...restField} name={[name, 'phase']} label="付款期数">
                                             <Input placeholder="付款期数" />
                                         </Form.Item>
-                                        <Form.Item {...restField} name={[name, 'qualification']}>
+                                        <Form.Item {...restField} name={[name, 'qualification']} label="付款条件">
                                             <Input placeholder="付款条件" />
                                         </Form.Item>
-                                        <Form.Item {...restField} name={[name, 'amount']}>
+                                        <Form.Item {...restField} name={[name, 'amount']} label="付款金额">
                                             <InputNumber placeholder="付款额" suffix="元" />
                                         </Form.Item>
-                                        <Form.Item {...restField} name={[name, 'memo']}>
+                                        <Form.Item {...restField} name={[name, 'memo']} label="备注" style={{ marginLeft: 10 }}>
                                             <Input placeholder="备注" style={{ width: 500 }} />
                                         </Form.Item>
                                         <MinusCircleOutlined onClick={() => remove(name)} />

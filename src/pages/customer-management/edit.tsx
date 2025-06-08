@@ -67,11 +67,20 @@ export default function CustomerManagementEdit() {
       name: 'identification',
     },
     {
-      label: '创建人',
-      name: 'establisher',
-      rules: [{ required: true, message: '请输入创建人' }],
-      initialValue: JSON.parse(localStorage.getItem('userInfo') || '{}').userName,
-      children: <Input disabled />,
+      label: '开票地址',
+      name: 'invoiceAddress',
+    },
+    {
+      label: '开户行',
+      name: 'bankName',
+    },
+    {
+      label: '账号',
+      name: 'accountNumber',
+    },
+    {
+      label: '财务电话',
+      name: 'financialTel',
     },
     {
       label: '法定代表人',
@@ -84,10 +93,6 @@ export default function CustomerManagementEdit() {
     {
       label: '邮寄地址',
       name: 'mailAddress',
-    },
-    {
-      label: '开票地址',
-      name: 'invoiceAddress',
     },
     {
       label: '公司电话',
@@ -110,18 +115,6 @@ export default function CustomerManagementEdit() {
       children: <Radio.Group options={[{ label: '增值税专用发票', value: '增值税专用发票' }, { label: '增值税普通发票', value: '增值税普通发票' }]} />,
     },
     {
-      label: '开户行',
-      name: 'bankName',
-    },
-    {
-      label: '账号',
-      name: 'accountNumber',
-    },
-    {
-      label: '财务电话',
-      name: 'financialTel',
-    },
-    {
       label: '注册资本',
       name: 'registerCapital',
     },
@@ -129,6 +122,13 @@ export default function CustomerManagementEdit() {
       label: '注册日期',
       name: 'registerDate',
       children: <DatePicker />,
+    },
+    {
+      label: '创建人',
+      name: 'establisher',
+      rules: [{ required: true, message: '请输入创建人' }],
+      initialValue: JSON.parse(localStorage.getItem('userInfo') || '{}').userName,
+      children: <Input disabled />,
     },
   ];
 

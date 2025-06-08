@@ -220,27 +220,6 @@ export default function RevenueManagementEdit() {
         >
             <Space>
                 <Button
-                    type="primary"
-                    loading={submitState.loading}
-                    style={{
-                        marginBottom: 20,
-                        marginRight: 10,
-                    }}
-                    onClick={() => {
-                        form
-                            .validateFields()
-                            .then(values => {
-                                doFetch(values);
-                            })
-                            .catch(error => {
-                                console.log('表单验证失败:', error);
-                            });
-                    }}
-                >
-                    保存当前编辑
-                </Button>
-
-                <Button
                     style={{
                         marginBottom: 20,
                         marginRight: 10,
@@ -260,6 +239,28 @@ export default function RevenueManagementEdit() {
                 }}
                 formlist={formlist}
             />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                    type="primary"
+                    loading={submitState.loading}
+                    style={{
+                        marginBottom: 20,
+                        marginRight: 10,
+                    }}
+                    onClick={() => {
+                        form
+                            .validateFields()
+                            .then(values => {
+                                doFetch(values);
+                            })
+                            .catch(error => {
+                                console.log('表单验证失败:', error);
+                            });
+                    }}
+                >
+                    保存当前编辑
+                </Button>
+            </div>
         </PageHeader>
     );
 }
