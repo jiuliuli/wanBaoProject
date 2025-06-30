@@ -141,7 +141,7 @@ export default function ContractInfoEditInfo({ projectNumber, projectName, amoun
                                 {fields.map(({ key, name, ...restField }) => (
                                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                         <Form.Item {...restField} name={[name, 'phase']} label="付款期数">
-                                            <Input placeholder="付款期数" />
+                                            <Select options={[{ label: "首付款", value: "首付款" }, { label: "中间款", value: "中间款" }, { label: "尾款", value: "尾款" }, { label: "全款", value: "全款" }]} />
                                         </Form.Item>
                                         <Form.Item {...restField} name={[name, 'qualification']} label="付款条件">
                                             <Input placeholder="付款条件" />

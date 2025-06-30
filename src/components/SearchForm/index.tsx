@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Select } from 'antd';
+import { Button, Col, Form, Input, Row, Select, Space } from 'antd';
 import React from 'react';
 
 interface SearchFormColumn {
@@ -40,18 +40,19 @@ const SearchForm: React.FC<SearchFormProps> = ({ columns, onFinish, className })
         ))}
         <Col span={4}>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              搜索
-            </Button>
-            <Button
-              style={{ marginLeft: 8 }}
-              onClick={() => {
-                form.resetFields();
-                onFinish({});
-              }}
-            >
-              重置
-            </Button>
+            <Space>
+              <Button type="primary" htmlType="submit">
+                搜索
+              </Button>
+              <Button
+                onClick={() => {
+                  form.resetFields();
+                  onFinish({});
+                }}
+              >
+                重置
+              </Button>
+            </Space>
           </Form.Item>
         </Col>
       </Row>

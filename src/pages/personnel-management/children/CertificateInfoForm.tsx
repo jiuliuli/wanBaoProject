@@ -9,6 +9,9 @@ const CertificateInfoForm = (props: any) => {
   const [form] = Form.useForm();
   useEffect(() => {
     if (props.data && props.userName) {
+      if (props.data.industryType) {
+        props.data.industryType = props.data.industryType.split('/');
+      }
       form.setFieldsValue({ ...props.data, name: props.userName });
     }
   }, [props.data]);
@@ -19,6 +22,9 @@ const CertificateInfoForm = (props: any) => {
 
   const [state, doFetch] = useAsyncFn(async () => {
     const values = await form.validateFields();
+    if (values.industryType.length !== 0) {
+      values.industryType = values.industryType.join('/');
+    }
     try {
       if (props.type === 'create') {
         await PersonnelService.createCertificate(values);

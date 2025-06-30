@@ -3,7 +3,7 @@ import PATH_ENUM from '@/components/routes/path';
 import PersonnelService from '@/services/personnel.service';
 import { useNavigate } from '@umijs/max';
 import { Button, Form, Input, message } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 
 type SalarySocialFormProps = {
@@ -13,6 +13,7 @@ type SalarySocialFormProps = {
 const SalarySocialForm = ({ userName }: SalarySocialFormProps) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(userName === JSON.parse(localStorage.getItem('userInfo') || '{}').userName);
 
   const salarySocialState = useAsync(async () => {
     if (!userName) return;
@@ -66,6 +67,7 @@ const SalarySocialForm = ({ userName }: SalarySocialFormProps) => {
           onClick={doFetch}
           loading={state.loading}
           style={{ marginRight: '20px' }}
+          disabled={disabled}
         >
           保存
         </Button>

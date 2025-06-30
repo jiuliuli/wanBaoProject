@@ -1,15 +1,34 @@
 import { ContractInfoVO } from '@/types/project.types';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, InputNumber, Select, Space } from 'antd';
+import { useParams } from '@umijs/max';
+import { Button, Card, DatePicker, Form, Input, InputNumber, Select } from 'antd';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
 
 interface ContractInfoEditProps {
   data: ContractInfoVO;
   onSubmit: (values: any) => Promise<void>;
+  amount: number;
 }
 
-export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditProps) {
+export default function ContractInfoEdit({ data, onSubmit, amount }: ContractInfoEditProps) {
   const [form] = Form.useForm();
+  const { id } = useParams();
+  const userName = JSON.parse(localStorage.getItem('userInfo') || '{}').userName;
+
+  useEffect(() => {
+    form.setFieldsValue({
+      contract: {
+        ...(data?.contract ?? {}),
+        signDate: data?.contract?.signDate ? dayjs(data?.contract?.signDate) : undefined,
+      },
+      revenues:
+        data?.revenues?.map((revenue: any) => ({
+          ...revenue,
+          revenueTime: revenue.revenueTime ? dayjs(revenue.revenueTime) : undefined,
+        })) ?? [],
+    });
+  }, [data]);
 
   const handleSubmit = async (values: any) => {
     // 转换日期格式
@@ -52,8 +71,9 @@ export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditPro
           label="合同编号"
           name={['contract', 'contractNumber']}
           rules={[{ required: true, message: '请输入合同编号' }]}
+          initialValue={id}
         >
-          <Input />
+          <Input disabled />
         </Form.Item>
         <Form.Item
           label="合同类型"
@@ -69,8 +89,9 @@ export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditPro
           label="合同金额"
           name={['contract', 'amount']}
           rules={[{ required: true, message: '请输入合同金额' }]}
+          initialValue={amount}
         >
-          <InputNumber style={{ width: '100%' }} />
+          <InputNumber style={{ width: '100%' }} disabled />
         </Form.Item>
         <Form.Item
           label="签订时间"
@@ -96,67 +117,63 @@ export default function ContractInfoEdit({ data, onSubmit }: ContractInfoEditPro
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'revenueNumber']}
-                    rules={[{ required: true, message: '请输入收款编号' }]}
+                <div key={key} style={{ position: 'relative', marginBottom: 16 }}>
+                  <Card bodyStyle={{ padding: '16px' }}>
+                    <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                      <Form.Item {...restField} name={[name, 'revenueNumber']} label="收款编号" style={{ flex: 1 }}>
+                        <Input placeholder="收款编号" />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'title']} label="收款标题" rules={[{ required: true, message: '请输入收款标题' }]} style={{ flex: 1 }}>
+                        <Input placeholder="收款标题" />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'operator']} label="操作人" rules={[{ required: true, message: '请输入操作人' }]} style={{ flex: 1 }} initialValue={userName}>
+                        <Input placeholder="操作人" disabled />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'phase']} label="阶段" rules={[{ required: true, message: '请输入阶段' }]} style={{ flex: 1 }}>
+                        <Select options={[{ label: "首付款", value: "首付款" }, { label: "中期款", value: "中期款" }, { label: "尾款", value: "尾款" }]} />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'payment']} label="付款金额" rules={[{ required: true, message: '请输入付款金额' }]} style={{ flex: 1 }}>
+                        <InputNumber style={{ width: '100%' }} min={0} precision={2} placeholder="付款金额" prefix="¥" />
+                      </Form.Item>
+                    </div>
+                    <div style={{ display: 'flex', gap: '16px' }}>
+                      <Form.Item {...restField} name={[name, 'amount']} label="总金额" rules={[{ required: true, message: '请输入总金额' }]} style={{ flex: 1 }}>
+                        <InputNumber style={{ width: '100%' }} min={0} precision={2} placeholder="总金额" prefix="¥" />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'revenueTime']} label="收款时间" rules={[{ required: true, message: '请选择收款时间' }]} style={{ flex: 1 }}>
+                        <DatePicker placeholder="收款时间" style={{ width: '100%' }} />
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'invoice']} label="发票状态" style={{ flex: 1 }}>
+                        <Select placeholder="发票状态">
+                          <Select.Option value="未到款">未到款</Select.Option>
+                          <Select.Option value="已到款">已到款</Select.Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'memo']} label="备注" style={{ flex: 1 }}>
+                        <Input placeholder="备注" />
+                      </Form.Item>
+                    </div>
+                  </Card>
+                  <div
+                    onClick={() => remove(name)}
+                    style={{
+                      position: 'absolute',
+                      right: -8,
+                      top: -8,
+                      width: '20px',
+                      height: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: '#fff',
+                      borderRadius: '50%',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      cursor: 'pointer'
+                    }}
                   >
-                    <Input placeholder="收款编号" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'title']}
-                    rules={[{ required: true, message: '请输入收款标题' }]}
-                  >
-                    <Input placeholder="收款标题" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'operator']}
-                    rules={[{ required: true, message: '请输入操作人' }]}
-                  >
-                    <Input placeholder="操作人" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'phase']}
-                    rules={[{ required: true, message: '请输入阶段' }]}
-                  >
-                    <InputNumber placeholder="阶段" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'payment']}
-                    rules={[{ required: true, message: '请输入付款金额' }]}
-                  >
-                    <InputNumber placeholder="付款金额" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'amount']}
-                    rules={[{ required: true, message: '请输入总金额' }]}
-                  >
-                    <InputNumber placeholder="总金额" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'revenueTime']}
-                    rules={[{ required: true, message: '请选择收款时间' }]}
-                  >
-                    <DatePicker placeholder="收款时间" />
-                  </Form.Item>
-                  <Form.Item {...restField} name={[name, 'invoice']}>
-                    <Select placeholder="发票状态" style={{ width: 120 }}>
-                      <Select.Option value="未到款">未到款</Select.Option>
-                      <Select.Option value="已到款">已到款</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item {...restField} name={[name, 'memo']}>
-                    <Input placeholder="备注" />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
+                    <MinusCircleOutlined style={{ fontSize: '16px', color: '#ff4d4f' }} />
+                  </div>
+                </div>
               ))}
               <Form.Item>
                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>

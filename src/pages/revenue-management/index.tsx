@@ -1,4 +1,3 @@
-import AutoTag from '@/components/AutoTag';
 import PATH_ENUM from '@/components/routes/path';
 import SearchForm from '@/components/SearchForm';
 import { useTableDataFn } from '@/hooks/useTableDataFn';
@@ -43,18 +42,11 @@ const getColumns = (navigate: (path: string) => void) => [
         render: (text: string) => `${text}元`,
     },
     {
-        title: '合同到款时间',
+        title: '到款时间',
         dataIndex: 'revenueTime',
         key: 'revenueTime',
         align: 'center',
         render: (text: string) => dayjs(text).format('YYYY-MM-DD'),
-    },
-    {
-        title: '到款状态',
-        dataIndex: 'receive',
-        key: 'receive',
-        align: 'center',
-        render: (text: string) => <AutoTag options={['已到账', '未到账']} value={text} />,
     },
     {
         title: '开票时间',

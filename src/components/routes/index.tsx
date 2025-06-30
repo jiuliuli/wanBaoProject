@@ -10,6 +10,11 @@ export const routes = [
     component: '@/pages/Home',
   },
   {
+    path: '/todo-list',
+    name: '待办工作',
+    component: '@/pages/todo-list',
+  },
+  {
     path: '/reset-password',
     name: '修改密码',
     component: '@/pages/reset-password',

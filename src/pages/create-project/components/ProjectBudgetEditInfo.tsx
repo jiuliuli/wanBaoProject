@@ -87,7 +87,7 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
           form,
           onFinish: doFetch,
           onValuesChange: (changedValues, allValues) => {
-            const {
+            let {
               taskDays,
               travelFee = 0,
               printFee = 0,
@@ -108,7 +108,11 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
               otherFee = 0,
             } = allValues;
 
-            // 计算所有费用总和
+            if (changedValues.taskDays !== undefined) {
+              compileCost = changedValues.taskDays * dayCount;
+              form.setFieldsValue({ compileCost });
+            }
+
             const totalCost =
               travelFee +
               printFee +
@@ -129,7 +133,7 @@ export default function ProjectBudgetEditInfo({ amount, onFinish }: Props) {
               otherFee;
 
             // 计算成本核算结果
-            const result = amount - amount * 0.07 - taskDays * dayCount - totalCost;
+            const result = amount - totalCost;
             setPass(result > 0);
             setResult(result);
           },

@@ -32,6 +32,11 @@ const { Text } = Typography;
 
 const menuItems: MenuProps['items'] = [
   {
+    key: '/todo-list',
+    icon: <OrderedListOutlined />,
+    label: <Link to="/todo-list">待办工作</Link>,
+  },
+  {
     key: '/personnel-management',
     icon: <UserSwitchOutlined />,
     label: <Link to="/personnel-management">人员信息维护</Link>,

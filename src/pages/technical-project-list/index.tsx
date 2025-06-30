@@ -83,14 +83,14 @@ const getColumns = (navigate: (path: string) => void) => [
           >
             查看
           </Button>
-          <Button
+          {/* <Button
             type="link"
             onClick={() => {
               navigate(`${PATH_ENUM.TECHNICAL_PROJECTS_EDIT}`.replace(':id', data.projectNumber));
             }}
           >
             编辑
-          </Button>
+          </Button> */}
         </>
       );
     },

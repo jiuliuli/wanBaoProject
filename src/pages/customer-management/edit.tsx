@@ -65,22 +65,32 @@ export default function CustomerManagementEdit() {
     {
       label: '统一社会信用代码',
       name: 'identification',
+      rules: [{ required: false }],
+      required: false,
     },
     {
       label: '开票地址',
       name: 'invoiceAddress',
+      rules: [{ required: false }],
+      required: false,
     },
     {
       label: '开户行',
       name: 'bankName',
+      rules: [{ required: false }],
+      required: false,
     },
     {
       label: '账号',
       name: 'accountNumber',
+      rules: [{ required: false }],
+      required: false,
     },
     {
       label: '财务电话',
       name: 'financialTel',
+      rules: [{ required: false }],
+      required: false,
     },
     {
       label: '法定代表人',

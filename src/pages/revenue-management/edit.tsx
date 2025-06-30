@@ -2,9 +2,6 @@ import LabelForm from '@/components/LabelForm';
 import { LabelFormItem } from '@/components/LabelForm/types';
 import PATH_ENUM from '@/components/routes/path';
 import { ContractService } from '@/services/ContractService';
-import DepartmentService from '@/services/department.service';
-import PersonnelService from '@/services/personnel.service';
-import ProjectManagementService from '@/services/project-management.service';
 import RevenueManagementService from '@/services/revenue.service';
 import { PageHeader } from '@ant-design/pro-components';
 import { useModel, useNavigate, useParams } from '@umijs/max';
@@ -38,20 +35,8 @@ export default function RevenueManagementEdit() {
         }
     }, [id]);
 
-    const staffListState = useAsync(async () => {
-        return await PersonnelService.fetchPersonnelList({});
-    });
-
     const contractListState = useAsync(async () => {
         return await ContractService.getContractList();
-    });
-
-    const projectListState = useAsync(async () => {
-        return await ProjectManagementService.fetchProjectList({ finished: false });
-    });
-
-    const divisionListState = useAsync(async () => {
-        return await DepartmentService.fetchDepartmentList({});
     });
 
     useEffect(() => {
@@ -100,21 +85,11 @@ export default function RevenueManagementEdit() {
             children: <Input placeholder="请输入标题" />,
         },
         {
-            label: '执行人',
+            label: '收款人',
             name: 'operator',
+            initialValue: userInfo?.userName,
             children: (
-                <Select
-                    showSearch
-                    placeholder="请选择执行人"
-                    optionFilterProp="children"
-                    filterOption={(input: string, option: any) =>
-                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                    }
-                    options={staffListState.value?.map((staff: any) => ({
-                        value: staff.userName,
-                        label: staff.userName,
-                    }))}
-                />
+                <Input disabled />
             ),
         },
         {
@@ -136,9 +111,9 @@ export default function RevenueManagementEdit() {
             ),
         },
         {
-            label: '尾款',
+            label: '付款期数',
             name: 'phase',
-            children: <Input />,
+            children: <Select options={[{ label: "首付款", value: "首付款" }, { label: "中间款", value: "中间款" }, { label: "尾款", value: "尾款" }, { label: "全款", value: "全款" }]} />,
         },
         {
             label: '限定条件',
@@ -151,7 +126,7 @@ export default function RevenueManagementEdit() {
             children: <InputNumber style={{ width: '200px' }} suffix="元" />,
         },
         {
-            label: '总金额',
+            label: '应付金额',
             name: 'amount',
             children: <InputNumber style={{ width: '200px' }} suffix="元" />,
         },
@@ -165,12 +140,6 @@ export default function RevenueManagementEdit() {
             name: 'revenueMode',
             initialValue: '转账',
             children: <Radio.Group options={['现金', '转账', '承兑', '支票']} />,
-        },
-        {
-            label: '到款状态',
-            name: 'receive',
-            initialValue: '未到款',
-            children: <Radio.Group options={['已到款', '未到款']} />,
         },
         {
             label: '开票时间',

@@ -51,7 +51,7 @@ const getColumns = (navigate: (path: string) => void) => [
   {
     title: '费用发生时间',
     dataIndex: 'feeTime',
-    width: 120,
+    width: 150,
     align: 'center' as const,
     render: (text: any) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
   },
@@ -64,7 +64,7 @@ const getColumns = (navigate: (path: string) => void) => [
   {
     title: '操作',
     align: 'center' as const,
-    width: 120,
+    width: 100,
     render: (record: TableItem) => {
       return (
         <Button

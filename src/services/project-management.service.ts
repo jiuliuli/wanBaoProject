@@ -7,11 +7,11 @@ const ProjectManagementService = {
     return Request.get(url, params).then(res => res.data);
   },
   fetchProjectList: async (params: any) => {
-    const url = `/v1/getMyProject`;
+    const url = `/v1/searchProject`;
     return Request.get(url, params).then(res => res.data);
   },
   fetchProjectById: async (id: string) => {
-    const url = `/v1/getMyProject?projectNumber=${id}&finished=false`;
+    const url = `/v1/searchProject?projectNumber=${id}&finished=false`;
     return Request.get(url).then(res => res.data);
   },
   fetchEvaluateTypeList: async () => {
@@ -70,6 +70,10 @@ const ProjectManagementService = {
   fetchArchiveById: async (id: string) => {
     const url = `/v1/getArchive/${id}`;
     return Request.get(url).then((res: any) => res.data);
+  },
+  submitProjectAudit: async (data: any) => {
+    const url = `/v1/submitProject`;
+    return Request.post(url, data).then((res: any) => res.data);
   },
 };
 

@@ -71,12 +71,12 @@ export default function BasicInfo({ data }: BasicInfoProps) {
     {
       label: '需要送审的市级管理部门',
       key: 'cityBureau',
-      children: <>{data.cityBureau?.join(', ')}</>,
+      children: <>{data.cityBureau}</>,
     },
     {
       label: '需要送审的区级管理部门',
       key: 'districtBureau',
-      children: <>{data.districtBureau?.join(', ')}</>,
+      children: <>{data.districtBureau}</>,
     },
     {
       label: '紧急程度',
